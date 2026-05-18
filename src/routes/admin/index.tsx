@@ -51,11 +51,15 @@ function DashboardPage() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: (vars: { id: string; status: "pending" | "confirmed" | "cancelled" }) => 
-      updateFn({ data: vars }),
+    mutationFn: (vars: { 
+      id: string; 
+      status?: "pending" | "confirmed" | "cancelled";
+      paymentStatus?: "pending" | "paid";
+      attendanceStatus?: "waiting" | "completed" | "missed";
+    }) => updateFn({ data: vars }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["bookings"] });
-      toast.success("Status atualizado!");
+      toast.success("Atualizado com sucesso!");
     },
     onError: (err: any) => {
       toast.error(err.message || "Erro ao atualizar.");
@@ -90,32 +94,91 @@ function DashboardPage() {
     }
   };
 
+  const getPaymentBadge = (status: string) => {
+    switch (status) {
+      case "paid":
+        return <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/20">Pago</Badge>;
+      default:
+        return <Badge className="bg-slate-500/20 text-slate-400 border-slate-500/20">Pendente</Badge>;
+    }
+  };
+
+  const getAttendanceBadge = (status: string) => {
+    switch (status) {
+      case "completed":
+        return <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/20">Concluído</Badge>;
+      case "missed":
+        return <Badge className="bg-red-500/20 text-red-400 border-red-500/20">Faltou</Badge>;
+      default:
+        return <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/20">Aguardando</Badge>;
+    }
+  };
+
   const stats = [
-    { label: "Total de Agendamentos", value: bookings?.length || 0, icon: Calendar, color: "text-primary" },
-    { label: "Pendentes", value: bookings?.filter(b => b.status === "pending").length || 0, icon: Clock4, color: "text-amber-500" },
-    { label: "Confirmados", value: bookings?.filter(b => b.status === "confirmed").length || 0, icon: CheckCircle, color: "text-emerald-500" },
+    { 
+      label: "Aguardando Contato", 
+      value: bookings?.filter(b => b.status === "pending").length || 0, 
+      icon: Clock4, 
+      color: "text-amber-500",
+      description: "Novos leads"
+    },
+    { 
+      label: "Pagos (Aguardando Atendimento)", 
+      value: bookings?.filter(b => b.payment_status === "paid" && b.attendance_status === "waiting").length || 0, 
+      icon: CheckCircle, 
+      color: "text-blue-500",
+      description: "Prontos para consulta"
+    },
+    { 
+      label: "Total Concluídos", 
+      value: bookings?.filter(b => b.attendance_status === "completed").length || 0, 
+      icon: CheckCircle, 
+      color: "text-purple-500",
+      description: "Consultas realizadas"
+    },
+    { 
+      label: "Pagos e Não Concluídos", 
+      value: bookings?.filter(b => b.payment_status === "paid" && b.attendance_status !== "completed").length || 0, 
+      icon: MessageCircle, 
+      color: "text-emerald-500",
+      description: "Em andamento"
+    },
   ];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Visão Geral</h1>
-        <p className="text-muted-foreground text-lg">Gerencie todas as consultas e solicitações de pacientes.</p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight mb-2">Painel de Controle</h1>
+          <p className="text-muted-foreground text-lg">Acompanhe o fluxo completo de agendamentos e pagamentos.</p>
+        </div>
+        <Button 
+          variant="outline" 
+          size="lg" 
+          className="rounded-2xl bg-white/5 border-white/10 hover:bg-white/10"
+          onClick={() => queryClient.invalidateQueries({ queryKey: ["bookings"] })}
+        >
+          <Loader2 className={`mr-2 h-4 w-4 ${updateMutation.isPending ? 'animate-spin' : ''}`} />
+          Atualizar Dados
+        </Button>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((s) => (
           <Card key={s.label} className="glass border-white/5 shadow-card hover:border-primary/20 transition-all">
             <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground mb-1">{s.label}</p>
-                  <p className="text-3xl font-bold">{s.value}</p>
-                </div>
+              <div className="flex items-center justify-between mb-2">
                 <div className={`p-3 rounded-2xl bg-white/5 ${s.color}`}>
                   <s.icon size={24} />
                 </div>
+                <div className="text-right">
+                  <p className="text-3xl font-bold">{s.value}</p>
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-bold text-foreground mb-0.5">{s.label}</p>
+                <p className="text-xs text-muted-foreground">{s.description}</p>
               </div>
             </CardContent>
           </Card>
@@ -123,32 +186,28 @@ function DashboardPage() {
       </div>
 
       {/* Bookings Table */}
-      <Card className="glass border-white/5 shadow-card">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-7">
-          <div>
-            <CardTitle className="text-xl">Agendamentos Recentes</CardTitle>
-            <CardDescription>Lista cronológica de todas as consultas marcadas.</CardDescription>
-          </div>
-          <Button variant="outline" size="sm" className="rounded-xl bg-white/5 border-white/10" onClick={() => queryClient.invalidateQueries({ queryKey: ["bookings"] })}>
-            Atualizar Lista
-          </Button>
+      <Card className="glass border-white/5 shadow-card overflow-hidden">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xl">Fila de Atendimento</CardTitle>
+          <CardDescription>Gerencie o status de cada agendamento abaixo.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="rounded-2xl border border-white/5 overflow-hidden">
+        <CardContent className="p-0 sm:p-6">
+          <div className="overflow-x-auto">
             <Table>
               <TableHeader className="bg-white/5">
                 <TableRow className="hover:bg-transparent border-white/5">
-                  <TableHead className="font-bold">Paciente</TableHead>
-                  <TableHead className="font-bold">Data e Hora</TableHead>
-                  <TableHead className="font-bold">WhatsApp</TableHead>
-                  <TableHead className="font-bold">Status</TableHead>
+                  <TableHead className="font-bold min-w-[200px]">Paciente</TableHead>
+                  <TableHead className="font-bold">Agendado</TableHead>
+                  <TableHead className="font-bold">Contato</TableHead>
+                  <TableHead className="font-bold">Pagamento</TableHead>
+                  <TableHead className="font-bold">Atendimento</TableHead>
                   <TableHead className="text-right font-bold">Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {bookings?.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="h-32 text-center text-muted-foreground">
+                    <TableCell colSpan={6} className="h-32 text-center text-muted-foreground">
                       Nenhum agendamento encontrado.
                     </TableCell>
                   </TableRow>
@@ -157,20 +216,18 @@ function DashboardPage() {
                     <TableRow key={b.id} className="hover:bg-white/5 border-white/5 transition-colors">
                       <TableCell>
                         <div className="flex flex-col">
-                          <span className="font-bold">{b.full_name}</span>
+                          <span className="font-bold text-base">{b.full_name}</span>
                           <span className="text-xs text-muted-foreground flex items-center gap-1">
                             <Mail size={12} /> {b.email}
                           </span>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <div className="flex flex-col">
-                          <span className="flex items-center gap-1.5 font-medium">
-                            <Calendar size={14} className="text-primary" />
+                        <div className="flex flex-col text-sm">
+                          <span className="font-medium">
                             {format(new Date(b.appointment_time), "dd/MM/yyyy", { locale: ptBR })}
                           </span>
-                          <span className="text-xs text-muted-foreground flex items-center gap-1.5 pl-5">
-                            <Clock size={12} />
+                          <span className="text-xs text-muted-foreground">
                             {format(new Date(b.appointment_time), "HH:mm", { locale: ptBR })}
                           </span>
                         </div>
@@ -180,13 +237,14 @@ function DashboardPage() {
                           href={`https://wa.me/${b.whatsapp.replace(/\D/g, '')}`} 
                           target="_blank" 
                           rel="noreferrer"
-                          className="flex items-center gap-2 text-emerald-500 hover:underline font-medium"
+                          className="flex items-center gap-2 text-emerald-500 hover:text-emerald-400 font-bold text-sm"
                         >
                           <MessageCircle size={16} />
-                          {b.whatsapp}
+                          WhatsApp
                         </a>
                       </TableCell>
-                      <TableCell>{getStatusBadge(b.status)}</TableCell>
+                      <TableCell>{getPaymentBadge(b.payment_status)}</TableCell>
+                      <TableCell>{getAttendanceBadge(b.attendance_status)}</TableCell>
                       <TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
@@ -194,21 +252,51 @@ function DashboardPage() {
                               <MoreHorizontal size={20} />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="glass border-white/10 text-foreground w-48">
+                          <DropdownMenuContent align="end" className="glass border-white/10 text-foreground w-56">
+                            <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ações de Status</div>
                             <DropdownMenuItem 
                               className="gap-2 focus:bg-emerald-500/10 focus:text-emerald-500"
                               onClick={() => updateMutation.mutate({ id: b.id, status: "confirmed" })}
                             >
-                              <CheckCircle size={16} /> Confirmar
+                              <CheckCircle size={16} /> Confirmar Contato
+                            </DropdownMenuItem>
+                            
+                            <div className="h-px bg-white/10 my-1" />
+                            <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Pagamento</div>
+                            <DropdownMenuItem 
+                              className="gap-2 focus:bg-blue-500/10 focus:text-blue-400"
+                              onClick={() => updateMutation.mutate({ id: b.id, paymentStatus: "paid" })}
+                            >
+                              <CheckCircle size={16} /> Marcar como PAGO
                             </DropdownMenuItem>
                             <DropdownMenuItem 
-                              className="gap-2 focus:bg-destructive/10 focus:text-destructive"
+                              className="gap-2"
+                              onClick={() => updateMutation.mutate({ id: b.id, paymentStatus: "pending" })}
+                            >
+                              <Clock size={16} /> Voltar para Pendente
+                            </DropdownMenuItem>
+
+                            <div className="h-px bg-white/10 my-1" />
+                            <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Atendimento</div>
+                            <DropdownMenuItem 
+                              className="gap-2 focus:bg-purple-500/10 focus:text-purple-400"
+                              onClick={() => updateMutation.mutate({ id: b.id, attendanceStatus: "completed" })}
+                            >
+                              <CheckCircle size={16} /> Marcar CONCLUÍDO
+                            </DropdownMenuItem>
+                            <DropdownMenuItem 
+                              className="gap-2 focus:bg-red-500/10 focus:text-red-400"
+                              onClick={() => updateMutation.mutate({ id: b.id, attendanceStatus: "missed" })}
+                            >
+                              <XCircle size={16} /> Marcar como FALTOU
+                            </DropdownMenuItem>
+
+                            <div className="h-px bg-white/10 my-1" />
+                            <DropdownMenuItem 
+                              className="gap-2 text-destructive focus:bg-destructive/10 focus:text-destructive"
                               onClick={() => updateMutation.mutate({ id: b.id, status: "cancelled" })}
                             >
-                              <XCircle size={16} /> Cancelar
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="gap-2" onClick={() => window.open(`mailto:${b.email}`)}>
-                              <Mail size={16} /> Enviar E-mail
+                              <XCircle size={16} /> Cancelar Tudo
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
