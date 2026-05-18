@@ -136,7 +136,7 @@ function DoctorsPage() {
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit" disabled={createMutation.isPending} className="w-full bg-primary-gradient font-bold h-12 rounded-xl uppercase italic">
+                <Button type="submit" disabled={createMutation.isPending} className="w-full bg-primary text-primary-foreground font-bold h-12 rounded-xl uppercase italic">
                   {createMutation.isPending ? "Salvando..." : "Confirmar Cadastro"}
                 </Button>
               </DialogFooter>
