@@ -6,7 +6,11 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useLocation,
 } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { trackVisit } from "@/lib/analytics.functions";
 
 import appCss from "../styles.css?url";
 
