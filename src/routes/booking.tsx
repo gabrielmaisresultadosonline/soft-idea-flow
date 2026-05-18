@@ -114,6 +114,28 @@ function BookingPage() {
 
       setIsSuccess(true);
       toast.success("Consulta agendada com sucesso!");
+
+      // Meta Pixel Lead Event
+      if (typeof window !== "undefined") {
+        trackEventFn({
+          data: {
+            eventName: "Lead",
+            userData: {
+              em: formData.email,
+              ph: formData.whatsapp,
+              fn: formData.fullName,
+              clientUserAgent: window.navigator.userAgent,
+            },
+            customData: {
+              currency: "BRL",
+              value: "50.00",
+              content_name: "Consulta Online",
+              appointment_time: appointmentDate.toISOString(),
+            },
+            eventSourceUrl: window.location.href,
+          },
+        }).catch(err => console.error("Meta Tracking Error:", err));
+      }
     } catch (error: any) {
       toast.error(error.message || "Erro ao agendar consulta.");
     } finally {
