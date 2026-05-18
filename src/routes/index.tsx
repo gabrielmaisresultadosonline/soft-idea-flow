@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { trackMetaEvent } from "@/lib/meta-pixel.functions";
 import {
   Calendar,
   MessageCircle,
