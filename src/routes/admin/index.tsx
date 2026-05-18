@@ -243,8 +243,8 @@ function DashboardPage() {
                           WhatsApp
                         </a>
                       </TableCell>
-                      <TableCell>{getPaymentBadge(b.payment_status)}</TableCell>
-                      <TableCell>{getAttendanceBadge(b.attendance_status)}</TableCell>
+                      <TableCell>{getPaymentBadge(b.payment_status || "pending")}</TableCell>
+                      <TableCell>{getAttendanceBadge(b.attendance_status || "waiting")}</TableCell>
                       <TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
