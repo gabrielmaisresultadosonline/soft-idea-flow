@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Calendar,
@@ -28,7 +28,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const CALENDAR_URL = "https://calendar.app.google/79x67LEWu5C6gqY57";
 const WHATSAPP_URL =
   "https://wa.me/556781226312?text=Sou%20Acad%C3%AAmico%20e%20gostaria%20de%20Agendar";
 
@@ -119,10 +118,10 @@ function Index() {
       {/* NAV */}
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/40 border-b border-white/5">
         <nav className="mx-auto max-w-7xl px-5 lg:px-8 h-20 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <img src={logo} alt="UniDoc" width={44} height={44} className="rounded-xl" />
             <span className="sr-only">UniDoc</span>
-          </a>
+          </Link>
           <ul className="hidden lg:flex items-center gap-9 text-sm font-medium text-muted-foreground">
             {navLinks.map((l) => (
               <li key={l.href}>
@@ -132,14 +131,12 @@ function Index() {
               </li>
             ))}
           </ul>
-          <a
-            href={CALENDAR_URL}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            to="/booking"
             className="hidden lg:inline-flex bg-primary-gradient text-primary-foreground font-semibold px-6 py-3 rounded-full shadow-glow hover:scale-[1.03] transition-transform"
           >
             Agendar consulta
-          </a>
+          </Link>
           <button
             className="lg:hidden p-2 text-foreground"
             onClick={() => setMenuOpen((s) => !s)}
@@ -160,14 +157,13 @@ function Index() {
                 {l.label}
               </a>
             ))}
-            <a
-              href={CALENDAR_URL}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              to="/booking"
+              onClick={() => setMenuOpen(false)}
               className="inline-flex bg-primary-gradient text-primary-foreground font-semibold px-5 py-2.5 rounded-full"
             >
               Agendar consulta
-            </a>
+            </Link>
           </div>
         )}
       </header>
@@ -187,15 +183,13 @@ function Index() {
             Consultas médicas online com <span className="text-primary font-semibold">valor acessível</span>. Sem fila, sem deslocamento, sem burocracia. Feito para a rotina universitária.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href={CALENDAR_URL}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              to="/booking"
               className="inline-flex items-center gap-2 bg-background text-foreground font-semibold px-7 py-4 rounded-full shadow-card hover:scale-[1.03] transition-transform w-full sm:w-auto justify-center"
             >
               <Calendar size={20} className="text-primary" />
               Agendar minha consulta agora
-            </a>
+            </Link>
             <a
               href={WHATSAPP_URL}
               target="_blank"
@@ -303,15 +297,13 @@ function Index() {
               Agende agora e fale com um médico em minutos. Sem burocracia, de onde você estiver.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href={CALENDAR_URL}
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                to="/booking"
                 className="inline-flex items-center gap-2 bg-background text-foreground font-semibold px-7 py-4 rounded-full hover:scale-[1.03] transition-transform justify-center"
               >
                 <Calendar size={20} className="text-primary" />
                 Agendar minha consulta
-              </a>
+              </Link>
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
@@ -380,7 +372,10 @@ function Index() {
             <img src={logo} alt="UniDoc" width={32} height={32} className="rounded-lg" />
             <span>© {new Date().getFullYear()} UniDoc. Todos os direitos reservados.</span>
           </div>
-          <p>CFM • Resolução 2.314/2022 • LGPD</p>
+          <div className="flex items-center gap-6">
+            <Link to="/login" className="hover:text-primary transition-colors">Painel Admin</Link>
+            <p>CFM • Resolução 2.314/2022 • LGPD</p>
+          </div>
         </div>
       </footer>
 
