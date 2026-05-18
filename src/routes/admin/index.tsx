@@ -111,6 +111,17 @@ function DashboardPage() {
     }
   });
 
+  const clearMutation = useMutation({
+    mutationFn: () => clearFn(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["bookings"] });
+      toast.success("Fila zerada com sucesso!");
+    },
+    onError: (err: any) => {
+      toast.error(err.message || "Erro ao zerar fila.");
+    }
+  });
+
   const analyticsData = useMemo(() => {
     if (!analytics) return { hourly: [], daily: [], todayTotal: 0, total: 0 };
 
