@@ -257,34 +257,34 @@ function DashboardPage() {
   };
 
   return (
-    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div>
-          <h1 className="text-4xl font-black tracking-tight mb-2 uppercase italic text-primary">Operações em Tempo Real</h1>
-          <p className="text-muted-foreground text-lg font-medium">Gestão inteligente e monitoramento de performance.</p>
+    <div className="space-y-6 md:space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700 w-full overflow-hidden">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6">
+        <div className="w-full">
+          <h1 className="text-2xl md:text-4xl font-black tracking-tight mb-1 md:mb-2 uppercase italic text-primary leading-tight">Operações em Tempo Real</h1>
+          <p className="text-muted-foreground text-sm md:text-lg font-medium">Gestão inteligente e monitoramento.</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 md:gap-3 w-full md:w-auto">
           <div className="hidden sm:flex flex-col items-end mr-2">
-             <span className="text-[10px] font-bold text-primary uppercase tracking-widest opacity-60">Status do Servidor</span>
-             <span className="text-xs font-black text-emerald-500">CONECTADO</span>
+             <span className="text-[10px] font-bold text-primary uppercase tracking-widest opacity-60">Status</span>
+             <span className="text-xs font-black text-emerald-500">ONLINE</span>
           </div>
           <Button 
             variant="outline" 
-            size="lg" 
-            className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold"
+            size="sm" 
+            className="flex-1 md:flex-none rounded-xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-4 md:px-8 h-10 md:h-14 font-bold text-xs md:text-sm"
             onClick={() => setShowAnalytics(!showAnalytics)}
           >
-            <Activity className={`mr-2 h-5 w-5 ${showAnalytics ? 'text-primary' : ''}`} />
-            {showAnalytics ? "Ocultar Analytics" : "Ver Analytics"}
+            <Activity className={`mr-2 h-4 w-4 md:h-5 md:w-5 ${showAnalytics ? 'text-primary' : ''}`} />
+            {showAnalytics ? "Ocultar" : "Analytics"}
           </Button>
           <Button 
             variant="outline" 
-            size="lg" 
-            className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold"
+            size="sm" 
+            className="flex-1 md:flex-none rounded-xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-4 md:px-8 h-10 md:h-14 font-bold text-xs md:text-sm"
             onClick={() => queryClient.invalidateQueries({ queryKey: ["bookings"] })}
           >
-            <Loader2 className={`mr-2 h-5 w-5 ${isLoading || updateMutation.isPending ? 'animate-spin' : ''}`} />
-            Sincronizar
+            <Loader2 className={`mr-2 h-4 w-4 md:h-5 md:w-5 ${isLoading || updateMutation.isPending ? 'animate-spin' : ''}`} />
+            Sync
           </Button>
         </div>
       </div>
@@ -391,21 +391,21 @@ function DashboardPage() {
       )}
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 md:gap-6">
         {stats.map((s) => (
-          <Card key={s.label} className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card hover:border-primary/20 transition-all group relative overflow-hidden">
-            <CardContent className="pt-8 pb-6 relative z-10">
-              <div className="flex items-start justify-between mb-4">
-                <div className={`p-4 rounded-2xl bg-white/5 border border-white/5 ${s.color} group-hover:scale-105 transition-transform`}>
-                  <s.icon size={24} />
+          <Card key={s.label} className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card hover:border-primary/20 transition-all group relative overflow-hidden h-full">
+            <CardContent className="p-4 md:pt-8 md:pb-6 relative z-10 flex flex-col h-full">
+              <div className="flex items-start justify-between mb-2 md:mb-4">
+                <div className={`p-2 md:p-4 rounded-xl md:rounded-2xl bg-white/5 border border-white/5 ${s.color} group-hover:scale-105 transition-transform`}>
+                  <s.icon className="w-4 h-4 md:w-6 md:h-6" />
                 </div>
                 <div className="text-right">
-                  <p className="text-4xl font-black tracking-tighter italic">{s.value}</p>
+                  <p className="text-xl md:text-4xl font-black tracking-tighter italic leading-none">{s.value}</p>
                 </div>
               </div>
-              <div>
-                <p className="text-sm font-black text-foreground mb-1 uppercase tracking-tight">{s.label}</p>
-                <p className="text-xs text-muted-foreground font-medium">{s.description}</p>
+              <div className="mt-auto">
+                <p className="text-[10px] md:text-sm font-black text-foreground mb-0.5 md:mb-1 uppercase tracking-tight line-clamp-2 md:line-clamp-1">{s.label}</p>
+                <p className="text-[8px] md:text-xs text-muted-foreground font-medium hidden xs:block">{s.description}</p>
               </div>
             </CardContent>
           </Card>
@@ -413,11 +413,11 @@ function DashboardPage() {
       </div>
 
       {/* Bookings Table */}
-      <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden">
-        <CardHeader className="pb-2 flex flex-row items-center justify-between">
+      <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden w-full">
+        <CardHeader className="p-4 md:pb-2 md:p-6 flex flex-row items-center justify-between">
           <div>
-            <CardTitle className="text-xl uppercase font-black italic">Fila de Atendimento</CardTitle>
-            <CardDescription>Gerencie o status de cada agendamento abaixo.</CardDescription>
+            <CardTitle className="text-lg md:text-xl uppercase font-black italic">Fila</CardTitle>
+            <CardDescription className="text-[10px] md:text-sm">Gestão de agendamentos.</CardDescription>
           </div>
           <Button
             variant="ghost"
@@ -433,9 +433,9 @@ function DashboardPage() {
             {clearMutation.isPending ? "Limpando..." : "Zerar Fila"}
           </Button>
         </CardHeader>
-        <CardContent className="p-0 sm:p-6">
-          <div className="overflow-x-auto">
-            <Table>
+        <CardContent className="p-0">
+          <div className="w-full overflow-x-auto">
+            <Table className="min-w-[800px] md:min-w-full">
               <TableHeader className="bg-muted/10">
                 <TableRow className="hover:bg-transparent border-white/5">
                   <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Paciente</TableHead>
