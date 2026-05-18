@@ -329,7 +329,7 @@ function DashboardPage() {
           </CardHeader>
           <CardContent className="h-[300px] pb-8">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={analyticsData.daily}>
+              <RechartsBarChart data={analyticsData.daily}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
                 <XAxis 
                   dataKey="day" 
@@ -359,7 +359,7 @@ function DashboardPage() {
                   radius={[4, 4, 0, 0]} 
                   barSize={30}
                 />
-              </BarChart>
+              </RechartsBarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
