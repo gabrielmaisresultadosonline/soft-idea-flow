@@ -54,13 +54,13 @@ function AdminLayout() {
             <LayoutDashboard size={24} />
             Dashboard
           </Button>
-          <Button variant="ghost" className="w-full justify-start gap-4 h-14 rounded-2xl text-muted-foreground hover:bg-white/5 transition-all group" disabled>
-            <Calendar size={22} className="group-hover:text-primary transition-colors" />
-            <span className="font-semibold">Calendário</span>
-          </Button>
-          <Button variant="ghost" className="w-full justify-start gap-4 h-14 rounded-2xl text-muted-foreground hover:bg-white/5 transition-all group" disabled>
-            <Users size={22} className="group-hover:text-primary transition-colors" />
-            <span className="font-semibold">Pacientes</span>
+          <Button 
+            variant="ghost" 
+            className={`w-full justify-start gap-4 h-14 rounded-2xl transition-all group ${location.pathname === '/admin/doctors' ? 'bg-primary/10 border border-primary/20 text-primary font-bold' : 'text-muted-foreground hover:bg-white/5'}`}
+            onClick={() => navigate({ to: "/admin/doctors" })}
+          >
+            <Users size={22} className={location.pathname === '/admin/doctors' ? 'text-primary' : 'group-hover:text-primary transition-colors'} />
+            <span className="font-semibold">Médicos</span>
           </Button>
           <Button variant="ghost" className="w-full justify-start gap-4 h-14 rounded-2xl text-muted-foreground hover:bg-white/5 transition-all group" disabled>
             <Settings size={22} className="group-hover:text-primary transition-colors" />

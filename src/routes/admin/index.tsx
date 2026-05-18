@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getBookings, updateBookingStatus } from "@/lib/bookings.functions";
+import { getDoctors } from "@/lib/doctors.functions";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -43,13 +44,21 @@ export const Route = createFileRoute("/admin/")({
 function DashboardPage() {
   const queryClient = useQueryClient();
   const fetchBookings = useServerFn(getBookings);
+  const fetchDoctors = useServerFn(getDoctors);
   const updateFn = useServerFn(updateBookingStatus);
 
-  const { data: bookings, isLoading, error } = useQuery({
+  const { data: bookings, isLoading: isBookingsLoading } = useQuery({
     queryKey: ["bookings"],
     queryFn: () => fetchBookings(),
-    refetchInterval: 10000, // Real-time feel: refetch every 10 seconds
+    refetchInterval: 10000,
   });
+
+  const { data: doctors } = useQuery({
+    queryKey: ["doctors"],
+    queryFn: () => fetchDoctors(),
+  });
+
+  const isLoading = isBookingsLoading;
 
   const updateMutation = useMutation({
     mutationFn: (vars: { 
@@ -269,6 +278,21 @@ function DashboardPage() {
                               <CheckCircle size={16} /> Confirmar Contato
                             </DropdownMenuItem>
                             
+                            <div className="h-px bg-white/10 my-1" />
+                            <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Atribuir Médico</div>
+                            {doctors?.map((doc) => (
+                              <DropdownMenuItem 
+                                key={doc.id}
+                                className={`gap-2 ${b.doctor_id === doc.id ? 'bg-primary/20 text-primary' : ''}`}
+                                onClick={() => updateMutation.mutate({ id: b.id, doctorId: doc.id })}
+                              >
+                                <Stethoscope size={14} /> {doc.name}
+                              </DropdownMenuItem>
+                            ))}
+                            {(!doctors || doctors.length === 0) && (
+                              <div className="px-2 py-1.5 text-[10px] text-muted-foreground italic">Nenhum médico cadastrado</div>
+                            )}
+
                             <div className="h-px bg-white/10 my-1" />
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Pagamento</div>
                             <DropdownMenuItem 
