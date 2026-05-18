@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { createBooking } from "@/lib/bookings.functions";
 import { Calendar } from "@/components/ui/calendar";
@@ -39,8 +39,13 @@ function BookingPage() {
   const navigate = useNavigate();
   const bookFn = useServerFn(createBooking);
   
+  const [isClient, setIsClient] = useState(false);
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [time, setTime] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -112,6 +117,8 @@ function BookingPage() {
     );
   }
 
+  if (!isClient) return <div className="bg-hero min-h-screen" />;
+
   return (
     <div className="bg-hero min-h-screen py-12 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
@@ -130,126 +137,162 @@ function BookingPage() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="grid lg:grid-cols-2 gap-8">
-          {/* Dados Pessoais */}
-          <div className="space-y-6">
-            <Card className="glass border-white/10 shadow-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <User className="text-primary" size={20} />
-                  Seus Dados
-                </CardTitle>
-                <CardDescription>
-                  Preencha suas informações para contato.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="fullName">Nome Completo</Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-3 text-muted-foreground" size={18} />
-                    <Input 
-                      id="fullName" 
-                      placeholder="Seu nome" 
-                      className="pl-10 bg-white/5 border-white/10" 
-                      value={formData.fullName}
-                      onChange={handleInputChange}
-                      required
-                    />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Dados Pessoais */}
+            <div className="space-y-6">
+              <Card className="glass border-white/10 shadow-card">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-xl">
+                    <User className="text-primary" size={20} />
+                    Seus Dados
+                  </CardTitle>
+                  <CardDescription>
+                    Preencha suas informações para contato.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-3">
+                    <Label htmlFor="fullName" className="text-sm font-semibold tracking-wide uppercase opacity-70">Nome Completo</Label>
+                    <div className="relative group">
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={20} />
+                      <Input 
+                        id="fullName" 
+                        placeholder="Ex: João Silva" 
+                        className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:bg-white/10 transition-all text-lg" 
+                        value={formData.fullName}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">E-mail</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 text-muted-foreground" size={18} />
-                    <Input 
-                      id="email" 
-                      type="email" 
-                      placeholder="seu@email.com" 
-                      className="pl-10 bg-white/5 border-white/10" 
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                    />
+                  <div className="space-y-3">
+                    <Label htmlFor="email" className="text-sm font-semibold tracking-wide uppercase opacity-70">E-mail</Label>
+                    <div className="relative group">
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={20} />
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        placeholder="seu@email.com" 
+                        className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:bg-white/10 transition-all text-lg" 
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="whatsapp">WhatsApp</Label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-3 text-muted-foreground" size={18} />
-                    <Input 
-                      id="whatsapp" 
-                      placeholder="(00) 00000-0000" 
-                      className="pl-10 bg-white/5 border-white/10" 
-                      value={formData.whatsapp}
-                      onChange={handleInputChange}
-                      required
-                    />
+                  <div className="space-y-3">
+                    <Label htmlFor="whatsapp" className="text-sm font-semibold tracking-wide uppercase opacity-70">WhatsApp</Label>
+                    <div className="relative group">
+                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={20} />
+                      <Input 
+                        id="whatsapp" 
+                        placeholder="(00) 00000-0000" 
+                        className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:bg-white/10 transition-all text-lg" 
+                        value={formData.whatsapp}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
+              <div className="hidden lg:block">
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="w-full bg-primary-gradient text-primary-foreground font-bold h-16 rounded-3xl text-xl shadow-glow hover:scale-[1.02] transition-transform disabled:opacity-50"
+                >
+                  {isSubmitting ? "Agendando..." : "Confirmar Agendamento"}
+                </Button>
+              </div>
+            </div>
+
+            {/* Calendário e Horários */}
+            <div className="space-y-6">
+              <Card className="glass border-white/10 shadow-card overflow-hidden">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-xl">
+                    <CalendarIcon className="text-primary" size={20} />
+                    Escolha a Data
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex justify-center p-2 sm:p-4">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    disabled={(date) => isBefore(date, startOfToday())}
+                    className="rounded-md border-none w-full"
+                    locale={ptBR}
+                    classNames={{
+                      months: "w-full",
+                      month: "space-y-4 w-full",
+                      caption: "flex justify-center pt-1 relative items-center mb-4",
+                      caption_label: "text-base font-bold",
+                      nav: "space-x-1 flex items-center",
+                      nav_button: "h-9 w-9 bg-white/5 p-0 opacity-100 hover:bg-white/10 rounded-full flex items-center justify-center transition-colors",
+                      nav_button_previous: "absolute left-1",
+                      nav_button_next: "absolute right-1",
+                      table: "w-full border-collapse",
+                      head_row: "grid grid-cols-7 w-full mb-2",
+                      head_cell: "text-muted-foreground font-medium text-[0.85rem] text-center uppercase tracking-wider",
+                      row: "grid grid-cols-7 w-full gap-1 sm:gap-2",
+                      cell: "relative p-0 text-center focus-within:relative focus-within:z-20",
+                      day: "h-10 sm:h-12 w-full p-0 font-medium aria-selected:opacity-100 hover:bg-white/10 rounded-xl transition-all flex items-center justify-center text-sm sm:text-base",
+                      day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground shadow-glow",
+                      day_today: "bg-white/5 text-primary font-bold border border-primary/30",
+                      day_outside: "text-muted-foreground opacity-30",
+                      day_disabled: "text-muted-foreground opacity-20 cursor-not-allowed",
+                      day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                      day_hidden: "invisible",
+                    }}
+                  />
+                </CardContent>
+              </Card>
+
+              <Card className="glass border-white/10 shadow-card">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-xl">
+                    <Clock className="text-primary" size={20} />
+                    Horários Disponíveis
+                  </CardTitle>
+                  <CardDescription>
+                    {date ? format(date, "EEEE, dd 'de' MMMM", { locale: ptBR }) : "Selecione uma data"}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                    {timeSlots.map((t) => (
+                      <Button
+                        key={t}
+                        type="button"
+                        variant={time === t ? "default" : "outline"}
+                        onClick={() => setTime(t)}
+                        className={`rounded-xl h-12 font-semibold transition-all ${
+                          time === t 
+                            ? "bg-primary text-primary-foreground border-primary" 
+                            : "bg-white/5 border-white/10 hover:bg-primary/20"
+                        }`}
+                      >
+                        {t}
+                      </Button>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          <div className="lg:hidden">
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full bg-primary-gradient text-primary-foreground font-bold h-14 rounded-full text-lg shadow-glow hover:scale-[1.02] transition-transform disabled:opacity-50"
+              className="w-full bg-primary-gradient text-primary-foreground font-bold h-16 rounded-3xl text-xl shadow-glow hover:scale-[1.02] transition-transform disabled:opacity-50"
             >
               {isSubmitting ? "Agendando..." : "Confirmar Agendamento"}
             </Button>
-          </div>
-
-          {/* Calendário e Horários */}
-          <div className="space-y-6">
-            <Card className="glass border-white/10 shadow-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <CalendarIcon className="text-primary" size={20} />
-                  Escolha a Data
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex justify-center p-0 pb-6">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  disabled={(date) => isBefore(date, startOfToday())}
-                  className="rounded-md border-none"
-                  locale={ptBR}
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="glass border-white/10 shadow-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <Clock className="text-primary" size={20} />
-                  Horários Disponíveis
-                </CardTitle>
-                <CardDescription>
-                  {date ? format(date, "EEEE, dd 'de' MMMM", { locale: ptBR }) : "Selecione uma data"}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-3 gap-2">
-                  {timeSlots.map((t) => (
-                    <Button
-                      key={t}
-                      type="button"
-                      variant={time === t ? "default" : "outline"}
-                      onClick={() => setTime(t)}
-                      className={`rounded-xl h-12 font-semibold transition-all ${
-                        time === t 
-                          ? "bg-primary text-primary-foreground border-primary" 
-                          : "bg-white/5 border-white/10 hover:bg-primary/20"
-                      }`}
-                    >
-                      {t}
-                    </Button>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </form>
       </div>
