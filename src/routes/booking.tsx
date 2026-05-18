@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { createBooking } from "@/lib/bookings.functions";
+import { trackMetaEvent } from "@/lib/meta-pixel.functions";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -41,6 +42,7 @@ const timeSlots = [
 function BookingPage() {
   const navigate = useNavigate();
   const bookFn = useServerFn(createBooking);
+  const trackEventFn = useServerFn(trackMetaEvent);
   
   const [isClient, setIsClient] = useState(false);
   const [step, setStep] = useState(1);
@@ -82,6 +84,30 @@ function BookingPage() {
         return;
       }
     }
+    
+    // Meta Pixel InitiateCheckout Event
+    if (step === 2) {
+      if (typeof window !== "undefined") {
+        trackEventFn({
+          data: {
+            eventName: "InitiateCheckout",
+            userData: {
+              em: formData.email,
+              ph: formData.whatsapp,
+              fn: formData.fullName,
+              clientUserAgent: window.navigator.userAgent,
+            },
+            customData: {
+              currency: "BRL",
+              value: "50.00",
+              content_name: "Consulta Online",
+            },
+            eventSourceUrl: window.location.href,
+          },
+        }).catch(err => console.error("Meta Tracking Error:", err));
+      }
+    }
+    
     setStep(step + 1);
   };
 
@@ -112,6 +138,28 @@ function BookingPage() {
 
       setIsSuccess(true);
       toast.success("Consulta agendada com sucesso!");
+
+      // Meta Pixel Lead Event
+      if (typeof window !== "undefined") {
+        trackEventFn({
+          data: {
+            eventName: "Lead",
+            userData: {
+              em: formData.email,
+              ph: formData.whatsapp,
+              fn: formData.fullName,
+              clientUserAgent: window.navigator.userAgent,
+            },
+            customData: {
+              currency: "BRL",
+              value: "50.00",
+              content_name: "Consulta Online",
+              appointment_time: appointmentDate.toISOString(),
+            },
+            eventSourceUrl: window.location.href,
+          },
+        }).catch(err => console.error("Meta Tracking Error:", err));
+      }
     } catch (error: any) {
       toast.error(error.message || "Erro ao agendar consulta.");
     } finally {
