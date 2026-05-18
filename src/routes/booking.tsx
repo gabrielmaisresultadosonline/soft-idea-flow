@@ -257,7 +257,7 @@ function BookingPage() {
                     selected={date}
                     onSelect={setDate}
                     disabled={(date) => isBefore(date, startOfToday())}
-                    className="w-full max-w-none p-0 pointer-events-auto [--cell-size:clamp(2.75rem,9vw,5.75rem)]"
+                    className="w-full max-w-none p-0 pointer-events-auto [&_.rdp-months]:!w-full [&_.rdp-month]:!w-full [&_.rdp-month_grid]:!w-full [&_.rdp-weekdays]:!grid [&_.rdp-weekdays]:!grid-cols-7 [&_.rdp-weekdays]:!w-full [&_.rdp-week]:!grid [&_.rdp-week]:!grid-cols-7 [&_.rdp-week]:!w-full [&_.rdp-day]:!w-full [&_.rdp-day_button]:!w-full"
                     locale={ptBR}
                     classNames={{
                       root: "!w-full max-w-none",
@@ -268,7 +268,7 @@ function BookingPage() {
                       nav: "absolute inset-x-0 top-0 flex w-full items-center justify-between",
                       button_previous: "h-11 w-11 rounded-xl border border-white/10 bg-white/5 p-0 hover:bg-primary hover:text-primary-foreground sm:h-12 sm:w-12",
                       button_next: "h-11 w-11 rounded-xl border border-white/10 bg-white/5 p-0 hover:bg-primary hover:text-primary-foreground sm:h-12 sm:w-12",
-                      table: "w-full border-collapse",
+                      month_grid: "w-full border-separate border-spacing-x-1 border-spacing-y-2 sm:border-spacing-x-2 sm:border-spacing-y-3",
                       weekdays: "grid w-full grid-cols-7 gap-1 sm:gap-2",
                       weekday: "flex h-8 items-center justify-center text-[10px] font-bold uppercase text-muted-foreground opacity-60 sm:text-xs",
                       week: "grid w-full grid-cols-7 gap-1 sm:gap-2 mt-2",
