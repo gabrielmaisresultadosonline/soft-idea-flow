@@ -272,6 +272,15 @@ function DashboardPage() {
             variant="outline" 
             size="lg" 
             className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold"
+            onClick={() => setShowAnalytics(!showAnalytics)}
+          >
+            <Activity className={`mr-2 h-5 w-5 ${showAnalytics ? 'text-primary' : ''}`} />
+            {showAnalytics ? "Ocultar Analytics" : "Ver Analytics"}
+          </Button>
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold"
             onClick={() => queryClient.invalidateQueries({ queryKey: ["bookings"] })}
           >
             <Loader2 className={`mr-2 h-5 w-5 ${isLoading || updateMutation.isPending ? 'animate-spin' : ''}`} />
