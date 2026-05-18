@@ -76,7 +76,9 @@ export const updateBookingStatus = createServerFn({ method: "POST" })
     z
       .object({
         id: z.string().uuid(),
-        status: z.enum(["pending", "confirmed", "cancelled"]),
+        status: z.enum(["pending", "confirmed", "cancelled"]).optional(),
+        paymentStatus: z.enum(["pending", "paid"]).optional(),
+        attendanceStatus: z.enum(["waiting", "completed", "missed"]).optional(),
       })
       .parse(data)
   )
@@ -92,9 +94,14 @@ export const updateBookingStatus = createServerFn({ method: "POST" })
       throw new Error("Acesso negado.");
     }
 
+    const updateData: any = {};
+    if (data.status) updateData.status = data.status;
+    if (data.paymentStatus) updateData.payment_status = data.paymentStatus;
+    if (data.attendanceStatus) updateData.attendance_status = data.attendanceStatus;
+
     const { error } = await supabase
       .from("bookings")
-      .update({ status: data.status })
+      .update(updateData)
       .eq("id", data.id);
 
     if (error) {
