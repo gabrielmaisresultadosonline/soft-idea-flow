@@ -151,44 +151,44 @@ function BookingPage() {
                     Preencha suas informações para contato.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="fullName">Nome Completo</Label>
-                    <div className="relative">
-                      <User className="absolute left-3 top-3 text-muted-foreground" size={18} />
+                <CardContent className="space-y-6">
+                  <div className="space-y-3">
+                    <Label htmlFor="fullName" className="text-sm font-semibold tracking-wide uppercase opacity-70">Nome Completo</Label>
+                    <div className="relative group">
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={20} />
                       <Input 
                         id="fullName" 
-                        placeholder="Seu nome" 
-                        className="pl-10 bg-white/5 border-white/10" 
+                        placeholder="Ex: João Silva" 
+                        className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:bg-white/10 transition-all text-lg" 
                         value={formData.fullName}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">E-mail</Label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-3 text-muted-foreground" size={18} />
+                  <div className="space-y-3">
+                    <Label htmlFor="email" className="text-sm font-semibold tracking-wide uppercase opacity-70">E-mail</Label>
+                    <div className="relative group">
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={20} />
                       <Input 
                         id="email" 
                         type="email" 
                         placeholder="seu@email.com" 
-                        className="pl-10 bg-white/5 border-white/10" 
+                        className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:bg-white/10 transition-all text-lg" 
                         value={formData.email}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="whatsapp">WhatsApp</Label>
-                    <div className="relative">
-                      <Phone className="absolute left-3 top-3 text-muted-foreground" size={18} />
+                  <div className="space-y-3">
+                    <Label htmlFor="whatsapp" className="text-sm font-semibold tracking-wide uppercase opacity-70">WhatsApp</Label>
+                    <div className="relative group">
+                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={20} />
                       <Input 
                         id="whatsapp" 
                         placeholder="(00) 00000-0000" 
-                        className="pl-10 bg-white/5 border-white/10" 
+                        className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:bg-white/10 transition-all text-lg" 
                         value={formData.whatsapp}
                         onChange={handleInputChange}
                         required
@@ -202,7 +202,7 @@ function BookingPage() {
                 <Button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="w-full bg-primary-gradient text-primary-foreground font-bold h-14 rounded-full text-lg shadow-glow hover:scale-[1.02] transition-transform disabled:opacity-50"
+                  className="w-full bg-primary-gradient text-primary-foreground font-bold h-16 rounded-3xl text-xl shadow-glow hover:scale-[1.02] transition-transform disabled:opacity-50"
                 >
                   {isSubmitting ? "Agendando..." : "Confirmar Agendamento"}
                 </Button>
