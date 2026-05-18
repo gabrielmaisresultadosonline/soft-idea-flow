@@ -289,7 +289,7 @@ function BookingPage() {
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full bg-primary-gradient text-primary-foreground font-bold h-14 rounded-full text-lg shadow-glow hover:scale-[1.02] transition-transform disabled:opacity-50"
+              className="w-full bg-primary-gradient text-primary-foreground font-bold h-16 rounded-3xl text-xl shadow-glow hover:scale-[1.02] transition-transform disabled:opacity-50"
             >
               {isSubmitting ? "Agendando..." : "Confirmar Agendamento"}
             </Button>
