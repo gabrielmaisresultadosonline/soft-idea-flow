@@ -97,10 +97,10 @@ function DoctorsPage() {
               <Plus className="mr-2 h-6 w-6" /> Novo Médico
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-card border-border text-foreground shadow-xl">
+          <DialogContent className="bg-card border-white/10 text-foreground">
             <form onSubmit={handleSubmit}>
               <DialogHeader>
-                <DialogTitle className="text-2xl font-black uppercase italic text-primary">Cadastrar Médico</DialogTitle>
+                <DialogTitle className="text-2xl font-black uppercase italic italic text-primary">Cadastrar Médico</DialogTitle>
                 <DialogDescription className="text-muted-foreground">Adicione um novo profissional ao sistema.</DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-6">
@@ -108,7 +108,7 @@ function DoctorsPage() {
                   <Label htmlFor="name" className="font-bold uppercase tracking-widest text-[10px] opacity-70">Nome Completo</Label>
                   <Input 
                     id="name" 
-                    className="bg-muted border-border rounded-xl h-12 focus:ring-primary" 
+                    className="bg-white/5 border-white/10 rounded-xl h-12" 
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                     required 
