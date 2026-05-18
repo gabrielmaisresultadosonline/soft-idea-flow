@@ -591,7 +591,7 @@ function DashboardPage() {
                               <Clock size={16} /> Voltar para Pendente
                             </DropdownMenuItem>
 
-                             <div className="h-px bg-border my-1" />
+                             <div className="h-px bg-white/10 my-1" />
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Atendimento</div>
                             <DropdownMenuItem 
                               className="gap-2 focus:bg-purple-500/10 focus:text-purple-400"
