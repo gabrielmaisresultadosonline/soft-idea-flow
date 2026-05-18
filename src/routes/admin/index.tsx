@@ -41,9 +41,13 @@ import {
   Loader2,
   Stethoscope,
   Copy,
-  ShieldCheck
+  ShieldCheck,
+  TrendingUp,
+  Users,
+  Eye,
+  Activity
 } from "lucide-react";
-import { format } from "date-fns";
+import { format, startOfDay, subDays, eachHourOfInterval, isSameHour, isSameDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { toast } from "sonner";
 import {
