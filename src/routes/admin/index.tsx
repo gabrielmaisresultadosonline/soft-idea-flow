@@ -271,7 +271,7 @@ function DashboardPage() {
           <Button 
             variant="outline" 
             size="lg" 
-            className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold"
+            className="rounded-2xl bg-white border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold shadow-sm"
             onClick={() => setShowAnalytics(!showAnalytics)}
           >
             <Activity className={`mr-2 h-5 w-5 ${showAnalytics ? 'text-primary' : ''}`} />
@@ -280,7 +280,7 @@ function DashboardPage() {
           <Button 
             variant="outline" 
             size="lg" 
-            className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold"
+            className="rounded-2xl bg-white border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold shadow-sm"
             onClick={() => queryClient.invalidateQueries({ queryKey: ["bookings"] })}
           >
             <Loader2 className={`mr-2 h-5 w-5 ${isLoading || updateMutation.isPending ? 'animate-spin' : ''}`} />
@@ -292,7 +292,7 @@ function DashboardPage() {
       {/* Analytics Chart */}
       {showAnalytics && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
-          <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
+          <Card className="bg-card border-border shadow-sm overflow-hidden">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
                 <TrendingUp size={20} />
@@ -308,16 +308,16 @@ function DashboardPage() {
                       <stop offset="95%" stopColor="#0066FF" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#00000010" vertical={false} />
                   <XAxis 
                     dataKey="hour" 
-                    stroke="#ffffff40" 
+                    stroke="#00000060" 
                     fontSize={12} 
                     tickLine={false} 
                     axisLine={false}
                   />
                   <YAxis 
-                    stroke="#ffffff40" 
+                    stroke="#00000060" 
                     fontSize={12} 
                     tickLine={false} 
                     axisLine={false}
@@ -325,9 +325,10 @@ function DashboardPage() {
                   />
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: '#1a1a1a', 
-                      border: '1px solid #ffffff10',
-                      borderRadius: '12px'
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #00000010',
+                      borderRadius: '12px',
+                      color: '#000000'
                     }}
                     itemStyle={{ color: '#0066FF' }}
                   />
@@ -344,7 +345,7 @@ function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
+          <Card className="bg-card border-border shadow-sm overflow-hidden">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
                 <BarChartIcon size={20} />
@@ -354,26 +355,27 @@ function DashboardPage() {
             <CardContent className="h-[300px] pb-8">
               <ResponsiveContainer width="100%" height="100%">
                 <RechartsBarChart data={analyticsData.daily}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#00000010" vertical={false} />
                   <XAxis 
                     dataKey="day" 
-                    stroke="#ffffff40" 
+                    stroke="#00000060" 
                     fontSize={12} 
                     tickLine={false} 
                     axisLine={false}
                   />
                   <YAxis 
-                    stroke="#ffffff40" 
+                    stroke="#00000060" 
                     fontSize={12} 
                     tickLine={false} 
                     axisLine={false}
                   />
                   <Tooltip 
-                    cursor={{fill: '#ffffff05'}}
+                    cursor={{fill: '#00000005'}}
                     contentStyle={{ 
-                      backgroundColor: '#1a1a1a', 
-                      border: '1px solid #ffffff10',
-                      borderRadius: '12px'
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #00000010',
+                      borderRadius: '12px',
+                      color: '#000000'
                     }}
                     itemStyle={{ color: '#0066FF' }}
                   />
@@ -393,10 +395,10 @@ function DashboardPage() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
         {stats.map((s) => (
-          <Card key={s.label} className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card hover:border-primary/20 transition-all group relative overflow-hidden">
+          <Card key={s.label} className="bg-card border-border shadow-sm hover:border-primary/40 transition-all group relative overflow-hidden">
             <CardContent className="pt-8 pb-6 relative z-10">
               <div className="flex items-start justify-between mb-4">
-                <div className={`p-4 rounded-2xl bg-white/5 border border-white/5 ${s.color} group-hover:scale-105 transition-transform`}>
+                <div className={`p-4 rounded-2xl bg-muted border border-border ${s.color} group-hover:scale-105 transition-transform`}>
                   <s.icon size={24} />
                 </div>
                 <div className="text-right">
@@ -413,8 +415,8 @@ function DashboardPage() {
       </div>
 
       {/* Bookings Table */}
-      <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden">
-        <CardHeader className="pb-2 flex flex-row items-center justify-between">
+      <Card className="bg-card border-border shadow-sm overflow-hidden">
+        <CardHeader className="pb-2 border-b border-border flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-xl uppercase font-black italic">Fila de Atendimento</CardTitle>
             <CardDescription>Gerencie o status de cada agendamento abaixo.</CardDescription>
@@ -436,8 +438,8 @@ function DashboardPage() {
         <CardContent className="p-0 sm:p-6">
           <div className="overflow-x-auto">
             <Table>
-              <TableHeader className="bg-muted/10">
-                <TableRow className="hover:bg-transparent border-white/5">
+              <TableHeader className="bg-muted">
+                <TableRow className="hover:bg-transparent border-border">
                   <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Paciente</TableHead>
                   <TableHead className="font-bold text-xs uppercase tracking-wider py-4">CPF</TableHead>
                   <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Agendado</TableHead>
@@ -456,7 +458,7 @@ function DashboardPage() {
                   </TableRow>
                 ) : (
                   bookings?.map((b) => (
-                    <TableRow key={b.id} className="hover:bg-white/5 border-white/5 transition-colors">
+                    <TableRow key={b.id} className="hover:bg-muted/50 border-border transition-colors">
                       <TableCell>
                         <div className="flex flex-col">
                           <div className="flex items-center gap-2">
