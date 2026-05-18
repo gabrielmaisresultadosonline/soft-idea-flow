@@ -41,7 +41,7 @@ function AdminLayout() {
             <img src={logo} alt="UniDoc" width={42} height={42} className="rounded-xl" />
           </div>
           <div className="flex flex-col">
-            <span className="font-black text-2xl tracking-tighter bg-primary-gradient bg-clip-text text-transparent uppercase">UniDoc</span>
+            <span className="font-black text-2xl tracking-tighter text-primary uppercase">UniDoc</span>
             <span className="text-[10px] font-bold text-primary tracking-[0.2em] uppercase opacity-80 leading-none">Painel Administrativo</span>
           </div>
         </div>
