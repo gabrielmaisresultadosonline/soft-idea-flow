@@ -171,31 +171,31 @@ function DashboardPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "confirmed":
-        return <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20">Confirmado</Badge>;
+        return <Badge className="bg-emerald-500/20 text-emerald-500 border-emerald-500/20">Confirmado</Badge>;
       case "cancelled":
-        return <Badge className="bg-destructive/10 text-destructive border-destructive/20">Cancelado</Badge>;
+        return <Badge className="bg-destructive/20 text-destructive border-destructive/20">Cancelado</Badge>;
       default:
-        return <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20">Pendente</Badge>;
+        return <Badge className="bg-amber-500/20 text-amber-500 border-amber-500/20">Pendente</Badge>;
     }
   };
 
   const getPaymentBadge = (status: string) => {
     switch (status) {
       case "paid":
-        return <Badge className="bg-blue-500/10 text-blue-600 border-blue-500/20">Pago</Badge>;
+        return <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/20">Pago</Badge>;
       default:
-        return <Badge className="bg-slate-500/10 text-slate-500 border-slate-500/20">Pendente</Badge>;
+        return <Badge className="bg-slate-500/20 text-slate-400 border-slate-500/20">Pendente</Badge>;
     }
   };
 
   const getAttendanceBadge = (status: string) => {
     switch (status) {
       case "completed":
-        return <Badge className="bg-purple-500/10 text-purple-600 border-purple-500/20">Concluído</Badge>;
+        return <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/20">Concluído</Badge>;
       case "missed":
-        return <Badge className="bg-red-500/10 text-red-600 border-red-500/20">Faltou</Badge>;
+        return <Badge className="bg-red-500/20 text-red-400 border-red-500/20">Faltou</Badge>;
       default:
-        return <Badge className="bg-orange-500/10 text-orange-600 border-orange-500/20">Aguardando</Badge>;
+        return <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/20">Aguardando</Badge>;
     }
   };
 
