@@ -45,7 +45,8 @@ import {
   TrendingUp,
   Users,
   Eye,
-  Activity
+  Activity,
+  BarChart as BarChartIcon
 } from "lucide-react";
 import { format, startOfDay, subDays, eachHourOfInterval, isSameHour, isSameDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
