@@ -413,8 +413,8 @@ function DashboardPage() {
       </div>
 
       {/* Bookings Table */}
-      <Card className="bg-card border-border shadow-sm overflow-hidden">
-        <CardHeader className="pb-2 border-b border-border flex flex-row items-center justify-between">
+      <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden">
+        <CardHeader className="pb-2 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-xl uppercase font-black italic">Fila de Atendimento</CardTitle>
             <CardDescription>Gerencie o status de cada agendamento abaixo.</CardDescription>
