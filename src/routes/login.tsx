@@ -93,7 +93,7 @@ function LoginPage() {
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="unidoc@unidoc.com.br"
+                  placeholder="E-mail"
                   className="pl-10 bg-white/5 border-white/10"
                   required
                 />
