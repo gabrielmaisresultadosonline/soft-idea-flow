@@ -84,17 +84,17 @@ function DoctorsPage() {
   if (!isClient || isLoading) return <div className="flex items-center justify-center h-96"><Loader2 className="animate-spin text-primary" size={48} /></div>;
 
   return (
-    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div>
-          <h1 className="text-4xl font-black tracking-tight mb-2 uppercase italic text-primary">Gestão de Médicos</h1>
-          <p className="text-muted-foreground text-lg font-medium">Cadastre e gerencie a equipe médica da UniDoc.</p>
+    <div className="space-y-6 md:space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700 w-full overflow-hidden">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6">
+        <div className="w-full">
+          <h1 className="text-2xl md:text-4xl font-black tracking-tight mb-1 md:mb-2 uppercase italic text-primary leading-tight">Gestão de Médicos</h1>
+          <p className="text-muted-foreground text-sm md:text-lg font-medium">Equipe UniDoc.</p>
         </div>
 
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button size="lg" className="rounded-2xl bg-primary text-primary-foreground font-bold hover:scale-105 transition-all px-8 h-14 uppercase tracking-wider italic">
-              <Plus className="mr-2 h-6 w-6" /> Novo Médico
+            <Button size="lg" className="w-full md:w-auto rounded-xl md:rounded-2xl bg-primary text-primary-foreground font-bold hover:scale-105 transition-all px-8 h-12 md:h-14 uppercase tracking-wider italic">
+              <Plus className="mr-2 h-5 w-5 md:h-6 md:w-6" /> Novo Médico
             </Button>
           </DialogTrigger>
           <DialogContent className="bg-card border-white/10 text-foreground">
@@ -147,9 +147,10 @@ function DoctorsPage() {
         </Dialog>
       </div>
 
-      <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden">
-        <CardContent className="p-0 sm:p-6">
-          <Table>
+      <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden w-full">
+        <CardContent className="p-0">
+          <div className="w-full overflow-x-auto">
+            <Table className="min-w-[600px] md:min-w-full">
             <TableHeader className="bg-white/[0.02]">
               <TableRow className="border-white/10 hover:bg-transparent">
                 <TableHead className="font-black uppercase tracking-widest text-[10px] opacity-70">Médico</TableHead>
@@ -161,7 +162,7 @@ function DoctorsPage() {
             <TableBody>
               {doctors?.map((doc) => (
                 <TableRow key={doc.id} className="border-white/5 hover:bg-white/5 transition-colors">
-                  <TableCell className="font-bold text-lg">{doc.name}</TableCell>
+                  <TableCell className="font-bold text-base md:text-lg">{doc.name}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2 text-primary font-bold">
                       <Stethoscope size={16} /> {doc.specialty || "Geral"}
@@ -184,7 +185,8 @@ function DoctorsPage() {
                 <TableRow><TableCell colSpan={4} className="h-32 text-center text-muted-foreground italic">Nenhum médico cadastrado.</TableCell></TableRow>
               )}
             </TableBody>
-          </Table>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>
