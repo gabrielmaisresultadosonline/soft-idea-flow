@@ -29,11 +29,7 @@ import { format, addHours, startOfToday, isBefore, isSameDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 export const Route = createFileRoute("/booking")({
-  component: () => (
-    <Suspense fallback={<div className="bg-hero min-h-screen" />}>
-      <BookingPage />
-    </Suspense>
-  ),
+  component: BookingPage,
 });
 
 const timeSlots = [
