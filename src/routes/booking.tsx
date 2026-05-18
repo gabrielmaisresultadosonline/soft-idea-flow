@@ -250,45 +250,45 @@ function BookingPage() {
                   Selecione o melhor dia para sua consulta online.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="p-0">
-                <div className="bg-white/2 border-y sm:border border-white/10 shadow-inner flex justify-center w-full min-h-[600px] lg:min-h-[800px]">
+              <CardContent className="p-4 sm:p-6 lg:p-8">
+                <div className="w-full">
                   <Calendar
                     mode="single"
                     selected={date}
                     onSelect={setDate}
                     disabled={(date) => isBefore(date, startOfToday())}
-                    className="w-full flex flex-col"
+                    className="w-full p-0"
                     locale={ptBR}
                     classNames={{
-                      months: "w-full flex-1 flex flex-col",
-                      month: "space-y-6 w-full p-4 sm:p-10 lg:p-16 flex-1 flex flex-col",
-                      caption: "flex justify-center pt-2 relative items-center mb-12 px-10",
-                      caption_label: "text-2xl sm:text-4xl lg:text-6xl font-black tracking-tighter text-primary uppercase",
+                      months: "w-full",
+                      month: "space-y-4 w-full",
+                      caption: "flex justify-center pt-1 relative items-center mb-6",
+                      caption_label: "text-xl sm:text-2xl font-bold text-primary uppercase tracking-wider",
                       nav: "space-x-1 flex items-center",
-                      nav_button: "h-14 w-14 sm:h-24 sm:w-24 bg-white/5 p-0 opacity-100 hover:bg-primary hover:text-primary-foreground rounded-2xl flex items-center justify-center transition-all duration-300 border border-white/10",
-                      nav_button_previous: "absolute left-0",
-                      nav_button_next: "absolute right-0",
-                      table: "w-full border-collapse flex-1 flex flex-col",
-                      head_row: "flex w-full mb-10",
-                      head_cell: "text-muted-foreground flex-1 font-black text-xs sm:text-xl lg:text-2xl text-center uppercase tracking-[0.4em] opacity-40",
-                      row: "flex w-full mt-0 gap-3 sm:gap-6 flex-1",
-                      cell: "relative flex-1 p-0 text-center focus-within:relative focus-within:z-20 flex items-stretch",
-                      day: "h-full min-h-[60px] sm:min-h-[120px] lg:min-h-[160px] w-full p-0 font-black hover:bg-primary/20 hover:text-primary rounded-2xl sm:rounded-[3rem] transition-all flex items-center justify-center text-xl sm:text-5xl lg:text-7xl",
-                      day_selected: "bg-primary! text-primary-foreground! hover:bg-primary! hover:text-primary-foreground! focus:bg-primary! focus:text-primary-foreground! shadow-[0_0_50px_rgba(var(--primary-rgb),0.6)] opacity-100! scale-105 sm:scale-110 ring-8 ring-primary/30 z-30",
-                      day_today: "border-4 border-primary/40 text-primary bg-primary/5",
+                      nav_button: "h-10 w-10 bg-white/5 p-0 opacity-100 hover:bg-primary hover:text-primary-foreground rounded-xl flex items-center justify-center transition-all border border-white/10",
+                      nav_button_previous: "absolute left-1",
+                      nav_button_next: "absolute right-1",
+                      table: "w-full border-collapse",
+                      head_row: "grid grid-cols-7 w-full mb-2",
+                      head_cell: "text-muted-foreground font-medium text-[10px] sm:text-xs text-center uppercase tracking-tighter opacity-50",
+                      row: "grid grid-cols-7 w-full mt-2 gap-1 sm:gap-2",
+                      cell: "p-0 text-center relative",
+                      day: "aspect-square w-full p-0 font-semibold hover:bg-primary/20 hover:text-primary rounded-xl transition-all flex items-center justify-center text-sm sm:text-base lg:text-lg border border-transparent",
+                      day_selected: "bg-primary! text-primary-foreground! hover:bg-primary! hover:text-primary-foreground! focus:bg-primary! focus:text-primary-foreground! shadow-glow opacity-100! scale-105 border-primary",
+                      day_today: "border-primary/30 text-primary bg-primary/5",
                       day_outside: "text-muted-foreground opacity-10",
                       day_disabled: "text-muted-foreground opacity-5 cursor-not-allowed",
                       day_hidden: "invisible",
                     }}
                   />
                 </div>
-                <div className="p-8 sm:p-12">
+                <div className="mt-8">
                   <Button 
                     onClick={nextStep}
                     disabled={!date}
-                    className="w-full bg-primary-gradient text-primary-foreground font-black h-20 sm:h-24 rounded-3xl sm:rounded-[2.5rem] text-2xl sm:text-4xl shadow-glow hover:scale-[1.02] transition-transform flex items-center justify-center gap-4 disabled:opacity-50"
+                    className="w-full bg-primary-gradient text-primary-foreground font-bold h-14 sm:h-16 rounded-2xl text-lg sm:text-xl shadow-glow hover:scale-[1.02] transition-transform flex items-center justify-center gap-2 disabled:opacity-50"
                   >
-                    Próximo Passo <ChevronRight size={40} className="hidden sm:block" />
+                    Próximo Passo <ChevronRight size={24} />
                   </Button>
                 </div>
               </CardContent>
