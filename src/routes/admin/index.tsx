@@ -290,103 +290,105 @@ function DashboardPage() {
       </div>
 
       {/* Analytics Chart */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
-              <TrendingUp size={20} />
-              Visitas por Hora (Hoje)
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="h-[300px] pb-8">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={analyticsData.hourly}>
-                <defs>
-                  <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#0066FF" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#0066FF" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
-                <XAxis 
-                  dataKey="hour" 
-                  stroke="#ffffff40" 
-                  fontSize={12} 
-                  tickLine={false} 
-                  axisLine={false}
-                />
-                <YAxis 
-                  stroke="#ffffff40" 
-                  fontSize={12} 
-                  tickLine={false} 
-                  axisLine={false}
-                  tickFormatter={(value) => `${value}`}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: '#1a1a1a', 
-                    border: '1px solid #ffffff10',
-                    borderRadius: '12px'
-                  }}
-                  itemStyle={{ color: '#0066FF' }}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="visits" 
-                  stroke="#0066FF" 
-                  strokeWidth={3}
-                  fillOpacity={1} 
-                  fill="url(#colorVisits)" 
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
+      {showAnalytics && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
+          <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
+                <TrendingUp size={20} />
+                Visitas por Hora (Hoje)
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="h-[300px] pb-8">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={analyticsData.hourly}>
+                  <defs>
+                    <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#0066FF" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#0066FF" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+                  <XAxis 
+                    dataKey="hour" 
+                    stroke="#ffffff40" 
+                    fontSize={12} 
+                    tickLine={false} 
+                    axisLine={false}
+                  />
+                  <YAxis 
+                    stroke="#ffffff40" 
+                    fontSize={12} 
+                    tickLine={false} 
+                    axisLine={false}
+                    tickFormatter={(value) => `${value}`}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1a1a1a', 
+                      border: '1px solid #ffffff10',
+                      borderRadius: '12px'
+                    }}
+                    itemStyle={{ color: '#0066FF' }}
+                  />
+                  <Area 
+                    type="monotone" 
+                    dataKey="visits" 
+                    stroke="#0066FF" 
+                    strokeWidth={3}
+                    fillOpacity={1} 
+                    fill="url(#colorVisits)" 
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
 
-        <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
-              <BarChartIcon size={20} />
-              Visitas nos Últimos 7 Dias
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="h-[300px] pb-8">
-            <ResponsiveContainer width="100%" height="100%">
-              <RechartsBarChart data={analyticsData.daily}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
-                <XAxis 
-                  dataKey="day" 
-                  stroke="#ffffff40" 
-                  fontSize={12} 
-                  tickLine={false} 
-                  axisLine={false}
-                />
-                <YAxis 
-                  stroke="#ffffff40" 
-                  fontSize={12} 
-                  tickLine={false} 
-                  axisLine={false}
-                />
-                <Tooltip 
-                  cursor={{fill: '#ffffff05'}}
-                  contentStyle={{ 
-                    backgroundColor: '#1a1a1a', 
-                    border: '1px solid #ffffff10',
-                    borderRadius: '12px'
-                  }}
-                  itemStyle={{ color: '#0066FF' }}
-                />
-                <Bar 
-                  dataKey="visits" 
-                  fill="#0066FF" 
-                  radius={[4, 4, 0, 0]} 
-                  barSize={30}
-                />
-              </RechartsBarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
+          <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
+                <BarChartIcon size={20} />
+                Visitas nos Últimos 7 Dias
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="h-[300px] pb-8">
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsBarChart data={analyticsData.daily}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+                  <XAxis 
+                    dataKey="day" 
+                    stroke="#ffffff40" 
+                    fontSize={12} 
+                    tickLine={false} 
+                    axisLine={false}
+                  />
+                  <YAxis 
+                    stroke="#ffffff40" 
+                    fontSize={12} 
+                    tickLine={false} 
+                    axisLine={false}
+                  />
+                  <Tooltip 
+                    cursor={{fill: '#ffffff05'}}
+                    contentStyle={{ 
+                      backgroundColor: '#1a1a1a', 
+                      border: '1px solid #ffffff10',
+                      borderRadius: '12px'
+                    }}
+                    itemStyle={{ color: '#0066FF' }}
+                  />
+                  <Bar 
+                    dataKey="visits" 
+                    fill="#0066FF" 
+                    radius={[4, 4, 0, 0]} 
+                    barSize={30}
+                  />
+                </RechartsBarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
