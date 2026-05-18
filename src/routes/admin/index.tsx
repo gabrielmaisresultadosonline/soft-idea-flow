@@ -269,8 +269,8 @@ function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
           <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <TrendingUp className="text-primary" size={20} />
+            <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
+              <TrendingUp size={20} />
               Visitas por Hora (Hoje)
             </CardTitle>
           </CardHeader>
@@ -321,8 +321,8 @@ function DashboardPage() {
 
         <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
           <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <BarChart className="text-primary" size={20} />
+            <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
+              <BarChart size={20} />
               Visitas nos Últimos 7 Dias
             </CardTitle>
           </CardHeader>
