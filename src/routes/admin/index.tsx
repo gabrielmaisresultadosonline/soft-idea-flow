@@ -344,7 +344,7 @@ function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-card border-border shadow-sm overflow-hidden">
+          <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
                 <BarChartIcon size={20} />
@@ -354,27 +354,26 @@ function DashboardPage() {
             <CardContent className="h-[300px] pb-8">
               <ResponsiveContainer width="100%" height="100%">
                 <RechartsBarChart data={analyticsData.daily}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#00000010" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
                   <XAxis 
                     dataKey="day" 
-                    stroke="#00000060" 
+                    stroke="#ffffff40" 
                     fontSize={12} 
                     tickLine={false} 
                     axisLine={false}
                   />
                   <YAxis 
-                    stroke="#00000060" 
+                    stroke="#ffffff40" 
                     fontSize={12} 
                     tickLine={false} 
                     axisLine={false}
                   />
                   <Tooltip 
-                    cursor={{fill: '#00000005'}}
+                    cursor={{fill: '#ffffff05'}}
                     contentStyle={{ 
-                      backgroundColor: '#ffffff', 
-                      border: '1px solid #00000010',
-                      borderRadius: '12px',
-                      color: '#000000'
+                      backgroundColor: '#1a1a1a', 
+                      border: '1px solid #ffffff10',
+                      borderRadius: '12px'
                     }}
                     itemStyle={{ color: '#0066FF' }}
                   />
