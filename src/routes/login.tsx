@@ -121,9 +121,6 @@ function LoginPage() {
             >
               {isLoading ? "Entrando..." : "Entrar"}
             </Button>
-            <p className="text-xs text-center text-muted-foreground">
-              Credenciais padrão: <strong>unidoc@unidoc.com.br</strong> / <strong>unidoc</strong>
-            </p>
           </form>
         </CardContent>
       </Card>
