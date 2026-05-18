@@ -541,11 +541,11 @@ function DashboardPage() {
                       <TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="rounded-full hover:bg-muted">
+                            <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
                               <MoreHorizontal size={20} />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-card border-border text-foreground w-56 shadow-xl">
+                          <DropdownMenuContent align="end" className="glass border-white/10 text-foreground w-56">
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ações de Status</div>
                             <DropdownMenuItem 
                               className="gap-2 font-bold text-primary focus:bg-primary/10 focus:text-primary"
