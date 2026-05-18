@@ -7,12 +7,15 @@ export const getDoctors = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabase } = context;
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("doctors")
       .select("*")
       .order("name", { ascending: true });
 
-    if (error) throw new Error("Erro ao buscar médicos");
+    if (error) {
+      console.error("Supabase error fetching doctors:", error);
+      throw new Error(`Erro ao buscar médicos: ${error.message}`);
+    }
     return data;
   });
 
