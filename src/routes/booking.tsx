@@ -62,6 +62,11 @@ function BookingPage() {
         toast.error("Por favor, preencha todos os dados.");
         return;
       }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        toast.error("Por favor, insira um e-mail válido.");
+        return;
+      }
     }
     if (step === 2) {
       if (!date) {

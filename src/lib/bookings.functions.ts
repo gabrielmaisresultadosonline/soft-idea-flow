@@ -12,7 +12,7 @@ export const createBooking = createServerFn({ method: "POST" })
     z
       .object({
         fullName: z.string().min(2),
-        email: z.string().email(),
+        email: z.string().email("E-mail inválido"),
         whatsapp: z.string().min(8),
         appointmentTime: z.string(), // ISO string
       })
