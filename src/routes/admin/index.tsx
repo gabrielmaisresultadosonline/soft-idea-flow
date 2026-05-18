@@ -48,6 +48,7 @@ function DashboardPage() {
   const { data: bookings, isLoading, error } = useQuery({
     queryKey: ["bookings"],
     queryFn: () => fetchBookings(),
+    refetchInterval: 10000, // Real-time feel: refetch every 10 seconds
   });
 
   const updateMutation = useMutation({
@@ -146,39 +147,46 @@ function DashboardPage() {
   ];
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight mb-2">Painel de Controle</h1>
-          <p className="text-muted-foreground text-lg">Acompanhe o fluxo completo de agendamentos e pagamentos.</p>
+          <h1 className="text-4xl font-black tracking-tight mb-2 uppercase italic bg-primary-gradient bg-clip-text text-transparent">Centro de Operações</h1>
+          <p className="text-muted-foreground text-lg font-medium">Gestão inteligente e monitoramento em tempo real.</p>
         </div>
-        <Button 
-          variant="outline" 
-          size="lg" 
-          className="rounded-2xl bg-white/5 border-white/10 hover:bg-white/10"
-          onClick={() => queryClient.invalidateQueries({ queryKey: ["bookings"] })}
-        >
-          <Loader2 className={`mr-2 h-4 w-4 ${updateMutation.isPending ? 'animate-spin' : ''}`} />
-          Atualizar Dados
-        </Button>
+        <div className="flex items-center gap-3">
+          <div className="hidden sm:flex flex-col items-end mr-2">
+             <span className="text-[10px] font-bold text-primary uppercase tracking-widest opacity-60">Status do Servidor</span>
+             <span className="text-xs font-black text-emerald-500">CONECTADO</span>
+          </div>
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold shadow-glow-blue/5"
+            onClick={() => queryClient.invalidateQueries({ queryKey: ["bookings"] })}
+          >
+            <Loader2 className={`mr-2 h-5 w-5 ${isLoading || updateMutation.isPending ? 'animate-spin' : ''}`} />
+            Sincronizar
+          </Button>
+        </div>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((s) => (
-          <Card key={s.label} className="glass border-white/5 shadow-card hover:border-primary/20 transition-all">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between mb-2">
-                <div className={`p-3 rounded-2xl bg-white/5 ${s.color}`}>
-                  <s.icon size={24} />
+          <Card key={s.label} className="glass border-white/10 shadow-card hover:border-primary/40 transition-all group relative overflow-hidden">
+            <div className={`absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-primary/10 transition-colors`}></div>
+            <CardContent className="pt-8 pb-6 relative z-10">
+              <div className="flex items-start justify-between mb-4">
+                <div className={`p-4 rounded-2xl bg-white/5 border border-white/10 ${s.color} shadow-glow-blue/5 group-hover:scale-110 transition-transform`}>
+                  <s.icon size={28} />
                 </div>
                 <div className="text-right">
-                  <p className="text-3xl font-bold">{s.value}</p>
+                  <p className="text-4xl font-black tracking-tighter italic">{s.value}</p>
                 </div>
               </div>
               <div>
-                <p className="text-sm font-bold text-foreground mb-0.5">{s.label}</p>
-                <p className="text-xs text-muted-foreground">{s.description}</p>
+                <p className="text-sm font-black text-foreground mb-1 uppercase tracking-tight">{s.label}</p>
+                <p className="text-xs text-muted-foreground font-medium">{s.description}</p>
               </div>
             </CardContent>
           </Card>
