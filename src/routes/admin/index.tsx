@@ -213,7 +213,7 @@ function DashboardPage() {
       </div>
 
       {/* Bookings Table */}
-      <Card className="glass border-white/5 shadow-card overflow-hidden">
+      <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl">Fila de Atendimento</CardTitle>
           <CardDescription>Gerencie o status de cada agendamento abaixo.</CardDescription>
@@ -221,7 +221,7 @@ function DashboardPage() {
         <CardContent className="p-0 sm:p-6">
           <div className="overflow-x-auto">
             <Table>
-              <TableHeader className="bg-white/5">
+              <TableHeader className="bg-white/[0.02]">
                 <TableRow className="hover:bg-transparent border-white/5">
                   <TableHead className="font-bold min-w-[200px]">Paciente</TableHead>
                   <TableHead className="font-bold">CPF</TableHead>
