@@ -456,7 +456,7 @@ function DashboardPage() {
                   </TableRow>
                 ) : (
                   bookings?.map((b) => (
-                    <TableRow key={b.id} className="hover:bg-muted/50 border-border transition-colors">
+                    <TableRow key={b.id} className="hover:bg-white/5 border-white/5 transition-colors">
                       <TableCell>
                         <div className="flex flex-col">
                           <div className="flex items-center gap-2">
