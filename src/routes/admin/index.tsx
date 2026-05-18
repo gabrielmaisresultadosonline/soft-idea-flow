@@ -68,7 +68,14 @@ function DashboardPage() {
   const queryClient = useQueryClient();
   const fetchBookings = useServerFn(getBookings);
   const fetchDoctors = useServerFn(getDoctors);
+  const fetchAnalytics = useServerFn(getAnalytics);
   const updateFn = useServerFn(updateBookingStatus);
+
+  const { data: analytics, isLoading: isAnalyticsLoading } = useQuery({
+    queryKey: ["analytics"],
+    queryFn: () => fetchAnalytics(),
+    refetchInterval: 60000, // Refresh every minute
+  });
 
   const { data: bookings, isLoading: isBookingsLoading } = useQuery({
     queryKey: ["bookings"],
