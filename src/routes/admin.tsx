@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LogOut, LayoutDashboard, Calendar, Users, Settings } from "lucide-react";
-import logo from "@/assets/new-logo.png";
+import logo from "@/assets/unidoc-official-logo.png";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: async ({ location }) => {

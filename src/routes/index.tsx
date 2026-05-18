@@ -17,7 +17,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import logo from "@/assets/new-logo.png";
+import logo from "@/assets/unidoc-official-logo.png";
 import imgLate from "@/assets/student-late.jpg";
 import imgSport from "@/assets/student-sport.jpg";
 import imgWork from "@/assets/student-work.jpg";

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Lock, Mail, Loader2 } from "lucide-react";
-import logo from "@/assets/new-logo.png";
+import logo from "@/assets/unidoc-official-logo.png";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
