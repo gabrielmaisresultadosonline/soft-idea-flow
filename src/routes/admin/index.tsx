@@ -246,8 +246,8 @@ function DashboardPage() {
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black tracking-tight mb-2 uppercase italic text-primary">Centro de Operações</h1>
-          <p className="text-muted-foreground text-lg font-medium">Gestão inteligente e monitoramento em tempo real.</p>
+          <h1 className="text-4xl font-black tracking-tight mb-2 uppercase italic text-primary">Operações em Tempo Real</h1>
+          <p className="text-muted-foreground text-lg font-medium">Gestão inteligente e monitoramento de performance.</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="hidden sm:flex flex-col items-end mr-2">
