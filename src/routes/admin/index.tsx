@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getBookings, updateBookingStatus } from "@/lib/bookings.functions";
+import { getBookings, updateBookingStatus, clearBookings } from "@/lib/bookings.functions";
 import { getDoctors } from "@/lib/doctors.functions";
 import { getAnalytics } from "@/lib/analytics.functions";
 import { useEffect, useState, useMemo } from "react";
