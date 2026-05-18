@@ -118,6 +118,34 @@ export const updateBookingStatus = createServerFn({ method: "POST" })
   });
 
 /**
+ * Deletes all bookings.
+ * Only for admins.
+ */
+export const clearBookings = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { supabase, userId } = context;
+
+    const { data: isAdmin } = await supabase.rpc("has_role", {
+      _user_id: userId,
+      _role: "admin",
+    });
+
+    if (!isAdmin) {
+      throw new Error("Acesso negado.");
+    }
+
+    const { error } = await supabaseAdmin.from("bookings").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+
+    if (error) {
+      console.error("Error clearing bookings:", error);
+      throw new Error("Falha ao zerar fila.");
+    }
+
+    return { success: true };
+  });
+
+/**
  * Internal setup function to create the initial admin user.
  * This should only be called once or in development.
  */
