@@ -84,6 +84,30 @@ function BookingPage() {
         return;
       }
     }
+    
+    // Meta Pixel InitiateCheckout Event
+    if (step === 2) {
+      if (typeof window !== "undefined") {
+        trackEventFn({
+          data: {
+            eventName: "InitiateCheckout",
+            userData: {
+              em: formData.email,
+              ph: formData.whatsapp,
+              fn: formData.fullName,
+              clientUserAgent: window.navigator.userAgent,
+            },
+            customData: {
+              currency: "BRL",
+              value: "50.00",
+              content_name: "Consulta Online",
+            },
+            eventSourceUrl: window.location.href,
+          },
+        }).catch(err => console.error("Meta Tracking Error:", err));
+      }
+    }
+    
     setStep(step + 1);
   };
 
