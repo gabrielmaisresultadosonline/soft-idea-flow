@@ -42,6 +42,7 @@ const timeSlots = [
 function BookingPage() {
   const navigate = useNavigate();
   const bookFn = useServerFn(createBooking);
+  const trackEventFn = useServerFn(trackMetaEvent);
   
   const [isClient, setIsClient] = useState(false);
   const [step, setStep] = useState(1);
