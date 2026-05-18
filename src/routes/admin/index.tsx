@@ -213,6 +213,20 @@ function DashboardPage() {
       color: "text-emerald-500",
       description: "Em andamento"
     },
+    { 
+      label: "Visitas Hoje", 
+      value: analyticsData.todayTotal, 
+      icon: Eye, 
+      color: "text-primary",
+      description: "Tráfego em tempo real"
+    },
+    { 
+      label: "Total de Visitas", 
+      value: analyticsData.total, 
+      icon: Activity, 
+      color: "text-blue-400",
+      description: "Desde o início"
+    },
   ];
 
   const copyToClipboard = (text: string | null | undefined, label: string) => {
