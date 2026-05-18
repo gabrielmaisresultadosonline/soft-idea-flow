@@ -1,6 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Suspense, lazy } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { createBooking } from "@/lib/bookings.functions";
 import { Calendar } from "@/components/ui/calendar";
@@ -40,8 +39,13 @@ function BookingPage() {
   const navigate = useNavigate();
   const bookFn = useServerFn(createBooking);
   
+  const [isClient, setIsClient] = useState(false);
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [time, setTime] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -112,6 +116,8 @@ function BookingPage() {
       </div>
     );
   }
+
+  if (!isClient) return <div className="bg-hero min-h-screen" />;
 
   return (
     <div className="bg-hero min-h-screen py-12 px-4 sm:px-6">
