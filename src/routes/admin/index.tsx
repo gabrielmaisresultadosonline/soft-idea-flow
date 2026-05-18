@@ -292,7 +292,7 @@ function DashboardPage() {
       {/* Analytics Chart */}
       {showAnalytics && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
-          <Card className="bg-card border-border shadow-sm overflow-hidden">
+          <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
                 <TrendingUp size={20} />
@@ -308,16 +308,16 @@ function DashboardPage() {
                       <stop offset="95%" stopColor="#0066FF" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#00000010" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
                   <XAxis 
                     dataKey="hour" 
-                    stroke="#00000060" 
+                    stroke="#ffffff40" 
                     fontSize={12} 
                     tickLine={false} 
                     axisLine={false}
                   />
                   <YAxis 
-                    stroke="#00000060" 
+                    stroke="#ffffff40" 
                     fontSize={12} 
                     tickLine={false} 
                     axisLine={false}
@@ -325,10 +325,9 @@ function DashboardPage() {
                   />
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: '#ffffff', 
-                      border: '1px solid #00000010',
-                      borderRadius: '12px',
-                      color: '#000000'
+                      backgroundColor: '#1a1a1a', 
+                      border: '1px solid #ffffff10',
+                      borderRadius: '12px'
                     }}
                     itemStyle={{ color: '#0066FF' }}
                   />
