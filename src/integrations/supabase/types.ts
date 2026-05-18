@@ -17,30 +17,36 @@ export type Database = {
       bookings: {
         Row: {
           appointment_time: string
+          attendance_status: string | null
           created_at: string
           email: string
           full_name: string
           id: string
+          payment_status: string | null
           status: string
           updated_at: string
           whatsapp: string
         }
         Insert: {
           appointment_time: string
+          attendance_status?: string | null
           created_at?: string
           email: string
           full_name: string
           id?: string
+          payment_status?: string | null
           status?: string
           updated_at?: string
           whatsapp: string
         }
         Update: {
           appointment_time?: string
+          attendance_status?: string | null
           created_at?: string
           email?: string
           full_name?: string
           id?: string
+          payment_status?: string | null
           status?: string
           updated_at?: string
           whatsapp?: string
