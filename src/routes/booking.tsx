@@ -143,32 +143,32 @@ function BookingPage() {
   if (!isClient) return <div className="bg-hero min-h-screen" />;
 
   return (
-    <div className="bg-hero min-h-screen py-8 lg:py-12 px-2 sm:px-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
+    <div className="bg-hero min-h-screen py-6 lg:py-10 px-2 sm:px-6">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
             <Button 
               variant="ghost" 
               size="icon" 
               onClick={prevStep}
-              className="rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5"
+              className="rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 w-10 h-10"
             >
-              <ArrowLeft size={24} />
+              <ArrowLeft size={20} />
             </Button>
             <div className="flex items-center gap-2">
-              <img src={logo} alt="UniDoc" width={40} height={40} className="rounded-xl" />
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Agendamento</h1>
+              <img src={logo} alt="UniDoc" width={32} height={32} className="rounded-lg" />
+              <h1 className="text-lg sm:text-xl font-bold tracking-tight">Agendamento</h1>
             </div>
           </div>
-          <div className="text-sm font-medium text-muted-foreground">
+          <div className="text-xs sm:text-sm font-medium text-muted-foreground bg-white/5 px-3 py-1 rounded-full border border-white/10">
             Passo <span className="text-primary font-bold">{step}</span> de 3
           </div>
         </div>
 
         {/* Progress Bar */}
-        <div className="w-full h-1.5 bg-white/5 rounded-full mb-10 overflow-hidden">
+        <div className="w-full h-1 bg-white/5 rounded-full mb-8 overflow-hidden">
           <div 
-            className="h-full bg-primary-gradient transition-all duration-500" 
+            className="h-full bg-primary-gradient transition-all duration-500 shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]" 
             style={{ width: `${(step / 3) * 100}%` }}
           />
         </div>
@@ -240,8 +240,8 @@ function BookingPage() {
           )}
 
           {step === 2 && (
-            <Card className="glass border-white/10 shadow-card animate-in fade-in slide-in-from-right-4 duration-500">
-              <CardHeader>
+            <Card className="glass border-white/10 shadow-card animate-in fade-in slide-in-from-right-4 duration-500 overflow-hidden">
+              <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-xl">
                   <CalendarIcon className="text-primary" size={22} />
                   Escolha a Data
@@ -250,32 +250,32 @@ function BookingPage() {
                   Selecione o melhor dia para sua consulta online.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-8 p-4 sm:p-8">
-                <div className="p-4 sm:p-8 bg-white/5 rounded-[2rem] border border-white/10 shadow-inner">
+              <CardContent className="space-y-6 p-2 sm:p-6 lg:p-8">
+                <div className="p-1 sm:p-4 lg:p-6 bg-white/5 rounded-3xl border border-white/10 shadow-inner flex justify-center">
                   <Calendar
                     mode="single"
                     selected={date}
                     onSelect={setDate}
                     disabled={(date) => isBefore(date, startOfToday())}
-                    className="w-full"
+                    className="w-full max-w-full overflow-hidden"
                     locale={ptBR}
                     classNames={{
-                      months: "w-full",
-                      month: "space-y-8 w-full",
-                      caption: "flex justify-center pt-1 relative items-center mb-10",
-                      caption_label: "text-2xl sm:text-3xl font-black tracking-tight text-primary",
-                      nav: "space-x-2 flex items-center",
-                      nav_button: "h-12 w-12 bg-white/10 p-0 opacity-100 hover:bg-primary hover:text-primary-foreground rounded-2xl flex items-center justify-center transition-all duration-300",
-                      nav_button_previous: "absolute left-2",
-                      nav_button_next: "absolute right-2",
-                      table: "w-full border-collapse",
-                      head_row: "flex w-full mb-6",
-                      head_cell: "text-muted-foreground flex-1 font-bold text-[0.8rem] sm:text-base text-center uppercase tracking-[0.2em] opacity-50",
-                      row: "flex w-full mt-3 gap-2 sm:gap-4",
+                      months: "w-full space-y-4",
+                      month: "space-y-4 w-full",
+                      caption: "flex justify-center pt-2 relative items-center mb-6 px-10",
+                      caption_label: "text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-primary uppercase",
+                      nav: "space-x-1 flex items-center",
+                      nav_button: "h-10 w-10 sm:h-12 sm:w-12 bg-white/5 p-0 opacity-100 hover:bg-primary hover:text-primary-foreground rounded-xl flex items-center justify-center transition-all duration-300 border border-white/10",
+                      nav_button_previous: "absolute left-0",
+                      nav_button_next: "absolute right-0",
+                      table: "w-full border-collapse space-y-1",
+                      head_row: "flex w-full mb-4",
+                      head_cell: "text-muted-foreground flex-1 font-bold text-[0.65rem] sm:text-xs lg:text-sm text-center uppercase tracking-widest opacity-40",
+                      row: "flex w-full mt-1 gap-1 sm:gap-2",
                       cell: "relative flex-1 p-0 text-center focus-within:relative focus-within:z-20",
-                      day: "h-12 sm:h-20 w-full p-0 font-bold hover:bg-primary/20 hover:text-primary rounded-2xl sm:rounded-3xl transition-all flex items-center justify-center text-lg sm:text-2xl",
-                      day_selected: "bg-primary! text-primary-foreground! hover:bg-primary! hover:text-primary-foreground! focus:bg-primary! focus:text-primary-foreground! shadow-glow opacity-100! scale-105 sm:scale-110",
-                      day_today: "border-2 border-primary/30 text-primary bg-primary/5",
+                      day: "h-10 sm:h-16 lg:h-20 w-full p-0 font-bold hover:bg-primary/20 hover:text-primary rounded-xl sm:rounded-2xl transition-all flex items-center justify-center text-sm sm:text-lg lg:text-2xl",
+                      day_selected: "bg-primary! text-primary-foreground! hover:bg-primary! hover:text-primary-foreground! focus:bg-primary! focus:text-primary-foreground! shadow-glow opacity-100! scale-[1.05] ring-2 ring-primary ring-offset-2 ring-offset-background",
+                      day_today: "border-2 border-primary/40 text-primary bg-primary/5",
                       day_outside: "text-muted-foreground opacity-10",
                       day_disabled: "text-muted-foreground opacity-5 cursor-not-allowed",
                       day_hidden: "invisible",
