@@ -87,17 +87,17 @@ function DoctorsPage() {
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black tracking-tight mb-2 uppercase italic bg-primary-gradient bg-clip-text text-transparent">Gestão de Médicos</h1>
+          <h1 className="text-4xl font-black tracking-tight mb-2 uppercase italic text-primary">Gestão de Médicos</h1>
           <p className="text-muted-foreground text-lg font-medium">Cadastre e gerencie a equipe médica da UniDoc.</p>
         </div>
 
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button size="lg" className="rounded-2xl bg-primary-gradient text-primary-foreground font-bold shadow-glow-blue/20 hover:scale-105 transition-all px-8 h-14 uppercase tracking-wider italic">
+            <Button size="lg" className="rounded-2xl bg-primary text-primary-foreground font-bold hover:scale-105 transition-all px-8 h-14 uppercase tracking-wider italic">
               <Plus className="mr-2 h-6 w-6" /> Novo Médico
             </Button>
           </DialogTrigger>
-          <DialogContent className="glass border-white/10 text-foreground">
+          <DialogContent className="bg-card border-white/10 text-foreground">
             <form onSubmit={handleSubmit}>
               <DialogHeader>
                 <DialogTitle className="text-2xl font-black uppercase italic italic text-primary">Cadastrar Médico</DialogTitle>
