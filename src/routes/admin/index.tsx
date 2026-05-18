@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getBookings, updateBookingStatus } from "@/lib/bookings.functions";
 import { getDoctors } from "@/lib/doctors.functions";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -43,6 +44,9 @@ export const Route = createFileRoute("/admin/")({
 });
 
 function DashboardPage() {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => { setIsClient(true); }, []);
+
   const queryClient = useQueryClient();
   const fetchBookings = useServerFn(getBookings);
   const fetchDoctors = useServerFn(getDoctors);
@@ -78,7 +82,7 @@ function DashboardPage() {
     }
   });
 
-  if (isLoading) {
+  if (!isClient || isLoading) {
     return (
       <div className="flex items-center justify-center h-96">
         <Loader2 className="animate-spin text-primary" size={48} />
