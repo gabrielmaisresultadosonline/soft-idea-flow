@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getBookings, updateBookingStatus } from "@/lib/bookings.functions";
+import { getBookings, updateBookingStatus, clearBookings } from "@/lib/bookings.functions";
 import { getDoctors } from "@/lib/doctors.functions";
 import { getAnalytics } from "@/lib/analytics.functions";
 import { useEffect, useState, useMemo } from "react";
@@ -71,6 +71,9 @@ function DashboardPage() {
   const fetchDoctors = useServerFn(getDoctors);
   const fetchAnalytics = useServerFn(getAnalytics);
   const updateFn = useServerFn(updateBookingStatus);
+  const clearFn = useServerFn(clearBookings);
+
+  const [showAnalytics, setShowAnalytics] = useState(false);
 
   const { data: analytics, isLoading: isAnalyticsLoading } = useQuery({
     queryKey: ["analytics"],
@@ -105,6 +108,17 @@ function DashboardPage() {
     },
     onError: (err: any) => {
       toast.error(err.message || "Erro ao atualizar.");
+    }
+  });
+
+  const clearMutation = useMutation({
+    mutationFn: () => clearFn(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["bookings"] });
+      toast.success("Fila zerada com sucesso!");
+    },
+    onError: (err: any) => {
+      toast.error(err.message || "Erro ao zerar fila.");
     }
   });
 
@@ -258,6 +272,15 @@ function DashboardPage() {
             variant="outline" 
             size="lg" 
             className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold"
+            onClick={() => setShowAnalytics(!showAnalytics)}
+          >
+            <Activity className={`mr-2 h-5 w-5 ${showAnalytics ? 'text-primary' : ''}`} />
+            {showAnalytics ? "Ocultar Analytics" : "Ver Analytics"}
+          </Button>
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold"
             onClick={() => queryClient.invalidateQueries({ queryKey: ["bookings"] })}
           >
             <Loader2 className={`mr-2 h-5 w-5 ${isLoading || updateMutation.isPending ? 'animate-spin' : ''}`} />
@@ -267,103 +290,105 @@ function DashboardPage() {
       </div>
 
       {/* Analytics Chart */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
-              <TrendingUp size={20} />
-              Visitas por Hora (Hoje)
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="h-[300px] pb-8">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={analyticsData.hourly}>
-                <defs>
-                  <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#0066FF" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#0066FF" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
-                <XAxis 
-                  dataKey="hour" 
-                  stroke="#ffffff40" 
-                  fontSize={12} 
-                  tickLine={false} 
-                  axisLine={false}
-                />
-                <YAxis 
-                  stroke="#ffffff40" 
-                  fontSize={12} 
-                  tickLine={false} 
-                  axisLine={false}
-                  tickFormatter={(value) => `${value}`}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: '#1a1a1a', 
-                    border: '1px solid #ffffff10',
-                    borderRadius: '12px'
-                  }}
-                  itemStyle={{ color: '#0066FF' }}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="visits" 
-                  stroke="#0066FF" 
-                  strokeWidth={3}
-                  fillOpacity={1} 
-                  fill="url(#colorVisits)" 
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
+      {showAnalytics && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
+          <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
+                <TrendingUp size={20} />
+                Visitas por Hora (Hoje)
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="h-[300px] pb-8">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={analyticsData.hourly}>
+                  <defs>
+                    <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#0066FF" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#0066FF" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+                  <XAxis 
+                    dataKey="hour" 
+                    stroke="#ffffff40" 
+                    fontSize={12} 
+                    tickLine={false} 
+                    axisLine={false}
+                  />
+                  <YAxis 
+                    stroke="#ffffff40" 
+                    fontSize={12} 
+                    tickLine={false} 
+                    axisLine={false}
+                    tickFormatter={(value) => `${value}`}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1a1a1a', 
+                      border: '1px solid #ffffff10',
+                      borderRadius: '12px'
+                    }}
+                    itemStyle={{ color: '#0066FF' }}
+                  />
+                  <Area 
+                    type="monotone" 
+                    dataKey="visits" 
+                    stroke="#0066FF" 
+                    strokeWidth={3}
+                    fillOpacity={1} 
+                    fill="url(#colorVisits)" 
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
 
-        <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
-              <BarChartIcon size={20} />
-              Visitas nos Últimos 7 Dias
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="h-[300px] pb-8">
-            <ResponsiveContainer width="100%" height="100%">
-              <RechartsBarChart data={analyticsData.daily}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
-                <XAxis 
-                  dataKey="day" 
-                  stroke="#ffffff40" 
-                  fontSize={12} 
-                  tickLine={false} 
-                  axisLine={false}
-                />
-                <YAxis 
-                  stroke="#ffffff40" 
-                  fontSize={12} 
-                  tickLine={false} 
-                  axisLine={false}
-                />
-                <Tooltip 
-                  cursor={{fill: '#ffffff05'}}
-                  contentStyle={{ 
-                    backgroundColor: '#1a1a1a', 
-                    border: '1px solid #ffffff10',
-                    borderRadius: '12px'
-                  }}
-                  itemStyle={{ color: '#0066FF' }}
-                />
-                <Bar 
-                  dataKey="visits" 
-                  fill="#0066FF" 
-                  radius={[4, 4, 0, 0]} 
-                  barSize={30}
-                />
-              </RechartsBarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
+          <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
+                <BarChartIcon size={20} />
+                Visitas nos Últimos 7 Dias
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="h-[300px] pb-8">
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsBarChart data={analyticsData.daily}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+                  <XAxis 
+                    dataKey="day" 
+                    stroke="#ffffff40" 
+                    fontSize={12} 
+                    tickLine={false} 
+                    axisLine={false}
+                  />
+                  <YAxis 
+                    stroke="#ffffff40" 
+                    fontSize={12} 
+                    tickLine={false} 
+                    axisLine={false}
+                  />
+                  <Tooltip 
+                    cursor={{fill: '#ffffff05'}}
+                    contentStyle={{ 
+                      backgroundColor: '#1a1a1a', 
+                      border: '1px solid #ffffff10',
+                      borderRadius: '12px'
+                    }}
+                    itemStyle={{ color: '#0066FF' }}
+                  />
+                  <Bar 
+                    dataKey="visits" 
+                    fill="#0066FF" 
+                    radius={[4, 4, 0, 0]} 
+                    barSize={30}
+                  />
+                </RechartsBarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
@@ -389,9 +414,24 @@ function DashboardPage() {
 
       {/* Bookings Table */}
       <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-xl">Fila de Atendimento</CardTitle>
-          <CardDescription>Gerencie o status de cada agendamento abaixo.</CardDescription>
+        <CardHeader className="pb-2 flex flex-row items-center justify-between">
+          <div>
+            <CardTitle className="text-xl uppercase font-black italic">Fila de Atendimento</CardTitle>
+            <CardDescription>Gerencie o status de cada agendamento abaixo.</CardDescription>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-destructive hover:bg-destructive/10 font-bold uppercase tracking-widest text-[10px] h-8 px-4 rounded-xl border border-destructive/20"
+            onClick={() => {
+              if (confirm("Tem certeza que deseja zerar TODA a fila de atendimento? Esta ação não pode ser desfeita.")) {
+                clearMutation.mutate();
+              }
+            }}
+            disabled={clearMutation.isPending || !bookings || bookings.length === 0}
+          >
+            {clearMutation.isPending ? "Limpando..." : "Zerar Fila"}
+          </Button>
         </CardHeader>
         <CardContent className="p-0 sm:p-6">
           <div className="overflow-x-auto">
