@@ -119,7 +119,8 @@ function DoctorsPage() {
                   <Input 
                     id="email" 
                     type="email" 
-                    className="bg-muted border-border rounded-xl h-12 focus:ring-primary" 
+                    className="bg-white/5 border-white/10 rounded-xl h-12" 
+
 
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
