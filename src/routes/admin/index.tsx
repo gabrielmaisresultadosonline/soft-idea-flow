@@ -154,13 +154,14 @@ function DashboardPage() {
     },
   ];
 
-  const copyToClipboard = (text: string, label: string) => {
+  const copyToClipboard = (text: string | null | undefined, label: string) => {
+    if (!text) return;
     navigator.clipboard.writeText(text);
     toast.success(`${label} copiado!`);
   };
 
   const copyAllData = (b: any) => {
-    const text = `Nome: ${b.full_name}\nE-mail: ${b.email}\nWhatsApp: ${b.whatsapp}\nCPF: ${b.cpf || 'N/A'}`;
+    const text = `Nome: ${b.full_name}\nE-mail: ${b.email}\nWhatsApp: ${b.whatsapp || 'N/A'}\nCPF: ${b.cpf || 'N/A'}`;
     navigator.clipboard.writeText(text);
     toast.success("Todos os dados copiados!");
   };
