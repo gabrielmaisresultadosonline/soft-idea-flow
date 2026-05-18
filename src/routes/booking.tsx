@@ -144,7 +144,7 @@ function BookingPage() {
 
   return (
     <div className="bg-hero min-h-screen py-6 lg:py-10 px-2 sm:px-6">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <Button 
@@ -261,21 +261,21 @@ function BookingPage() {
                     locale={ptBR}
                     classNames={{
                       months: "w-full",
-                      month: "space-y-4 w-full p-4 sm:p-8",
-                      caption: "flex justify-center pt-2 relative items-center mb-8 px-10",
-                      caption_label: "text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-primary uppercase",
+                      month: "space-y-4 w-full p-4 sm:p-10 lg:p-14",
+                      caption: "flex justify-center pt-2 relative items-center mb-10 px-10",
+                      caption_label: "text-2xl sm:text-4xl lg:text-5xl font-black tracking-tighter text-primary uppercase",
                       nav: "space-x-1 flex items-center",
-                      nav_button: "h-12 w-12 sm:h-14 sm:w-14 bg-white/5 p-0 opacity-100 hover:bg-primary hover:text-primary-foreground rounded-2xl flex items-center justify-center transition-all duration-300 border border-white/10",
+                      nav_button: "h-14 w-14 sm:h-20 sm:w-20 bg-white/5 p-0 opacity-100 hover:bg-primary hover:text-primary-foreground rounded-2xl flex items-center justify-center transition-all duration-300 border border-white/10",
                       nav_button_previous: "absolute left-0",
                       nav_button_next: "absolute right-0",
                       table: "w-full border-collapse",
-                      head_row: "flex w-full mb-6",
-                      head_cell: "text-muted-foreground flex-1 font-bold text-xs sm:text-sm lg:text-base text-center uppercase tracking-[0.2em] opacity-40",
-                      row: "flex w-full mt-2 gap-2 sm:gap-4",
+                      head_row: "flex w-full mb-8",
+                      head_cell: "text-muted-foreground flex-1 font-bold text-xs sm:text-lg lg:text-xl text-center uppercase tracking-[0.3em] opacity-40",
+                      row: "flex w-full mt-2 gap-3 sm:gap-6",
                       cell: "relative flex-1 p-0 text-center focus-within:relative focus-within:z-20",
-                      day: "h-12 sm:h-20 lg:h-24 w-full p-0 font-bold hover:bg-primary/20 hover:text-primary rounded-2xl sm:rounded-[2rem] transition-all flex items-center justify-center text-lg sm:text-2xl lg:text-3xl",
-                      day_selected: "bg-primary! text-primary-foreground! hover:bg-primary! hover:text-primary-foreground! focus:bg-primary! focus:text-primary-foreground! shadow-glow opacity-100! scale-105 sm:scale-110 ring-4 ring-primary/20",
-                      day_today: "border-2 border-primary/40 text-primary bg-primary/5",
+                      day: "h-14 sm:h-28 lg:h-36 w-full p-0 font-bold hover:bg-primary/20 hover:text-primary rounded-2xl sm:rounded-[2.5rem] transition-all flex items-center justify-center text-xl sm:text-4xl lg:text-5xl",
+                      day_selected: "bg-primary! text-primary-foreground! hover:bg-primary! hover:text-primary-foreground! focus:bg-primary! focus:text-primary-foreground! shadow-glow opacity-100! scale-105 sm:scale-110 ring-8 ring-primary/20",
+                      day_today: "border-4 border-primary/40 text-primary bg-primary/5",
                       day_outside: "text-muted-foreground opacity-10",
                       day_disabled: "text-muted-foreground opacity-5 cursor-not-allowed",
                       day_hidden: "invisible",
