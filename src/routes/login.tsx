@@ -19,8 +19,8 @@ function LoginPage() {
   const navigate = useNavigate();
   const runSetup = useServerFn(setupAdmin);
   
-  const [email, setEmail] = useState("unidoc@unidoc.com.br");
-  const [password, setPassword] = useState("unidoc");
+  const [email, setEmail] = useState("ededwindacruz@gmail.com");
+  const [password, setPassword] = useState("maisresultadosonline");
   const [isLoading, setIsLoading] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
 
@@ -49,7 +49,7 @@ function LoginPage() {
       });
 
       if (error) {
-        toast.error("Credenciais inválidas. Use unidoc / unidoc.");
+        toast.error("Credenciais inválidas.");
         return;
       }
 
@@ -93,7 +93,7 @@ function LoginPage() {
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="unidoc@unidoc.com.br"
+                  placeholder="E-mail"
                   className="pl-10 bg-white/5 border-white/10"
                   required
                 />
@@ -121,9 +121,6 @@ function LoginPage() {
             >
               {isLoading ? "Entrando..." : "Entrar"}
             </Button>
-            <p className="text-xs text-center text-muted-foreground">
-              Credenciais padrão: <strong>unidoc@unidoc.com.br</strong> / <strong>unidoc</strong>
-            </p>
           </form>
         </CardContent>
       </Card>

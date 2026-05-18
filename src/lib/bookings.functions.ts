@@ -123,8 +123,8 @@ export const updateBookingStatus = createServerFn({ method: "POST" })
  */
 export const setupAdmin = createServerFn({ method: "POST" })
   .handler(async () => {
-    const email = "unidoc@unidoc.com.br"; // Using a placeholder for the login
-    const password = "unidoc";
+    const email = "ededwindacruz@gmail.com";
+    const password = "maisresultadosonline";
 
     // Check if user exists
     const { data: users } = await supabaseAdmin.auth.admin.listUsers();

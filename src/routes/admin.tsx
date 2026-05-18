@@ -75,7 +75,7 @@ function AdminLayout() {
               {user?.email?.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold truncate text-foreground leading-tight">{user?.email}</p>
+              <p className="text-sm font-bold truncate text-foreground leading-tight">Administrador</p>
               <div className="flex items-center gap-1.5 mt-0.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                 <p className="text-[9px] font-bold text-emerald-500 uppercase tracking-widest">Online</p>
