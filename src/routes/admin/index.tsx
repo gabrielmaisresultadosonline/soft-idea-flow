@@ -553,7 +553,7 @@ function DashboardPage() {
                             >
                               <Copy size={16} /> Copiar Todos os Dados
                             </DropdownMenuItem>
-                             <div className="h-px bg-border my-1" />
+                             <div className="h-px bg-white/10 my-1" />
                             <DropdownMenuItem 
                               className="gap-2 focus:bg-emerald-500/10 focus:text-emerald-500"
                               onClick={() => updateMutation.mutate({ id: b.id, status: "confirmed" })}
