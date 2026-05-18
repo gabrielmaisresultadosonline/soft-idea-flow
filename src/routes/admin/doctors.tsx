@@ -131,7 +131,7 @@ function DoctorsPage() {
                   <Label htmlFor="specialty" className="font-bold uppercase tracking-widest text-[10px] opacity-70">Especialidade</Label>
                   <Input 
                     id="specialty" 
-                    className="bg-muted border-border rounded-xl h-12 focus:ring-primary" 
+                    className="bg-white/5 border-white/10 rounded-xl h-12" 
                     value={formData.specialty}
                     onChange={(e) => setFormData({...formData, specialty: e.target.value})}
                   />
