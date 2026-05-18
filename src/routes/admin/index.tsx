@@ -263,29 +263,31 @@ function DashboardPage() {
           <h1 className="text-2xl md:text-4xl font-black tracking-tight mb-1 md:mb-2 uppercase italic text-primary leading-tight">Operações em Tempo Real</h1>
           <p className="text-muted-foreground text-sm md:text-lg font-medium">Gestão inteligente e monitoramento.</p>
         </div>
-        <div className="flex flex-wrap items-center gap-2 md:gap-3 w-full md:w-auto">
+        <div className="flex items-center gap-2 md:gap-3 w-full md:w-auto">
           <div className="hidden sm:flex flex-col items-end mr-2">
              <span className="text-[10px] font-bold text-primary uppercase tracking-widest opacity-60">Status</span>
              <span className="text-xs font-black text-emerald-500">ONLINE</span>
           </div>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="flex-1 md:flex-none rounded-xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-4 md:px-8 h-10 md:h-14 font-bold text-xs md:text-sm"
-            onClick={() => setShowAnalytics(!showAnalytics)}
-          >
-            <Activity className={`mr-2 h-4 w-4 md:h-5 md:w-5 ${showAnalytics ? 'text-primary' : ''}`} />
-            {showAnalytics ? "Ocultar" : "Analytics"}
-          </Button>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="flex-1 md:flex-none rounded-xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-4 md:px-8 h-10 md:h-14 font-bold text-xs md:text-sm"
-            onClick={() => queryClient.invalidateQueries({ queryKey: ["bookings"] })}
-          >
-            <Loader2 className={`mr-2 h-4 w-4 md:h-5 md:w-5 ${isLoading || updateMutation.isPending ? 'animate-spin' : ''}`} />
-            Sync
-          </Button>
+          <div className="grid grid-cols-2 md:flex gap-2 w-full md:w-auto">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="rounded-xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-4 md:px-8 h-10 md:h-14 font-bold text-xs md:text-sm"
+              onClick={() => setShowAnalytics(!showAnalytics)}
+            >
+              <Activity className={`mr-2 h-4 w-4 md:h-5 md:w-5 ${showAnalytics ? 'text-primary' : ''}`} />
+              {showAnalytics ? "Ocultar" : "Analytics"}
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="rounded-xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-4 md:px-8 h-10 md:h-14 font-bold text-xs md:text-sm"
+              onClick={() => queryClient.invalidateQueries({ queryKey: ["bookings"] })}
+            >
+              <Loader2 className={`mr-2 h-4 w-4 md:h-5 md:w-5 ${isLoading || updateMutation.isPending ? 'animate-spin' : ''}`} />
+              Sync
+            </Button>
+          </div>
         </div>
       </div>
 
