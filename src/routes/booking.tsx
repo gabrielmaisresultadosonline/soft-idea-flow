@@ -23,6 +23,8 @@ import {
   ArrowLeft,
   CheckCircle2,
   ChevronRight,
+  ShieldCheck,
+  Copy,
 } from "lucide-react";
 import logo from "@/assets/unidoc-official-logo.png";
 import { format, startOfToday, isBefore } from "date-fns";
@@ -48,6 +50,8 @@ function BookingPage() {
     fullName: "",
     email: "",
     whatsapp: "",
+    cpf: "",
+    lgpdAccepted: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -58,13 +62,17 @@ function BookingPage() {
 
   const nextStep = () => {
     if (step === 1) {
-      if (!formData.fullName || !formData.email || !formData.whatsapp) {
+      if (!formData.fullName || !formData.email || !formData.whatsapp || !formData.cpf) {
         toast.error("Por favor, preencha todos os dados.");
         return;
       }
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
         toast.error("Por favor, insira um e-mail válido.");
+        return;
+      }
+      if (!formData.lgpdAccepted) {
+        toast.error("Você precisa aceitar os termos da LGPD para continuar.");
         return;
       }
     }
@@ -112,7 +120,11 @@ function BookingPage() {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+    const { id, value, type, checked } = e.target;
+    setFormData((prev) => ({ 
+      ...prev, 
+      [id]: type === 'checkbox' ? checked : value 
+    }));
   };
 
   if (isSuccess) {
@@ -234,6 +246,36 @@ function BookingPage() {
                     />
                   </div>
                 </div>
+                <div className="space-y-3">
+                  <Label htmlFor="cpf" className="text-sm font-semibold tracking-wide uppercase opacity-70">CPF</Label>
+                  <div className="relative group">
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={20} />
+                    <Input 
+                      id="cpf" 
+                      placeholder="000.000.000-00" 
+                      className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:bg-white/10 transition-all text-lg" 
+                      value={formData.cpf}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/10 mt-2">
+                  <div className="flex items-center h-6">
+                    <input
+                      id="lgpdAccepted"
+                      type="checkbox"
+                      className="w-5 h-5 rounded border-white/10 bg-white/5 text-primary focus:ring-primary focus:ring-offset-0"
+                      checked={formData.lgpdAccepted}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <Label htmlFor="lgpdAccepted" className="text-xs sm:text-sm text-muted-foreground leading-relaxed cursor-pointer select-none">
+                    Estou de acordo com a <span className="text-primary font-bold">LGPD</span> (Lei Geral de Proteção de Dados) e autorizo o uso das minhas informações para fins de agendamento e contato.
+                  </Label>
+                </div>
+
                 <Button 
                   onClick={nextStep}
                   className="w-full bg-primary-gradient text-primary-foreground font-bold h-16 rounded-3xl text-xl shadow-glow hover:scale-[1.02] transition-transform mt-4 flex items-center justify-center gap-2"

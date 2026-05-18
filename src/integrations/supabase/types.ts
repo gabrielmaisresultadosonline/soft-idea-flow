@@ -18,11 +18,13 @@ export type Database = {
         Row: {
           appointment_time: string
           attendance_status: string | null
+          cpf: string | null
           created_at: string
           doctor_id: string | null
           email: string
           full_name: string
           id: string
+          lgpd_accepted: boolean | null
           payment_status: string | null
           status: string
           updated_at: string
@@ -31,11 +33,13 @@ export type Database = {
         Insert: {
           appointment_time: string
           attendance_status?: string | null
+          cpf?: string | null
           created_at?: string
           doctor_id?: string | null
           email: string
           full_name: string
           id?: string
+          lgpd_accepted?: boolean | null
           payment_status?: string | null
           status?: string
           updated_at?: string
@@ -44,11 +48,13 @@ export type Database = {
         Update: {
           appointment_time?: string
           attendance_status?: string | null
+          cpf?: string | null
           created_at?: string
           doctor_id?: string | null
           email?: string
           full_name?: string
           id?: string
+          lgpd_accepted?: boolean | null
           payment_status?: string | null
           status?: string
           updated_at?: string

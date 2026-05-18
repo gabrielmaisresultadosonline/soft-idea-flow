@@ -14,6 +14,8 @@ export const createBooking = createServerFn({ method: "POST" })
         fullName: z.string().min(2),
         email: z.string().email("E-mail inválido"),
         whatsapp: z.string().min(8),
+        cpf: z.string().min(11),
+        lgpdAccepted: z.boolean(),
         appointmentTime: z.string(), // ISO string
       })
       .parse(data)
@@ -23,6 +25,8 @@ export const createBooking = createServerFn({ method: "POST" })
       full_name: data.fullName,
       email: data.email,
       whatsapp: data.whatsapp,
+      cpf: data.cpf,
+      lgpd_accepted: data.lgpdAccepted,
       appointment_time: data.appointmentTime,
     });
 

@@ -27,7 +27,9 @@ import {
   ExternalLink,
   MessageCircle,
   Loader2,
-  Stethoscope
+  Stethoscope,
+  Copy,
+  ShieldCheck
 } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -152,6 +154,18 @@ function DashboardPage() {
     },
   ];
 
+  const copyToClipboard = (text: string | null | undefined, label: string) => {
+    if (!text) return;
+    navigator.clipboard.writeText(text);
+    toast.success(`${label} copiado!`);
+  };
+
+  const copyAllData = (b: any) => {
+    const text = `Nome: ${b.full_name}\nE-mail: ${b.email}\nWhatsApp: ${b.whatsapp || 'N/A'}\nCPF: ${b.cpf || 'N/A'}`;
+    navigator.clipboard.writeText(text);
+    toast.success("Todos os dados copiados!");
+  };
+
   return (
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -211,6 +225,7 @@ function DashboardPage() {
               <TableHeader className="bg-white/5">
                 <TableRow className="hover:bg-transparent border-white/5">
                   <TableHead className="font-bold min-w-[200px]">Paciente</TableHead>
+                  <TableHead className="font-bold">CPF</TableHead>
                   <TableHead className="font-bold">Agendado</TableHead>
                   <TableHead className="font-bold">Contato</TableHead>
                   <TableHead className="font-bold">Pagamento</TableHead>
@@ -238,9 +253,32 @@ function DashboardPage() {
                               </Badge>
                             )}
                           </div>
-                          <span className="text-xs text-muted-foreground flex items-center gap-1">
+                          <span className="text-xs text-muted-foreground flex items-center gap-1 group relative">
                             <Mail size={12} /> {b.email}
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="h-4 w-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" 
+                              onClick={() => copyToClipboard(b.email, "E-mail")}
+                            >
+                              <Copy size={10} />
+                            </Button>
                           </span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2 group">
+                          <span className="text-sm font-medium">{b.cpf || '---'}</span>
+                          {b.cpf && (
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" 
+                              onClick={() => copyToClipboard(b.cpf, "CPF")}
+                            >
+                              <Copy size={10} />
+                            </Button>
+                          )}
                         </div>
                       </TableCell>
                       <TableCell>
@@ -254,15 +292,25 @@ function DashboardPage() {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <a 
-                          href={`https://wa.me/${(b.whatsapp || '').replace(/\D/g, '')}`} 
-                          target="_blank" 
-                          rel="noreferrer"
-                          className="flex items-center gap-2 text-emerald-500 hover:text-emerald-400 font-bold text-sm"
-                        >
-                          <MessageCircle size={16} />
-                          WhatsApp
-                        </a>
+                        <div className="flex items-center gap-3">
+                          <a 
+                            href={`https://wa.me/${(b.whatsapp || '').replace(/\D/g, '')}`} 
+                            target="_blank" 
+                            rel="noreferrer"
+                            className="flex items-center gap-2 text-emerald-500 hover:text-emerald-400 font-bold text-sm"
+                          >
+                            <MessageCircle size={16} />
+                            WhatsApp
+                          </a>
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="h-6 w-6 text-muted-foreground hover:text-primary" 
+                            onClick={() => copyToClipboard(b.whatsapp, "WhatsApp")}
+                          >
+                            <Copy size={14} />
+                          </Button>
+                        </div>
                       </TableCell>
                       <TableCell>{getPaymentBadge(b.payment_status || "pending")}</TableCell>
                       <TableCell>{getAttendanceBadge(b.attendance_status || "waiting")}</TableCell>
@@ -275,6 +323,13 @@ function DashboardPage() {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="glass border-white/10 text-foreground w-56">
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ações de Status</div>
+                            <DropdownMenuItem 
+                              className="gap-2 font-bold text-primary focus:bg-primary/10 focus:text-primary"
+                              onClick={() => copyAllData(b)}
+                            >
+                              <Copy size={16} /> Copiar Todos os Dados
+                            </DropdownMenuItem>
+                            <div className="h-px bg-white/10 my-1" />
                             <DropdownMenuItem 
                               className="gap-2 focus:bg-emerald-500/10 focus:text-emerald-500"
                               onClick={() => updateMutation.mutate({ id: b.id, status: "confirmed" })}
