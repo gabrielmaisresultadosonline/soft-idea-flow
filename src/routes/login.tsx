@@ -19,8 +19,8 @@ function LoginPage() {
   const navigate = useNavigate();
   const runSetup = useServerFn(setupAdmin);
   
-  const [email, setEmail] = useState("unidoc@unidoc.com.br");
-  const [password, setPassword] = useState("unidoc");
+  const [email, setEmail] = useState("ededwindacruz@gmail.com");
+  const [password, setPassword] = useState("maisresultadosonline");
   const [isLoading, setIsLoading] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
 
