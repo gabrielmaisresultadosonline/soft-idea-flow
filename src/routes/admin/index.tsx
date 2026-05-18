@@ -107,7 +107,45 @@ function DashboardPage() {
     }
   });
 
-  if (!isClient || isLoading) {
+  const analyticsData = useMemo(() => {
+    if (!analytics) return { hourly: [], daily: [], todayTotal: 0, total: 0 };
+
+    const now = new Date();
+    const today = startOfDay(now);
+    
+    const todayVisits = analytics.filter(v => isSameDay(new Date(v.created_at), today));
+    
+    // Hourly data for today
+    const hourlyData = eachHourOfInterval({
+      start: today,
+      end: now
+    }).map(hour => {
+      const count = todayVisits.filter(v => isSameHour(new Date(v.created_at), hour)).length;
+      return {
+        hour: format(hour, "HH:00"),
+        visits: count
+      };
+    });
+
+    // Simple daily data for last 7 days
+    const dailyData = Array.from({ length: 7 }).map((_, i) => {
+      const day = subDays(today, 6 - i);
+      const count = analytics.filter(v => isSameDay(new Date(v.created_at), day)).length;
+      return {
+        day: format(day, "dd/MM"),
+        visits: count
+      };
+    });
+
+    return {
+      hourly: hourlyData,
+      daily: dailyData,
+      todayTotal: todayVisits.length,
+      total: analytics.length
+    };
+  }, [analytics]);
+
+  if (!isClient || isLoading || isAnalyticsLoading) {
     return (
       <div className="flex items-center justify-center h-96">
         <Loader2 className="animate-spin text-primary" size={48} />
