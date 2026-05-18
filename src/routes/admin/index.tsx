@@ -171,31 +171,31 @@ function DashboardPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "confirmed":
-        return <Badge className="bg-emerald-500/20 text-emerald-500 border-emerald-500/20">Confirmado</Badge>;
+        return <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20">Confirmado</Badge>;
       case "cancelled":
-        return <Badge className="bg-destructive/20 text-destructive border-destructive/20">Cancelado</Badge>;
+        return <Badge className="bg-destructive/10 text-destructive border-destructive/20">Cancelado</Badge>;
       default:
-        return <Badge className="bg-amber-500/20 text-amber-500 border-amber-500/20">Pendente</Badge>;
+        return <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20">Pendente</Badge>;
     }
   };
 
   const getPaymentBadge = (status: string) => {
     switch (status) {
       case "paid":
-        return <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/20">Pago</Badge>;
+        return <Badge className="bg-blue-500/10 text-blue-600 border-blue-500/20">Pago</Badge>;
       default:
-        return <Badge className="bg-slate-500/20 text-slate-400 border-slate-500/20">Pendente</Badge>;
+        return <Badge className="bg-slate-500/10 text-slate-500 border-slate-500/20">Pendente</Badge>;
     }
   };
 
   const getAttendanceBadge = (status: string) => {
     switch (status) {
       case "completed":
-        return <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/20">Concluído</Badge>;
+        return <Badge className="bg-purple-500/10 text-purple-600 border-purple-500/20">Concluído</Badge>;
       case "missed":
-        return <Badge className="bg-red-500/20 text-red-400 border-red-500/20">Faltou</Badge>;
+        return <Badge className="bg-red-500/10 text-red-600 border-red-500/20">Faltou</Badge>;
       default:
-        return <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/20">Aguardando</Badge>;
+        return <Badge className="bg-orange-500/10 text-orange-600 border-orange-500/20">Aguardando</Badge>;
     }
   };
 
@@ -543,11 +543,11 @@ function DashboardPage() {
                       <TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
+                            <Button variant="ghost" size="icon" className="rounded-full hover:bg-muted">
                               <MoreHorizontal size={20} />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="glass border-white/10 text-foreground w-56">
+                          <DropdownMenuContent align="end" className="bg-card border-border text-foreground w-56 shadow-xl">
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ações de Status</div>
                             <DropdownMenuItem 
                               className="gap-2 font-bold text-primary focus:bg-primary/10 focus:text-primary"
@@ -555,7 +555,7 @@ function DashboardPage() {
                             >
                               <Copy size={16} /> Copiar Todos os Dados
                             </DropdownMenuItem>
-                            <div className="h-px bg-white/10 my-1" />
+                             <div className="h-px bg-border my-1" />
                             <DropdownMenuItem 
                               className="gap-2 focus:bg-emerald-500/10 focus:text-emerald-500"
                               onClick={() => updateMutation.mutate({ id: b.id, status: "confirmed" })}
@@ -563,7 +563,7 @@ function DashboardPage() {
                               <CheckCircle size={16} /> Confirmar Contato
                             </DropdownMenuItem>
                             
-                            <div className="h-px bg-white/10 my-1" />
+                             <div className="h-px bg-border my-1" />
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Atribuir Médico</div>
                             {doctors?.map((doc) => (
                               <DropdownMenuItem 
@@ -578,7 +578,7 @@ function DashboardPage() {
                               <div className="px-2 py-1.5 text-[10px] text-muted-foreground italic">Nenhum médico cadastrado</div>
                             )}
 
-                            <div className="h-px bg-white/10 my-1" />
+                             <div className="h-px bg-border my-1" />
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Pagamento</div>
                             <DropdownMenuItem 
                               className="gap-2 focus:bg-blue-500/10 focus:text-blue-400"
@@ -593,7 +593,7 @@ function DashboardPage() {
                               <Clock size={16} /> Voltar para Pendente
                             </DropdownMenuItem>
 
-                            <div className="h-px bg-white/10 my-1" />
+                             <div className="h-px bg-border my-1" />
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Atendimento</div>
                             <DropdownMenuItem 
                               className="gap-2 focus:bg-purple-500/10 focus:text-purple-400"
@@ -608,7 +608,7 @@ function DashboardPage() {
                               <XCircle size={16} /> Marcar como FALTOU
                             </DropdownMenuItem>
 
-                            <div className="h-px bg-white/10 my-1" />
+                            <div className="h-px bg-border my-1" />
                             <DropdownMenuItem 
                               className="gap-2 text-destructive focus:bg-destructive/10 focus:text-destructive"
                               onClick={() => updateMutation.mutate({ id: b.id, status: "cancelled" })}
