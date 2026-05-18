@@ -87,17 +87,17 @@ function DoctorsPage() {
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black tracking-tight mb-2 uppercase italic bg-primary-gradient bg-clip-text text-transparent">Gestão de Médicos</h1>
+          <h1 className="text-4xl font-black tracking-tight mb-2 uppercase italic text-primary">Gestão de Médicos</h1>
           <p className="text-muted-foreground text-lg font-medium">Cadastre e gerencie a equipe médica da UniDoc.</p>
         </div>
 
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button size="lg" className="rounded-2xl bg-primary-gradient text-primary-foreground font-bold shadow-glow-blue/20 hover:scale-105 transition-all px-8 h-14 uppercase tracking-wider italic">
+            <Button size="lg" className="rounded-2xl bg-primary text-primary-foreground font-bold hover:scale-105 transition-all px-8 h-14 uppercase tracking-wider italic">
               <Plus className="mr-2 h-6 w-6" /> Novo Médico
             </Button>
           </DialogTrigger>
-          <DialogContent className="glass border-white/10 text-foreground">
+          <DialogContent className="bg-card border-white/10 text-foreground">
             <form onSubmit={handleSubmit}>
               <DialogHeader>
                 <DialogTitle className="text-2xl font-black uppercase italic italic text-primary">Cadastrar Médico</DialogTitle>
@@ -136,7 +136,7 @@ function DoctorsPage() {
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit" disabled={createMutation.isPending} className="w-full bg-primary-gradient font-bold h-12 rounded-xl uppercase italic">
+                <Button type="submit" disabled={createMutation.isPending} className="w-full bg-primary text-primary-foreground font-bold h-12 rounded-xl uppercase italic">
                   {createMutation.isPending ? "Salvando..." : "Confirmar Cadastro"}
                 </Button>
               </DialogFooter>
@@ -145,12 +145,12 @@ function DoctorsPage() {
         </Dialog>
       </div>
 
-      <Card className="glass border-white/10 shadow-card overflow-hidden">
+      <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden">
         <CardContent className="p-0 sm:p-6">
           <Table>
-            <TableHeader className="bg-white/5">
-              <TableRow className="border-white/10">
-                <TableHead className="font-black uppercase tracking-widest text-xs">Médico</TableHead>
+            <TableHeader className="bg-white/[0.02]">
+              <TableRow className="border-white/10 hover:bg-transparent">
+                <TableHead className="font-black uppercase tracking-widest text-[10px] opacity-70">Médico</TableHead>
                 <TableHead className="font-black uppercase tracking-widest text-xs">Especialidade</TableHead>
                 <TableHead className="font-black uppercase tracking-widest text-xs">E-mail</TableHead>
                 <TableHead className="text-right font-black uppercase tracking-widest text-xs">Ações</TableHead>

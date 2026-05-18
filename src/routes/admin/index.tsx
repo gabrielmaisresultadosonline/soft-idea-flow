@@ -170,7 +170,7 @@ function DashboardPage() {
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black tracking-tight mb-2 uppercase italic bg-primary-gradient bg-clip-text text-transparent">Centro de Operações</h1>
+          <h1 className="text-4xl font-black tracking-tight mb-2 uppercase italic text-primary">Centro de Operações</h1>
           <p className="text-muted-foreground text-lg font-medium">Gestão inteligente e monitoramento em tempo real.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -181,7 +181,7 @@ function DashboardPage() {
           <Button 
             variant="outline" 
             size="lg" 
-            className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold shadow-glow-blue/5"
+            className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold"
             onClick={() => queryClient.invalidateQueries({ queryKey: ["bookings"] })}
           >
             <Loader2 className={`mr-2 h-5 w-5 ${isLoading || updateMutation.isPending ? 'animate-spin' : ''}`} />
@@ -193,12 +193,11 @@ function DashboardPage() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((s) => (
-          <Card key={s.label} className="glass border-white/10 shadow-card hover:border-primary/40 transition-all group relative overflow-hidden">
-            <div className={`absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-primary/10 transition-colors`}></div>
+          <Card key={s.label} className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card hover:border-primary/20 transition-all group relative overflow-hidden">
             <CardContent className="pt-8 pb-6 relative z-10">
               <div className="flex items-start justify-between mb-4">
-                <div className={`p-4 rounded-2xl bg-white/5 border border-white/10 ${s.color} shadow-glow-blue/5 group-hover:scale-110 transition-transform`}>
-                  <s.icon size={28} />
+                <div className={`p-4 rounded-2xl bg-white/5 border border-white/5 ${s.color} group-hover:scale-105 transition-transform`}>
+                  <s.icon size={24} />
                 </div>
                 <div className="text-right">
                   <p className="text-4xl font-black tracking-tighter italic">{s.value}</p>
@@ -214,7 +213,7 @@ function DashboardPage() {
       </div>
 
       {/* Bookings Table */}
-      <Card className="glass border-white/5 shadow-card overflow-hidden">
+      <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl">Fila de Atendimento</CardTitle>
           <CardDescription>Gerencie o status de cada agendamento abaixo.</CardDescription>
@@ -222,15 +221,15 @@ function DashboardPage() {
         <CardContent className="p-0 sm:p-6">
           <div className="overflow-x-auto">
             <Table>
-              <TableHeader className="bg-white/5">
+              <TableHeader className="bg-muted/10">
                 <TableRow className="hover:bg-transparent border-white/5">
-                  <TableHead className="font-bold min-w-[200px]">Paciente</TableHead>
-                  <TableHead className="font-bold">CPF</TableHead>
-                  <TableHead className="font-bold">Agendado</TableHead>
-                  <TableHead className="font-bold">Contato</TableHead>
-                  <TableHead className="font-bold">Pagamento</TableHead>
-                  <TableHead className="font-bold">Atendimento</TableHead>
-                  <TableHead className="text-right font-bold">Ações</TableHead>
+                  <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Paciente</TableHead>
+                  <TableHead className="font-bold text-xs uppercase tracking-wider py-4">CPF</TableHead>
+                  <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Agendado</TableHead>
+                  <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Contato</TableHead>
+                  <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Pagamento</TableHead>
+                  <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Atendimento</TableHead>
+                  <TableHead className="text-right font-bold text-xs uppercase tracking-wider py-4">Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
