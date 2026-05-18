@@ -19,6 +19,7 @@ export type Database = {
           appointment_time: string
           attendance_status: string | null
           created_at: string
+          doctor_id: string | null
           email: string
           full_name: string
           id: string
@@ -31,6 +32,7 @@ export type Database = {
           appointment_time: string
           attendance_status?: string | null
           created_at?: string
+          doctor_id?: string | null
           email: string
           full_name: string
           id?: string
@@ -43,6 +45,7 @@ export type Database = {
           appointment_time?: string
           attendance_status?: string | null
           created_at?: string
+          doctor_id?: string | null
           email?: string
           full_name?: string
           id?: string
@@ -50,6 +53,41 @@ export type Database = {
           status?: string
           updated_at?: string
           whatsapp?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_doctor_id_fkey"
+            columns: ["doctor_id"]
+            isOneToOne: false
+            referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      doctors: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+          specialty: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          specialty?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          specialty?: string | null
+          updated_at?: string
         }
         Relationships: []
       }

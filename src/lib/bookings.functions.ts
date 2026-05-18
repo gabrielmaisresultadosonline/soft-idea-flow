@@ -79,6 +79,7 @@ export const updateBookingStatus = createServerFn({ method: "POST" })
         status: z.enum(["pending", "confirmed", "cancelled"]).optional(),
         paymentStatus: z.enum(["pending", "paid"]).optional(),
         attendanceStatus: z.enum(["waiting", "completed", "missed"]).optional(),
+        doctorId: z.string().uuid().optional(),
       })
       .parse(data)
   )
@@ -98,6 +99,7 @@ export const updateBookingStatus = createServerFn({ method: "POST" })
     if (data.status) updateData.status = data.status;
     if (data.paymentStatus) updateData.payment_status = data.paymentStatus;
     if (data.attendanceStatus) updateData.attendance_status = data.attendanceStatus;
+    if (data.doctorId) updateData.doctor_id = data.doctorId;
 
     const { error } = await supabase
       .from("bookings")

@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, useNavigate, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useNavigate, redirect, useLocation } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,7 @@ export const Route = createFileRoute("/admin")({
 
 function AdminLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -54,13 +55,13 @@ function AdminLayout() {
             <LayoutDashboard size={24} />
             Dashboard
           </Button>
-          <Button variant="ghost" className="w-full justify-start gap-4 h-14 rounded-2xl text-muted-foreground hover:bg-white/5 transition-all group" disabled>
-            <Calendar size={22} className="group-hover:text-primary transition-colors" />
-            <span className="font-semibold">Calendário</span>
-          </Button>
-          <Button variant="ghost" className="w-full justify-start gap-4 h-14 rounded-2xl text-muted-foreground hover:bg-white/5 transition-all group" disabled>
-            <Users size={22} className="group-hover:text-primary transition-colors" />
-            <span className="font-semibold">Pacientes</span>
+          <Button 
+            variant="ghost" 
+            className={`w-full justify-start gap-4 h-14 rounded-2xl transition-all group ${location.pathname === '/admin/doctors' ? 'bg-primary/10 border border-primary/20 text-primary font-bold' : 'text-muted-foreground hover:bg-white/5'}`}
+            onClick={() => navigate({ to: "/admin/doctors" })}
+          >
+            <Users size={22} className={location.pathname === '/admin/doctors' ? 'text-primary' : 'group-hover:text-primary transition-colors'} />
+            <span className="font-semibold">Médicos</span>
           </Button>
           <Button variant="ghost" className="w-full justify-start gap-4 h-14 rounded-2xl text-muted-foreground hover:bg-white/5 transition-all group" disabled>
             <Settings size={22} className="group-hover:text-primary transition-colors" />
