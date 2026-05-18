@@ -245,7 +245,17 @@ function DashboardPage() {
                       <TableCell>
                         <div className="flex flex-col">
                           <div className="flex items-center gap-2">
-                            <span className="font-bold text-base">{b.full_name}</span>
+                            <span className="font-bold text-base group/name relative">
+                              {b.full_name}
+                              <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="h-4 w-4 ml-1 opacity-0 group-hover/name:opacity-100 transition-opacity" 
+                                onClick={() => copyToClipboard(b.full_name, "Nome")}
+                              >
+                                <Copy size={10} />
+                              </Button>
+                            </span>
                             {b.doctor_id && (
                               <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px] h-5 uppercase font-black tracking-widest italic px-2">
                                 Atribuído
