@@ -606,7 +606,7 @@ function DashboardPage() {
                               <XCircle size={16} /> Marcar como FALTOU
                             </DropdownMenuItem>
 
-                            <div className="h-px bg-border my-1" />
+                            <div className="h-px bg-white/10 my-1" />
                             <DropdownMenuItem 
                               className="gap-2 text-destructive focus:bg-destructive/10 focus:text-destructive"
                               onClick={() => updateMutation.mutate({ id: b.id, status: "cancelled" })}
