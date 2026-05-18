@@ -204,28 +204,28 @@ function DashboardPage() {
       label: "Aguardando Contato", 
       value: bookings?.filter(b => b.status === "pending").length || 0, 
       icon: Clock4, 
-      color: "text-amber-600",
+      color: "text-amber-500",
       description: "Novos leads"
     },
     { 
       label: "Pagos (Aguardando Atendimento)", 
       value: bookings?.filter(b => b.payment_status === "paid" && b.attendance_status === "waiting").length || 0, 
       icon: CheckCircle, 
-      color: "text-blue-600",
+      color: "text-blue-500",
       description: "Prontos para consulta"
     },
     { 
       label: "Total Concluídos", 
       value: bookings?.filter(b => b.attendance_status === "completed").length || 0, 
       icon: CheckCircle, 
-      color: "text-purple-600",
+      color: "text-purple-500",
       description: "Consultas realizadas"
     },
     { 
       label: "Pagos e Não Concluídos", 
       value: bookings?.filter(b => b.payment_status === "paid" && b.attendance_status !== "completed").length || 0, 
       icon: MessageCircle, 
-      color: "text-emerald-600",
+      color: "text-emerald-500",
       description: "Em andamento"
     },
     { 
@@ -239,7 +239,7 @@ function DashboardPage() {
       label: "Total de Visitas", 
       value: analyticsData.total, 
       icon: Activity, 
-      color: "text-blue-600",
+      color: "text-blue-400",
       description: "Desde o início"
     },
   ];
