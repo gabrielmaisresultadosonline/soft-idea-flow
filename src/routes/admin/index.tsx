@@ -323,7 +323,7 @@ function DashboardPage() {
         <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
-              <BarChart size={20} />
+              <BarChartIcon size={20} />
               Visitas nos Últimos 7 Dias
             </CardTitle>
           </CardHeader>
