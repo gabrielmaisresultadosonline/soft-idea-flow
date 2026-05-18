@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Suspense, lazy } from "react";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { createBooking } from "@/lib/bookings.functions";
@@ -28,7 +29,11 @@ import { format, addHours, startOfToday, isBefore, isSameDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 export const Route = createFileRoute("/booking")({
-  component: BookingPage,
+  component: () => (
+    <Suspense fallback={<div className="bg-hero min-h-screen" />}>
+      <BookingPage />
+    </Suspense>
+  ),
 });
 
 const timeSlots = [
@@ -130,66 +135,155 @@ function BookingPage() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="grid lg:grid-cols-2 gap-8">
-          {/* Dados Pessoais */}
-          <div className="space-y-6">
-            <Card className="glass border-white/10 shadow-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <User className="text-primary" size={20} />
-                  Seus Dados
-                </CardTitle>
-                <CardDescription>
-                  Preencha suas informações para contato.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="fullName">Nome Completo</Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-3 text-muted-foreground" size={18} />
-                    <Input 
-                      id="fullName" 
-                      placeholder="Seu nome" 
-                      className="pl-10 bg-white/5 border-white/10" 
-                      value={formData.fullName}
-                      onChange={handleInputChange}
-                      required
-                    />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Dados Pessoais */}
+            <div className="space-y-6">
+              <Card className="glass border-white/10 shadow-card">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-xl">
+                    <User className="text-primary" size={20} />
+                    Seus Dados
+                  </CardTitle>
+                  <CardDescription>
+                    Preencha suas informações para contato.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="fullName">Nome Completo</Label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-3 text-muted-foreground" size={18} />
+                      <Input 
+                        id="fullName" 
+                        placeholder="Seu nome" 
+                        className="pl-10 bg-white/5 border-white/10" 
+                        value={formData.fullName}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">E-mail</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 text-muted-foreground" size={18} />
-                    <Input 
-                      id="email" 
-                      type="email" 
-                      placeholder="seu@email.com" 
-                      className="pl-10 bg-white/5 border-white/10" 
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                    />
+                  <div className="space-y-2">
+                    <Label htmlFor="email">E-mail</Label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-3 text-muted-foreground" size={18} />
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        placeholder="seu@email.com" 
+                        className="pl-10 bg-white/5 border-white/10" 
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="whatsapp">WhatsApp</Label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-3 text-muted-foreground" size={18} />
-                    <Input 
-                      id="whatsapp" 
-                      placeholder="(00) 00000-0000" 
-                      className="pl-10 bg-white/5 border-white/10" 
-                      value={formData.whatsapp}
-                      onChange={handleInputChange}
-                      required
-                    />
+                  <div className="space-y-2">
+                    <Label htmlFor="whatsapp">WhatsApp</Label>
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-3 text-muted-foreground" size={18} />
+                      <Input 
+                        id="whatsapp" 
+                        placeholder="(00) 00000-0000" 
+                        className="pl-10 bg-white/5 border-white/10" 
+                        value={formData.whatsapp}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
+              <div className="hidden lg:block">
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="w-full bg-primary-gradient text-primary-foreground font-bold h-14 rounded-full text-lg shadow-glow hover:scale-[1.02] transition-transform disabled:opacity-50"
+                >
+                  {isSubmitting ? "Agendando..." : "Confirmar Agendamento"}
+                </Button>
+              </div>
+            </div>
+
+            {/* Calendário e Horários */}
+            <div className="space-y-6">
+              <Card className="glass border-white/10 shadow-card overflow-hidden">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-xl">
+                    <CalendarIcon className="text-primary" size={20} />
+                    Escolha a Data
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex justify-center p-0 pb-6">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    disabled={(date) => isBefore(date, startOfToday())}
+                    className="rounded-md border-none w-full max-w-sm sm:max-w-md"
+                    locale={ptBR}
+                    classNames={{
+                      months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0 w-full",
+                      month: "space-y-4 w-full",
+                      caption: "flex justify-center pt-1 relative items-center",
+                      caption_label: "text-sm font-medium",
+                      nav: "space-x-1 flex items-center",
+                      nav_button: "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+                      nav_button_previous: "absolute left-1",
+                      nav_button_next: "absolute right-1",
+                      table: "w-full border-collapse space-y-1",
+                      head_row: "flex w-full",
+                      head_cell: "text-muted-foreground rounded-md w-full font-normal text-[0.8rem]",
+                      row: "flex w-full mt-2",
+                      cell: "h-9 w-full text-center text-sm p-0 relative focus-within:relative focus-within:z-20",
+                      day: "h-9 w-full p-0 font-normal aria-selected:opacity-100 hover:bg-white/10 rounded-md",
+                      day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                      day_today: "bg-accent text-accent-foreground",
+                      day_outside: "text-muted-foreground opacity-50",
+                      day_disabled: "text-muted-foreground opacity-50",
+                      day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                      day_hidden: "invisible",
+                    }}
+                  />
+                </CardContent>
+              </Card>
+
+              <Card className="glass border-white/10 shadow-card">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-xl">
+                    <Clock className="text-primary" size={20} />
+                    Horários Disponíveis
+                  </CardTitle>
+                  <CardDescription>
+                    {date ? format(date, "EEEE, dd 'de' MMMM", { locale: ptBR }) : "Selecione uma data"}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                    {timeSlots.map((t) => (
+                      <Button
+                        key={t}
+                        type="button"
+                        variant={time === t ? "default" : "outline"}
+                        onClick={() => setTime(t)}
+                        className={`rounded-xl h-12 font-semibold transition-all ${
+                          time === t 
+                            ? "bg-primary text-primary-foreground border-primary" 
+                            : "bg-white/5 border-white/10 hover:bg-primary/20"
+                        }`}
+                      >
+                        {t}
+                      </Button>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          <div className="lg:hidden">
             <Button 
               type="submit" 
               disabled={isSubmitting}
@@ -197,59 +291,6 @@ function BookingPage() {
             >
               {isSubmitting ? "Agendando..." : "Confirmar Agendamento"}
             </Button>
-          </div>
-
-          {/* Calendário e Horários */}
-          <div className="space-y-6">
-            <Card className="glass border-white/10 shadow-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <CalendarIcon className="text-primary" size={20} />
-                  Escolha a Data
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex justify-center p-0 pb-6">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  disabled={(date) => isBefore(date, startOfToday())}
-                  className="rounded-md border-none"
-                  locale={ptBR}
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="glass border-white/10 shadow-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <Clock className="text-primary" size={20} />
-                  Horários Disponíveis
-                </CardTitle>
-                <CardDescription>
-                  {date ? format(date, "EEEE, dd 'de' MMMM", { locale: ptBR }) : "Selecione uma data"}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-3 gap-2">
-                  {timeSlots.map((t) => (
-                    <Button
-                      key={t}
-                      type="button"
-                      variant={time === t ? "default" : "outline"}
-                      onClick={() => setTime(t)}
-                      className={`rounded-xl h-12 font-semibold transition-all ${
-                        time === t 
-                          ? "bg-primary text-primary-foreground border-primary" 
-                          : "bg-white/5 border-white/10 hover:bg-primary/20"
-                      }`}
-                    >
-                      {t}
-                    </Button>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </form>
       </div>
