@@ -576,7 +576,7 @@ function DashboardPage() {
                               <div className="px-2 py-1.5 text-[10px] text-muted-foreground italic">Nenhum médico cadastrado</div>
                             )}
 
-                             <div className="h-px bg-border my-1" />
+                             <div className="h-px bg-white/10 my-1" />
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Pagamento</div>
                             <DropdownMenuItem 
                               className="gap-2 focus:bg-blue-500/10 focus:text-blue-400"
