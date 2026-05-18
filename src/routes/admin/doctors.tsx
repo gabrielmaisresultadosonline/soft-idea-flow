@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getDoctors, createDoctor, deleteDoctor } from "@/lib/doctors.functions";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,7 +24,7 @@ import {
   Plus
 } from "lucide-react";
 import { toast } from "sonner";
-import { useState } from "react";
+
 import {
   Dialog,
   DialogContent,
