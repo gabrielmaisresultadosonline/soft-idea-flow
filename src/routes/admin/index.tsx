@@ -6,7 +6,7 @@ import { getDoctors } from "@/lib/doctors.functions";
 import { getAnalytics } from "@/lib/analytics.functions";
 import { useEffect, useState, useMemo } from "react";
 import { 
-  BarChart, 
+  BarChart as RechartsBarChart, 
   Bar, 
   XAxis, 
   YAxis, 
