@@ -6,7 +6,11 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useLocation,
 } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { trackVisit } from "@/lib/analytics.functions";
 
 import appCss from "../styles.css?url";
 
@@ -123,6 +127,21 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useLocation();
+  const trackVisitFn = useServerFn(trackVisit);
+
+  useEffect(() => {
+    // Only track on the client and not in admin paths to avoid polluting real traffic data
+    if (typeof window !== "undefined" && !location.pathname.startsWith("/admin")) {
+      trackVisitFn({
+        data: {
+          path: location.pathname,
+          userAgent: window.navigator.userAgent,
+          referrer: document.referrer,
+        },
+      }).catch(console.error);
+    }
+  }, [location.pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>

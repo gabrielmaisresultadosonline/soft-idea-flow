@@ -3,7 +3,19 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getBookings, updateBookingStatus } from "@/lib/bookings.functions";
 import { getDoctors } from "@/lib/doctors.functions";
-import { useEffect, useState } from "react";
+import { getAnalytics } from "@/lib/analytics.functions";
+import { useEffect, useState, useMemo } from "react";
+import { 
+  BarChart as RechartsBarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer,
+  AreaChart,
+  Area
+} from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -29,9 +41,14 @@ import {
   Loader2,
   Stethoscope,
   Copy,
-  ShieldCheck
+  ShieldCheck,
+  TrendingUp,
+  Users,
+  Eye,
+  Activity,
+  BarChart as BarChartIcon
 } from "lucide-react";
-import { format } from "date-fns";
+import { format, startOfDay, subDays, eachHourOfInterval, isSameHour, isSameDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { toast } from "sonner";
 import {
@@ -52,7 +69,14 @@ function DashboardPage() {
   const queryClient = useQueryClient();
   const fetchBookings = useServerFn(getBookings);
   const fetchDoctors = useServerFn(getDoctors);
+  const fetchAnalytics = useServerFn(getAnalytics);
   const updateFn = useServerFn(updateBookingStatus);
+
+  const { data: analytics, isLoading: isAnalyticsLoading } = useQuery({
+    queryKey: ["analytics"],
+    queryFn: () => fetchAnalytics(),
+    refetchInterval: 60000, // Refresh every minute
+  });
 
   const { data: bookings, isLoading: isBookingsLoading } = useQuery({
     queryKey: ["bookings"],
@@ -84,7 +108,45 @@ function DashboardPage() {
     }
   });
 
-  if (!isClient || isLoading) {
+  const analyticsData = useMemo(() => {
+    if (!analytics) return { hourly: [], daily: [], todayTotal: 0, total: 0 };
+
+    const now = new Date();
+    const today = startOfDay(now);
+    
+    const todayVisits = analytics.filter(v => isSameDay(new Date(v.created_at), today));
+    
+    // Hourly data for today
+    const hourlyData = eachHourOfInterval({
+      start: today,
+      end: now
+    }).map(hour => {
+      const count = todayVisits.filter(v => isSameHour(new Date(v.created_at), hour)).length;
+      return {
+        hour: format(hour, "HH:00"),
+        visits: count
+      };
+    });
+
+    // Simple daily data for last 7 days
+    const dailyData = Array.from({ length: 7 }).map((_, i) => {
+      const day = subDays(today, 6 - i);
+      const count = analytics.filter(v => isSameDay(new Date(v.created_at), day)).length;
+      return {
+        day: format(day, "dd/MM"),
+        visits: count
+      };
+    });
+
+    return {
+      hourly: hourlyData,
+      daily: dailyData,
+      todayTotal: todayVisits.length,
+      total: analytics.length
+    };
+  }, [analytics]);
+
+  if (!isClient || isLoading || isAnalyticsLoading) {
     return (
       <div className="flex items-center justify-center h-96">
         <Loader2 className="animate-spin text-primary" size={48} />
@@ -152,6 +214,20 @@ function DashboardPage() {
       color: "text-emerald-500",
       description: "Em andamento"
     },
+    { 
+      label: "Visitas Hoje", 
+      value: analyticsData.todayTotal, 
+      icon: Eye, 
+      color: "text-primary",
+      description: "Tráfego em tempo real"
+    },
+    { 
+      label: "Total de Visitas", 
+      value: analyticsData.total, 
+      icon: Activity, 
+      color: "text-blue-400",
+      description: "Desde o início"
+    },
   ];
 
   const copyToClipboard = (text: string | null | undefined, label: string) => {
@@ -190,8 +266,107 @@ function DashboardPage() {
         </div>
       </div>
 
+      {/* Analytics Chart */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
+              <TrendingUp size={20} />
+              Visitas por Hora (Hoje)
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="h-[300px] pb-8">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={analyticsData.hourly}>
+                <defs>
+                  <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#0066FF" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#0066FF" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+                <XAxis 
+                  dataKey="hour" 
+                  stroke="#ffffff40" 
+                  fontSize={12} 
+                  tickLine={false} 
+                  axisLine={false}
+                />
+                <YAxis 
+                  stroke="#ffffff40" 
+                  fontSize={12} 
+                  tickLine={false} 
+                  axisLine={false}
+                  tickFormatter={(value) => `${value}`}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: '#1a1a1a', 
+                    border: '1px solid #ffffff10',
+                    borderRadius: '12px'
+                  }}
+                  itemStyle={{ color: '#0066FF' }}
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="visits" 
+                  stroke="#0066FF" 
+                  strokeWidth={3}
+                  fillOpacity={1} 
+                  fill="url(#colorVisits)" 
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
+              <BarChartIcon size={20} />
+              Visitas nos Últimos 7 Dias
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="h-[300px] pb-8">
+            <ResponsiveContainer width="100%" height="100%">
+              <RechartsBarChart data={analyticsData.daily}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+                <XAxis 
+                  dataKey="day" 
+                  stroke="#ffffff40" 
+                  fontSize={12} 
+                  tickLine={false} 
+                  axisLine={false}
+                />
+                <YAxis 
+                  stroke="#ffffff40" 
+                  fontSize={12} 
+                  tickLine={false} 
+                  axisLine={false}
+                />
+                <Tooltip 
+                  cursor={{fill: '#ffffff05'}}
+                  contentStyle={{ 
+                    backgroundColor: '#1a1a1a', 
+                    border: '1px solid #ffffff10',
+                    borderRadius: '12px'
+                  }}
+                  itemStyle={{ color: '#0066FF' }}
+                />
+                <Bar 
+                  dataKey="visits" 
+                  fill="#0066FF" 
+                  radius={[4, 4, 0, 0]} 
+                  barSize={30}
+                />
+              </RechartsBarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
         {stats.map((s) => (
           <Card key={s.label} className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card hover:border-primary/20 transition-all group relative overflow-hidden">
             <CardContent className="pt-8 pb-6 relative z-10">
