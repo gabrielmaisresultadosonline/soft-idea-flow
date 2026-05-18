@@ -23,7 +23,7 @@ import {
   ArrowLeft,
   CheckCircle2,
 } from "lucide-react";
-import logo from "@/assets/new-logo.png";
+import logo from "@/assets/unidoc-official-logo.png";
 import { format, addHours, startOfToday, isBefore, isSameDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
