@@ -250,35 +250,34 @@ function BookingPage() {
                   Selecione o melhor dia para sua consulta online.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="p-4 sm:p-6 lg:p-8">
-                <div className="w-full">
+              <CardContent className="p-3 sm:p-6 lg:p-8">
+                <div className="w-full rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-5">
                   <Calendar
                     mode="single"
                     selected={date}
                     onSelect={setDate}
                     disabled={(date) => isBefore(date, startOfToday())}
-                    className="w-full p-0"
+                    className="w-full max-w-none p-0 pointer-events-auto [--cell-size:clamp(2.75rem,9vw,5.75rem)]"
                     locale={ptBR}
                     classNames={{
-                      months: "w-full",
-                      month: "space-y-4 w-full",
-                      caption: "flex justify-center pt-1 relative items-center mb-6",
-                      caption_label: "text-xl sm:text-2xl font-bold text-primary uppercase tracking-wider",
-                      nav: "space-x-1 flex items-center",
-                      nav_button: "h-10 w-10 bg-white/5 p-0 opacity-100 hover:bg-primary hover:text-primary-foreground rounded-xl flex items-center justify-center transition-all border border-white/10",
-                      nav_button_previous: "absolute left-1",
-                      nav_button_next: "absolute right-1",
+                      root: "!w-full max-w-none",
+                      months: "w-full max-w-none",
+                      month: "w-full max-w-none gap-4",
+                      month_caption: "flex h-12 w-full items-center justify-center px-12 sm:h-14",
+                      caption_label: "text-xl sm:text-2xl lg:text-3xl font-bold text-primary uppercase tracking-wider",
+                      nav: "absolute inset-x-0 top-0 flex w-full items-center justify-between",
+                      button_previous: "h-11 w-11 rounded-xl border border-white/10 bg-white/5 p-0 hover:bg-primary hover:text-primary-foreground sm:h-12 sm:w-12",
+                      button_next: "h-11 w-11 rounded-xl border border-white/10 bg-white/5 p-0 hover:bg-primary hover:text-primary-foreground sm:h-12 sm:w-12",
                       table: "w-full border-collapse",
-                      head_row: "grid grid-cols-7 w-full mb-2",
-                      head_cell: "text-muted-foreground font-medium text-[10px] sm:text-xs text-center uppercase tracking-tighter opacity-50",
-                      row: "grid grid-cols-7 w-full mt-2 gap-1 sm:gap-2",
-                      cell: "p-0 text-center relative",
-                      day: "aspect-square w-full p-0 font-semibold hover:bg-primary/20 hover:text-primary rounded-xl transition-all flex items-center justify-center text-sm sm:text-base lg:text-lg border border-transparent",
-                      day_selected: "bg-primary! text-primary-foreground! hover:bg-primary! hover:text-primary-foreground! focus:bg-primary! focus:text-primary-foreground! shadow-glow opacity-100! scale-105 border-primary",
-                      day_today: "border-primary/30 text-primary bg-primary/5",
-                      day_outside: "text-muted-foreground opacity-10",
-                      day_disabled: "text-muted-foreground opacity-5 cursor-not-allowed",
-                      day_hidden: "invisible",
+                      weekdays: "grid w-full grid-cols-7 gap-1 sm:gap-2",
+                      weekday: "flex h-8 items-center justify-center text-[10px] font-bold uppercase text-muted-foreground opacity-60 sm:text-xs",
+                      week: "grid w-full grid-cols-7 gap-1 sm:gap-2 mt-2",
+                      day: "aspect-square w-full p-0 text-center",
+                      day_button: "h-full min-h-0 w-full min-w-0 rounded-xl border border-white/10 bg-white/5 text-base font-bold text-foreground transition-all hover:bg-primary/20 hover:text-primary sm:rounded-2xl sm:text-xl lg:text-2xl data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[selected-single=true]:shadow-glow data-[selected-single=true]:scale-[1.03]",
+                      today: "[&_button]:border-primary/50 [&_button]:text-primary [&_button]:bg-primary/5",
+                      outside: "opacity-25",
+                      disabled: "opacity-15 cursor-not-allowed",
+                      hidden: "invisible",
                     }}
                   />
                 </div>
