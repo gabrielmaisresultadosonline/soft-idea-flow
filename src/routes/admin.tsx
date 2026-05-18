@@ -71,7 +71,7 @@ function AdminLayout() {
 
         <div className="pt-6 border-t border-white/5">
           <div className="flex items-center gap-4 mb-6 px-2">
-            <div className="w-10 h-10 rounded-xl bg-primary-gradient flex items-center justify-center text-primary-foreground font-black text-lg border border-white/10">
+            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-black text-lg border border-white/10">
               {user?.email?.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
