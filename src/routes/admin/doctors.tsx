@@ -145,12 +145,12 @@ function DoctorsPage() {
         </Dialog>
       </div>
 
-      <Card className="glass border-white/10 shadow-card overflow-hidden">
+      <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden">
         <CardContent className="p-0 sm:p-6">
           <Table>
-            <TableHeader className="bg-white/5">
-              <TableRow className="border-white/10">
-                <TableHead className="font-black uppercase tracking-widest text-xs">Médico</TableHead>
+            <TableHeader className="bg-white/[0.02]">
+              <TableRow className="border-white/10 hover:bg-transparent">
+                <TableHead className="font-black uppercase tracking-widest text-[10px] opacity-70">Médico</TableHead>
                 <TableHead className="font-black uppercase tracking-widest text-xs">Especialidade</TableHead>
                 <TableHead className="font-black uppercase tracking-widest text-xs">E-mail</TableHead>
                 <TableHead className="text-right font-black uppercase tracking-widest text-xs">Ações</TableHead>
