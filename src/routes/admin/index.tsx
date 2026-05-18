@@ -71,6 +71,9 @@ function DashboardPage() {
   const fetchDoctors = useServerFn(getDoctors);
   const fetchAnalytics = useServerFn(getAnalytics);
   const updateFn = useServerFn(updateBookingStatus);
+  const clearFn = useServerFn(clearBookings);
+
+  const [showAnalytics, setShowAnalytics] = useState(false);
 
   const { data: analytics, isLoading: isAnalyticsLoading } = useQuery({
     queryKey: ["analytics"],
