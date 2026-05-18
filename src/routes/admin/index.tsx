@@ -221,15 +221,15 @@ function DashboardPage() {
         <CardContent className="p-0 sm:p-6">
           <div className="overflow-x-auto">
             <Table>
-              <TableHeader className="bg-white/[0.02]">
+              <TableHeader className="bg-muted/10">
                 <TableRow className="hover:bg-transparent border-white/5">
-                  <TableHead className="font-bold min-w-[200px]">Paciente</TableHead>
-                  <TableHead className="font-bold">CPF</TableHead>
-                  <TableHead className="font-bold">Agendado</TableHead>
-                  <TableHead className="font-bold">Contato</TableHead>
-                  <TableHead className="font-bold">Pagamento</TableHead>
-                  <TableHead className="font-bold">Atendimento</TableHead>
-                  <TableHead className="text-right font-bold">Ações</TableHead>
+                  <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Paciente</TableHead>
+                  <TableHead className="font-bold text-xs uppercase tracking-wider py-4">CPF</TableHead>
+                  <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Agendado</TableHead>
+                  <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Contato</TableHead>
+                  <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Pagamento</TableHead>
+                  <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Atendimento</TableHead>
+                  <TableHead className="text-right font-bold text-xs uppercase tracking-wider py-4">Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
