@@ -436,8 +436,8 @@ function DashboardPage() {
         <CardContent className="p-0 sm:p-6">
           <div className="overflow-x-auto">
             <Table>
-              <TableHeader className="bg-muted">
-                <TableRow className="hover:bg-transparent border-border">
+              <TableHeader className="bg-muted/10">
+                <TableRow className="hover:bg-transparent border-white/5">
                   <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Paciente</TableHead>
                   <TableHead className="font-bold text-xs uppercase tracking-wider py-4">CPF</TableHead>
                   <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Agendado</TableHead>
