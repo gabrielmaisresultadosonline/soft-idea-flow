@@ -393,10 +393,10 @@ function DashboardPage() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
         {stats.map((s) => (
-          <Card key={s.label} className="bg-card border-border shadow-sm hover:border-primary/40 transition-all group relative overflow-hidden">
+          <Card key={s.label} className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card hover:border-primary/20 transition-all group relative overflow-hidden">
             <CardContent className="pt-8 pb-6 relative z-10">
               <div className="flex items-start justify-between mb-4">
-                <div className={`p-4 rounded-2xl bg-muted border border-border ${s.color} group-hover:scale-105 transition-transform`}>
+                <div className={`p-4 rounded-2xl bg-white/5 border border-white/5 ${s.color} group-hover:scale-105 transition-transform`}>
                   <s.icon size={24} />
                 </div>
                 <div className="text-right">
