@@ -250,31 +250,31 @@ function BookingPage() {
                   Selecione o melhor dia para sua consulta online.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6 p-2 sm:p-6 lg:p-8">
-                <div className="p-1 sm:p-4 lg:p-6 bg-white/5 rounded-3xl border border-white/10 shadow-inner flex justify-center">
+              <CardContent className="p-0 sm:p-6 lg:p-10">
+                <div className="bg-white/5 border-y sm:border border-white/10 shadow-inner flex justify-center w-full">
                   <Calendar
                     mode="single"
                     selected={date}
                     onSelect={setDate}
                     disabled={(date) => isBefore(date, startOfToday())}
-                    className="w-full max-w-full overflow-hidden"
+                    className="w-full"
                     locale={ptBR}
                     classNames={{
-                      months: "w-full space-y-4",
-                      month: "space-y-4 w-full",
-                      caption: "flex justify-center pt-2 relative items-center mb-6 px-10",
-                      caption_label: "text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-primary uppercase",
+                      months: "w-full",
+                      month: "space-y-4 w-full p-4 sm:p-8",
+                      caption: "flex justify-center pt-2 relative items-center mb-8 px-10",
+                      caption_label: "text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-primary uppercase",
                       nav: "space-x-1 flex items-center",
-                      nav_button: "h-10 w-10 sm:h-12 sm:w-12 bg-white/5 p-0 opacity-100 hover:bg-primary hover:text-primary-foreground rounded-xl flex items-center justify-center transition-all duration-300 border border-white/10",
+                      nav_button: "h-12 w-12 sm:h-14 sm:w-14 bg-white/5 p-0 opacity-100 hover:bg-primary hover:text-primary-foreground rounded-2xl flex items-center justify-center transition-all duration-300 border border-white/10",
                       nav_button_previous: "absolute left-0",
                       nav_button_next: "absolute right-0",
-                      table: "w-full border-collapse space-y-1",
-                      head_row: "flex w-full mb-4",
-                      head_cell: "text-muted-foreground flex-1 font-bold text-[0.65rem] sm:text-xs lg:text-sm text-center uppercase tracking-widest opacity-40",
-                      row: "flex w-full mt-1 gap-1 sm:gap-2",
+                      table: "w-full border-collapse",
+                      head_row: "flex w-full mb-6",
+                      head_cell: "text-muted-foreground flex-1 font-bold text-xs sm:text-sm lg:text-base text-center uppercase tracking-[0.2em] opacity-40",
+                      row: "flex w-full mt-2 gap-2 sm:gap-4",
                       cell: "relative flex-1 p-0 text-center focus-within:relative focus-within:z-20",
-                      day: "h-10 sm:h-16 lg:h-20 w-full p-0 font-bold hover:bg-primary/20 hover:text-primary rounded-xl sm:rounded-2xl transition-all flex items-center justify-center text-sm sm:text-lg lg:text-2xl",
-                      day_selected: "bg-primary! text-primary-foreground! hover:bg-primary! hover:text-primary-foreground! focus:bg-primary! focus:text-primary-foreground! shadow-glow opacity-100! scale-[1.05] ring-2 ring-primary ring-offset-2 ring-offset-background",
+                      day: "h-12 sm:h-20 lg:h-24 w-full p-0 font-bold hover:bg-primary/20 hover:text-primary rounded-2xl sm:rounded-[2rem] transition-all flex items-center justify-center text-lg sm:text-2xl lg:text-3xl",
+                      day_selected: "bg-primary! text-primary-foreground! hover:bg-primary! hover:text-primary-foreground! focus:bg-primary! focus:text-primary-foreground! shadow-glow opacity-100! scale-105 sm:scale-110 ring-4 ring-primary/20",
                       day_today: "border-2 border-primary/40 text-primary bg-primary/5",
                       day_outside: "text-muted-foreground opacity-10",
                       day_disabled: "text-muted-foreground opacity-5 cursor-not-allowed",
@@ -282,13 +282,15 @@ function BookingPage() {
                     }}
                   />
                 </div>
-                <Button 
-                  onClick={nextStep}
-                  disabled={!date}
-                  className="w-full bg-primary-gradient text-primary-foreground font-bold h-16 rounded-3xl text-xl shadow-glow hover:scale-[1.02] transition-transform flex items-center justify-center gap-2 disabled:opacity-50"
-                >
-                  Próximo Passo <ChevronRight size={24} />
-                </Button>
+                <div className="p-6 sm:p-0 mt-6">
+                  <Button 
+                    onClick={nextStep}
+                    disabled={!date}
+                    className="w-full bg-primary-gradient text-primary-foreground font-bold h-16 rounded-3xl text-xl shadow-glow hover:scale-[1.02] transition-transform flex items-center justify-center gap-2 disabled:opacity-50"
+                  >
+                    Próximo Passo <ChevronRight size={24} />
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           )}
