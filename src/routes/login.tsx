@@ -49,7 +49,7 @@ function LoginPage() {
       });
 
       if (error) {
-        toast.error("Credenciais inválidas. Use unidoc / unidoc.");
+        toast.error("Credenciais inválidas.");
         return;
       }
 
