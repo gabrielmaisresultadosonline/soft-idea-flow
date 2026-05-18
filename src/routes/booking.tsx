@@ -143,8 +143,8 @@ function BookingPage() {
   if (!isClient) return <div className="bg-hero min-h-screen" />;
 
   return (
-    <div className="bg-hero min-h-screen py-8 lg:py-12 px-4 sm:px-6">
-      <div className="max-w-2xl mx-auto">
+    <div className="bg-hero min-h-screen py-8 lg:py-12 px-2 sm:px-6">
+      <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
             <Button 
@@ -250,34 +250,34 @@ function BookingPage() {
                   Selecione o melhor dia para sua consulta online.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex justify-center p-2 sm:p-4 bg-white/5 rounded-2xl border border-white/5">
+              <CardContent className="space-y-8 p-4 sm:p-8">
+                <div className="p-4 sm:p-8 bg-white/5 rounded-[2rem] border border-white/10 shadow-inner">
                   <Calendar
                     mode="single"
                     selected={date}
                     onSelect={setDate}
                     disabled={(date) => isBefore(date, startOfToday())}
-                    className="rounded-md border-none w-full"
+                    className="w-full"
                     locale={ptBR}
                     classNames={{
                       months: "w-full",
-                      month: "space-y-4 w-full",
-                      caption: "flex justify-center pt-1 relative items-center mb-6",
-                      caption_label: "text-lg font-bold",
-                      nav: "space-x-1 flex items-center",
-                      nav_button: "h-10 w-10 bg-white/10 p-0 opacity-100 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors",
-                      nav_button_previous: "absolute left-1",
-                      nav_button_next: "absolute right-1",
+                      month: "space-y-8 w-full",
+                      caption: "flex justify-center pt-1 relative items-center mb-10",
+                      caption_label: "text-2xl sm:text-3xl font-black tracking-tight text-primary",
+                      nav: "space-x-2 flex items-center",
+                      nav_button: "h-12 w-12 bg-white/10 p-0 opacity-100 hover:bg-primary hover:text-primary-foreground rounded-2xl flex items-center justify-center transition-all duration-300",
+                      nav_button_previous: "absolute left-2",
+                      nav_button_next: "absolute right-2",
                       table: "w-full border-collapse",
-                      head_row: "flex w-full mb-3",
-                      head_cell: "text-muted-foreground flex-1 font-medium text-[0.7rem] sm:text-[0.85rem] text-center uppercase tracking-wider",
-                      row: "flex w-full mt-2 gap-1",
+                      head_row: "flex w-full mb-6",
+                      head_cell: "text-muted-foreground flex-1 font-bold text-[0.8rem] sm:text-base text-center uppercase tracking-[0.2em] opacity-50",
+                      row: "flex w-full mt-3 gap-2 sm:gap-4",
                       cell: "relative flex-1 p-0 text-center focus-within:relative focus-within:z-20",
-                      day: "h-10 sm:h-14 w-full p-0 font-medium hover:bg-white/10 rounded-xl transition-all flex items-center justify-center text-sm sm:text-lg",
-                      day_selected: "bg-primary! text-primary-foreground! hover:bg-primary! hover:text-primary-foreground! focus:bg-primary! focus:text-primary-foreground! shadow-glow opacity-100!",
-                      day_today: "border-2 border-primary/20 text-primary font-bold",
-                      day_outside: "text-muted-foreground opacity-20",
-                      day_disabled: "text-muted-foreground opacity-10 cursor-not-allowed",
+                      day: "h-12 sm:h-20 w-full p-0 font-bold hover:bg-primary/20 hover:text-primary rounded-2xl sm:rounded-3xl transition-all flex items-center justify-center text-lg sm:text-2xl",
+                      day_selected: "bg-primary! text-primary-foreground! hover:bg-primary! hover:text-primary-foreground! focus:bg-primary! focus:text-primary-foreground! shadow-glow opacity-100! scale-105 sm:scale-110",
+                      day_today: "border-2 border-primary/30 text-primary bg-primary/5",
+                      day_outside: "text-muted-foreground opacity-10",
+                      day_disabled: "text-muted-foreground opacity-5 cursor-not-allowed",
                       day_hidden: "invisible",
                     }}
                   />
