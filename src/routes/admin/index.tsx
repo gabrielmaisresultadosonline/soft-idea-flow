@@ -3,7 +3,19 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getBookings, updateBookingStatus } from "@/lib/bookings.functions";
 import { getDoctors } from "@/lib/doctors.functions";
-import { useEffect, useState } from "react";
+import { getAnalytics } from "@/lib/analytics.functions";
+import { useEffect, useState, useMemo } from "react";
+import { 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer,
+  AreaChart,
+  Area
+} from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
