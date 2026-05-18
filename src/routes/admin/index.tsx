@@ -25,7 +25,8 @@ import {
   Clock4,
   ExternalLink,
   MessageCircle,
-  Loader2
+  Loader2,
+  Stethoscope
 } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -66,6 +67,7 @@ function DashboardPage() {
       status?: "pending" | "confirmed" | "cancelled";
       paymentStatus?: "pending" | "paid";
       attendanceStatus?: "waiting" | "completed" | "missed";
+      doctorId?: string;
     }) => updateFn({ data: vars }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["bookings"] });
@@ -80,15 +82,6 @@ function DashboardPage() {
     return (
       <div className="flex items-center justify-center h-96">
         <Loader2 className="animate-spin text-primary" size={48} />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="p-8 text-center glass rounded-3xl border-destructive/20 text-destructive">
-        <h2 className="text-xl font-bold mb-2">Erro ao carregar agendamentos</h2>
-        <p>{(error as any).message}</p>
       </div>
     );
   }
@@ -233,7 +226,14 @@ function DashboardPage() {
                     <TableRow key={b.id} className="hover:bg-white/5 border-white/5 transition-colors">
                       <TableCell>
                         <div className="flex flex-col">
-                          <span className="font-bold text-base">{b.full_name}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="font-bold text-base">{b.full_name}</span>
+                            {b.doctor_id && (
+                              <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px] h-5 uppercase font-black tracking-widest italic px-2">
+                                Atribuído
+                              </Badge>
+                            )}
+                          </div>
                           <span className="text-xs text-muted-foreground flex items-center gap-1">
                             <Mail size={12} /> {b.email}
                           </span>
