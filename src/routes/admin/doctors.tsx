@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getDoctors, createDoctor, deleteDoctor } from "@/lib/doctors.functions";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,7 +24,7 @@ import {
   Plus
 } from "lucide-react";
 import { toast } from "sonner";
-import { useState } from "react";
+
 import {
   Dialog,
   DialogContent,
@@ -39,6 +40,9 @@ export const Route = createFileRoute("/admin/doctors")({
 });
 
 function DoctorsPage() {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => { setIsClient(true); }, []);
+
   const queryClient = useQueryClient();
   const fetchDoctors = useServerFn(getDoctors);
   const createFn = useServerFn(createDoctor);
@@ -77,7 +81,7 @@ function DoctorsPage() {
     createMutation.mutate(formData);
   };
 
-  if (isLoading) return <div className="flex items-center justify-center h-96"><Loader2 className="animate-spin text-primary" size={48} /></div>;
+  if (!isClient || isLoading) return <div className="flex items-center justify-center h-96"><Loader2 className="animate-spin text-primary" size={48} /></div>;
 
   return (
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
