@@ -171,31 +171,31 @@ function DashboardPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "confirmed":
-        return <Badge className="bg-emerald-500/20 text-emerald-500 border-emerald-500/20">Confirmado</Badge>;
+        return <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20">Confirmado</Badge>;
       case "cancelled":
-        return <Badge className="bg-destructive/20 text-destructive border-destructive/20">Cancelado</Badge>;
+        return <Badge className="bg-destructive/10 text-destructive border-destructive/20">Cancelado</Badge>;
       default:
-        return <Badge className="bg-amber-500/20 text-amber-500 border-amber-500/20">Pendente</Badge>;
+        return <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20">Pendente</Badge>;
     }
   };
 
   const getPaymentBadge = (status: string) => {
     switch (status) {
       case "paid":
-        return <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/20">Pago</Badge>;
+        return <Badge className="bg-blue-500/10 text-blue-600 border-blue-500/20">Pago</Badge>;
       default:
-        return <Badge className="bg-slate-500/20 text-slate-400 border-slate-500/20">Pendente</Badge>;
+        return <Badge className="bg-slate-500/10 text-slate-500 border-slate-500/20">Pendente</Badge>;
     }
   };
 
   const getAttendanceBadge = (status: string) => {
     switch (status) {
       case "completed":
-        return <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/20">Concluído</Badge>;
+        return <Badge className="bg-purple-500/10 text-purple-600 border-purple-500/20">Concluído</Badge>;
       case "missed":
-        return <Badge className="bg-red-500/20 text-red-400 border-red-500/20">Faltou</Badge>;
+        return <Badge className="bg-red-500/10 text-red-600 border-red-500/20">Faltou</Badge>;
       default:
-        return <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/20">Aguardando</Badge>;
+        return <Badge className="bg-orange-500/10 text-orange-600 border-orange-500/20">Aguardando</Badge>;
     }
   };
 
@@ -204,28 +204,28 @@ function DashboardPage() {
       label: "Aguardando Contato", 
       value: bookings?.filter(b => b.status === "pending").length || 0, 
       icon: Clock4, 
-      color: "text-amber-500",
+      color: "text-amber-600",
       description: "Novos leads"
     },
     { 
       label: "Pagos (Aguardando Atendimento)", 
       value: bookings?.filter(b => b.payment_status === "paid" && b.attendance_status === "waiting").length || 0, 
       icon: CheckCircle, 
-      color: "text-blue-500",
+      color: "text-blue-600",
       description: "Prontos para consulta"
     },
     { 
       label: "Total Concluídos", 
       value: bookings?.filter(b => b.attendance_status === "completed").length || 0, 
       icon: CheckCircle, 
-      color: "text-purple-500",
+      color: "text-purple-600",
       description: "Consultas realizadas"
     },
     { 
       label: "Pagos e Não Concluídos", 
       value: bookings?.filter(b => b.payment_status === "paid" && b.attendance_status !== "completed").length || 0, 
       icon: MessageCircle, 
-      color: "text-emerald-500",
+      color: "text-emerald-600",
       description: "Em andamento"
     },
     { 
@@ -239,7 +239,7 @@ function DashboardPage() {
       label: "Total de Visitas", 
       value: analyticsData.total, 
       icon: Activity, 
-      color: "text-blue-400",
+      color: "text-blue-600",
       description: "Desde o início"
     },
   ];
@@ -271,7 +271,7 @@ function DashboardPage() {
           <Button 
             variant="outline" 
             size="lg" 
-            className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold"
+            className="rounded-2xl bg-white border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold shadow-sm"
             onClick={() => setShowAnalytics(!showAnalytics)}
           >
             <Activity className={`mr-2 h-5 w-5 ${showAnalytics ? 'text-primary' : ''}`} />
@@ -280,7 +280,7 @@ function DashboardPage() {
           <Button 
             variant="outline" 
             size="lg" 
-            className="rounded-2xl bg-white/5 border-white/10 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold"
+            className="rounded-2xl bg-white border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all px-8 h-14 font-bold shadow-sm"
             onClick={() => queryClient.invalidateQueries({ queryKey: ["bookings"] })}
           >
             <Loader2 className={`mr-2 h-5 w-5 ${isLoading || updateMutation.isPending ? 'animate-spin' : ''}`} />
@@ -292,7 +292,7 @@ function DashboardPage() {
       {/* Analytics Chart */}
       {showAnalytics && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
-          <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
+          <Card className="bg-card border-border shadow-sm overflow-hidden">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
                 <TrendingUp size={20} />
@@ -308,16 +308,16 @@ function DashboardPage() {
                       <stop offset="95%" stopColor="#0066FF" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#00000010" vertical={false} />
                   <XAxis 
                     dataKey="hour" 
-                    stroke="#ffffff40" 
+                    stroke="#00000060" 
                     fontSize={12} 
                     tickLine={false} 
                     axisLine={false}
                   />
                   <YAxis 
-                    stroke="#ffffff40" 
+                    stroke="#00000060" 
                     fontSize={12} 
                     tickLine={false} 
                     axisLine={false}
@@ -325,9 +325,10 @@ function DashboardPage() {
                   />
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: '#1a1a1a', 
-                      border: '1px solid #ffffff10',
-                      borderRadius: '12px'
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #00000010',
+                      borderRadius: '12px',
+                      color: '#000000'
                     }}
                     itemStyle={{ color: '#0066FF' }}
                   />
@@ -344,7 +345,7 @@ function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card overflow-hidden">
+          <Card className="bg-card border-border shadow-sm overflow-hidden">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2 text-primary uppercase font-black italic">
                 <BarChartIcon size={20} />
@@ -354,26 +355,27 @@ function DashboardPage() {
             <CardContent className="h-[300px] pb-8">
               <ResponsiveContainer width="100%" height="100%">
                 <RechartsBarChart data={analyticsData.daily}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#00000010" vertical={false} />
                   <XAxis 
                     dataKey="day" 
-                    stroke="#ffffff40" 
+                    stroke="#00000060" 
                     fontSize={12} 
                     tickLine={false} 
                     axisLine={false}
                   />
                   <YAxis 
-                    stroke="#ffffff40" 
+                    stroke="#00000060" 
                     fontSize={12} 
                     tickLine={false} 
                     axisLine={false}
                   />
                   <Tooltip 
-                    cursor={{fill: '#ffffff05'}}
+                    cursor={{fill: '#00000005'}}
                     contentStyle={{ 
-                      backgroundColor: '#1a1a1a', 
-                      border: '1px solid #ffffff10',
-                      borderRadius: '12px'
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #00000010',
+                      borderRadius: '12px',
+                      color: '#000000'
                     }}
                     itemStyle={{ color: '#0066FF' }}
                   />
@@ -393,10 +395,10 @@ function DashboardPage() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
         {stats.map((s) => (
-          <Card key={s.label} className="bg-card/40 backdrop-blur-sm border-white/5 shadow-card hover:border-primary/20 transition-all group relative overflow-hidden">
+          <Card key={s.label} className="bg-card border-border shadow-sm hover:border-primary/40 transition-all group relative overflow-hidden">
             <CardContent className="pt-8 pb-6 relative z-10">
               <div className="flex items-start justify-between mb-4">
-                <div className={`p-4 rounded-2xl bg-white/5 border border-white/5 ${s.color} group-hover:scale-105 transition-transform`}>
+                <div className={`p-4 rounded-2xl bg-muted border border-border ${s.color} group-hover:scale-105 transition-transform`}>
                   <s.icon size={24} />
                 </div>
                 <div className="text-right">
@@ -413,8 +415,8 @@ function DashboardPage() {
       </div>
 
       {/* Bookings Table */}
-      <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden">
-        <CardHeader className="pb-2 flex flex-row items-center justify-between">
+      <Card className="bg-card border-border shadow-sm overflow-hidden">
+        <CardHeader className="pb-2 border-b border-border flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-xl uppercase font-black italic">Fila de Atendimento</CardTitle>
             <CardDescription>Gerencie o status de cada agendamento abaixo.</CardDescription>
@@ -436,8 +438,8 @@ function DashboardPage() {
         <CardContent className="p-0 sm:p-6">
           <div className="overflow-x-auto">
             <Table>
-              <TableHeader className="bg-muted/10">
-                <TableRow className="hover:bg-transparent border-white/5">
+              <TableHeader className="bg-muted">
+                <TableRow className="hover:bg-transparent border-border">
                   <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Paciente</TableHead>
                   <TableHead className="font-bold text-xs uppercase tracking-wider py-4">CPF</TableHead>
                   <TableHead className="font-bold text-xs uppercase tracking-wider py-4">Agendado</TableHead>
@@ -456,7 +458,7 @@ function DashboardPage() {
                   </TableRow>
                 ) : (
                   bookings?.map((b) => (
-                    <TableRow key={b.id} className="hover:bg-white/5 border-white/5 transition-colors">
+                    <TableRow key={b.id} className="hover:bg-muted/50 border-border transition-colors">
                       <TableCell>
                         <div className="flex flex-col">
                           <div className="flex items-center gap-2">
@@ -541,11 +543,11 @@ function DashboardPage() {
                       <TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
+                            <Button variant="ghost" size="icon" className="rounded-full hover:bg-muted">
                               <MoreHorizontal size={20} />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="glass border-white/10 text-foreground w-56">
+                          <DropdownMenuContent align="end" className="bg-card border-border text-foreground w-56 shadow-xl">
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ações de Status</div>
                             <DropdownMenuItem 
                               className="gap-2 font-bold text-primary focus:bg-primary/10 focus:text-primary"
@@ -553,7 +555,7 @@ function DashboardPage() {
                             >
                               <Copy size={16} /> Copiar Todos os Dados
                             </DropdownMenuItem>
-                            <div className="h-px bg-white/10 my-1" />
+                             <div className="h-px bg-border my-1" />
                             <DropdownMenuItem 
                               className="gap-2 focus:bg-emerald-500/10 focus:text-emerald-500"
                               onClick={() => updateMutation.mutate({ id: b.id, status: "confirmed" })}
@@ -561,7 +563,7 @@ function DashboardPage() {
                               <CheckCircle size={16} /> Confirmar Contato
                             </DropdownMenuItem>
                             
-                            <div className="h-px bg-white/10 my-1" />
+                             <div className="h-px bg-border my-1" />
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Atribuir Médico</div>
                             {doctors?.map((doc) => (
                               <DropdownMenuItem 
@@ -576,7 +578,7 @@ function DashboardPage() {
                               <div className="px-2 py-1.5 text-[10px] text-muted-foreground italic">Nenhum médico cadastrado</div>
                             )}
 
-                            <div className="h-px bg-white/10 my-1" />
+                             <div className="h-px bg-border my-1" />
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Pagamento</div>
                             <DropdownMenuItem 
                               className="gap-2 focus:bg-blue-500/10 focus:text-blue-400"
@@ -591,7 +593,7 @@ function DashboardPage() {
                               <Clock size={16} /> Voltar para Pendente
                             </DropdownMenuItem>
 
-                            <div className="h-px bg-white/10 my-1" />
+                             <div className="h-px bg-border my-1" />
                             <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Atendimento</div>
                             <DropdownMenuItem 
                               className="gap-2 focus:bg-purple-500/10 focus:text-purple-400"
@@ -606,7 +608,7 @@ function DashboardPage() {
                               <XCircle size={16} /> Marcar como FALTOU
                             </DropdownMenuItem>
 
-                            <div className="h-px bg-white/10 my-1" />
+                            <div className="h-px bg-border my-1" />
                             <DropdownMenuItem 
                               className="gap-2 text-destructive focus:bg-destructive/10 focus:text-destructive"
                               onClick={() => updateMutation.mutate({ id: b.id, status: "cancelled" })}

@@ -97,10 +97,10 @@ function DoctorsPage() {
               <Plus className="mr-2 h-6 w-6" /> Novo Médico
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-card border-white/10 text-foreground">
+          <DialogContent className="bg-card border-border text-foreground shadow-xl">
             <form onSubmit={handleSubmit}>
               <DialogHeader>
-                <DialogTitle className="text-2xl font-black uppercase italic italic text-primary">Cadastrar Médico</DialogTitle>
+                <DialogTitle className="text-2xl font-black uppercase italic text-primary">Cadastrar Médico</DialogTitle>
                 <DialogDescription className="text-muted-foreground">Adicione um novo profissional ao sistema.</DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-6">
@@ -108,7 +108,7 @@ function DoctorsPage() {
                   <Label htmlFor="name" className="font-bold uppercase tracking-widest text-[10px] opacity-70">Nome Completo</Label>
                   <Input 
                     id="name" 
-                    className="bg-white/5 border-white/10 rounded-xl h-12" 
+                    className="bg-muted border-border rounded-xl h-12 focus:ring-primary" 
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                     required 
@@ -119,7 +119,8 @@ function DoctorsPage() {
                   <Input 
                     id="email" 
                     type="email" 
-                    className="bg-white/5 border-white/10 rounded-xl h-12" 
+                    className="bg-muted border-border rounded-xl h-12 focus:ring-primary" 
+
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     required 
@@ -129,7 +130,7 @@ function DoctorsPage() {
                   <Label htmlFor="specialty" className="font-bold uppercase tracking-widest text-[10px] opacity-70">Especialidade</Label>
                   <Input 
                     id="specialty" 
-                    className="bg-white/5 border-white/10 rounded-xl h-12" 
+                    className="bg-muted border-border rounded-xl h-12 focus:ring-primary" 
                     value={formData.specialty}
                     onChange={(e) => setFormData({...formData, specialty: e.target.value})}
                   />
@@ -145,11 +146,11 @@ function DoctorsPage() {
         </Dialog>
       </div>
 
-      <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden">
+      <Card className="bg-card border-border shadow-sm overflow-hidden">
         <CardContent className="p-0 sm:p-6">
           <Table>
-            <TableHeader className="bg-white/[0.02]">
-              <TableRow className="border-white/10 hover:bg-transparent">
+            <TableHeader className="bg-muted">
+              <TableRow className="border-border hover:bg-transparent">
                 <TableHead className="font-black uppercase tracking-widest text-[10px] opacity-70">Médico</TableHead>
                 <TableHead className="font-black uppercase tracking-widest text-xs">Especialidade</TableHead>
                 <TableHead className="font-black uppercase tracking-widest text-xs">E-mail</TableHead>
@@ -158,7 +159,7 @@ function DoctorsPage() {
             </TableHeader>
             <TableBody>
               {doctors?.map((doc) => (
-                <TableRow key={doc.id} className="border-white/5 hover:bg-white/5 transition-colors">
+                <TableRow key={doc.id} className="border-border hover:bg-muted/50 transition-colors">
                   <TableCell className="font-bold text-lg">{doc.name}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2 text-primary font-bold">

@@ -33,9 +33,9 @@ function AdminLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col lg:flex-row font-sans">
+    <div className="min-h-screen bg-background text-foreground flex flex-col lg:flex-row font-sans admin-light">
       {/* Sidebar */}
-      <aside className="w-full lg:w-72 bg-card/30 backdrop-blur-xl border-r border-white/5 p-6 flex flex-col gap-10 z-20">
+      <aside className="w-full lg:w-72 bg-card border-r border-border p-6 flex flex-col gap-10 z-20 shadow-sm">
         <div className="flex items-center gap-3 px-2">
           <div className="bg-primary/5 p-2 rounded-2xl border border-primary/10">
             <img src={logo} alt="UniDoc" width={42} height={42} className="rounded-xl" />
@@ -49,7 +49,7 @@ function AdminLayout() {
         <nav className="flex-1 space-y-2">
           <Button 
             variant="ghost" 
-            className={`w-full justify-start gap-4 h-12 rounded-xl transition-all ${location.pathname === '/admin' || location.pathname === '/admin/' ? 'bg-primary/10 text-primary font-bold border border-primary/10' : 'text-muted-foreground hover:bg-white/5'}`}
+            className={`w-full justify-start gap-4 h-12 rounded-xl transition-all ${location.pathname === '/admin' || location.pathname === '/admin/' ? 'bg-primary/10 text-primary font-bold border border-primary/10' : 'text-muted-foreground hover:bg-accent'}`}
             onClick={() => navigate({ to: "/admin" })}
           >
             <LayoutDashboard size={20} />
@@ -57,21 +57,21 @@ function AdminLayout() {
           </Button>
           <Button 
             variant="ghost" 
-            className={`w-full justify-start gap-4 h-12 rounded-xl transition-all group ${location.pathname === '/admin/doctors' ? 'bg-primary/10 text-primary font-bold border border-primary/10' : 'text-muted-foreground hover:bg-white/5'}`}
+            className={`w-full justify-start gap-4 h-12 rounded-xl transition-all group ${location.pathname === '/admin/doctors' ? 'bg-primary/10 text-primary font-bold border border-primary/10' : 'text-muted-foreground hover:bg-accent'}`}
             onClick={() => navigate({ to: "/admin/doctors" })}
           >
             <Users size={20} className={location.pathname === '/admin/doctors' ? 'text-primary' : 'group-hover:text-primary transition-colors'} />
             <span className="font-semibold">Médicos</span>
           </Button>
-          <Button variant="ghost" className="w-full justify-start gap-4 h-12 rounded-xl text-muted-foreground hover:bg-white/5 transition-all group opacity-50" disabled>
+          <Button variant="ghost" className="w-full justify-start gap-4 h-12 rounded-xl text-muted-foreground hover:bg-accent transition-all group opacity-50" disabled>
             <Settings size={20} />
             <span className="font-semibold">Configurações</span>
           </Button>
         </nav>
 
-        <div className="pt-6 border-t border-white/5">
+        <div className="pt-6 border-t border-border">
           <div className="flex items-center gap-4 mb-6 px-2">
-            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-black text-lg border border-white/10">
+            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-black text-lg border border-primary/20 shadow-sm">
               {user?.email?.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
