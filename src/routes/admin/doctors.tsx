@@ -160,7 +160,7 @@ function DoctorsPage() {
             </TableHeader>
             <TableBody>
               {doctors?.map((doc) => (
-                <TableRow key={doc.id} className="border-border hover:bg-muted/50 transition-colors">
+                <TableRow key={doc.id} className="border-white/5 hover:bg-white/5 transition-colors">
                   <TableCell className="font-bold text-lg">{doc.name}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2 text-primary font-bold">
