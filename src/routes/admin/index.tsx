@@ -414,9 +414,24 @@ function DashboardPage() {
 
       {/* Bookings Table */}
       <Card className="bg-card/30 backdrop-blur-md border-white/5 shadow-card overflow-hidden">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-xl">Fila de Atendimento</CardTitle>
-          <CardDescription>Gerencie o status de cada agendamento abaixo.</CardDescription>
+        <CardHeader className="pb-2 flex flex-row items-center justify-between">
+          <div>
+            <CardTitle className="text-xl uppercase font-black italic">Fila de Atendimento</CardTitle>
+            <CardDescription>Gerencie o status de cada agendamento abaixo.</CardDescription>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-destructive hover:bg-destructive/10 font-bold uppercase tracking-widest text-[10px] h-8 px-4 rounded-xl border border-destructive/20"
+            onClick={() => {
+              if (confirm("Tem certeza que deseja zerar TODA a fila de atendimento? Esta ação não pode ser desfeita.")) {
+                clearMutation.mutate();
+              }
+            }}
+            disabled={clearMutation.isPending || !bookings || bookings.length === 0}
+          >
+            {clearMutation.isPending ? "Limpando..." : "Zerar Fila"}
+          </Button>
         </CardHeader>
         <CardContent className="p-0 sm:p-6">
           <div className="overflow-x-auto">
