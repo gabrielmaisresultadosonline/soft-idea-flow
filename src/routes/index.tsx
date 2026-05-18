@@ -170,10 +170,15 @@ function Index() {
 
       {/* HERO */}
       <section className="relative overflow-hidden">
-        <div className="mx-auto max-w-5xl px-5 lg:px-8 py-24 lg:py-36 text-center">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs sm:text-sm font-medium">
-            <ShieldCheck size={16} /> Em conformidade com o CFM • Resolução 2.314/2022
-          </span>
+        <div className="mx-auto max-w-5xl px-5 lg:px-8 py-20 lg:py-28 text-center">
+          <div className="flex flex-col items-center gap-6 mb-8">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs sm:text-sm font-medium">
+              <ShieldCheck size={16} /> Em conformidade com o CFM • Resolução 2.314/2022
+            </span>
+            <span className="text-primary font-bold tracking-[0.2em] uppercase text-xs sm:text-sm animate-pulse">
+              CONSULTA RÁPIDA E ACESSÍVEL • R$50
+            </span>
+          </div>
           <h1 className="mt-8 text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.05]">
             Médico online para
             <br className="hidden sm:block" /> quem não tem tempo de
