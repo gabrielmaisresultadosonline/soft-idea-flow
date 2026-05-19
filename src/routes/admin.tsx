@@ -7,6 +7,8 @@ import logo from "@/assets/unidoc-official-logo.png";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: async ({ location }) => {
+    if (typeof window === "undefined") return;
+
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) {
       throw redirect({
