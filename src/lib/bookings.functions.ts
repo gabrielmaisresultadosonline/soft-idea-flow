@@ -34,7 +34,38 @@ export const createBooking = createServerFn({ method: "POST" })
       throw new Error("Falha ao agendar consulta. Tente novamente.");
     }
 
+    // Try to send emails asynchronously (don't block the response)
+    (async () => {
+      try {
+        // 1. Send confirmation to client
+        await sendEmail({
+          to: data.email,
+          subject: "UniDoc - Recebemos seu agendamento!",
+          html: clientEmailTemplate(data.fullName),
+        });
+
+        // 2. Fetch admin email from settings
+        const settings = await getAppSettings();
+        const adminEmail = settings?.notification_email || 'suporte@unidoctelemedicina.com.br';
+
+        // 3. Send notification to admin
+        await sendEmail({
+          to: adminEmail,
+          subject: "Novo Agendamento UniDoc!",
+          html: adminEmailTemplate({
+            name: data.fullName,
+            email: data.email,
+            whatsapp: data.whatsapp,
+            time: data.appointmentTime,
+          }),
+        });
+      } catch (err) {
+        console.error("Error in post-booking email process:", err);
+      }
+    })();
+
     return { success: true };
+
   });
 
 /**
