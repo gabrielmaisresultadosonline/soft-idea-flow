@@ -39,8 +39,9 @@ function AdminSettings() {
       await updateSettingsFn({ data: { notificationEmail } });
       toast.success("Configurações atualizadas com sucesso!");
       refetch();
-    } catch (error) {
-      toast.error("Erro ao atualizar configurações.");
+    } catch (error: any) {
+      console.error("Save settings error:", error);
+      toast.error(error?.message || "Erro ao atualizar configurações.");
     } finally {
       setIsSaving(false);
     }
