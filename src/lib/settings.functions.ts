@@ -1,15 +1,19 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { supabaseAnon } from "./supabase-anon.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+
 
 export const getAppSettings = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async () => {
-    const { data, error } = await supabaseAdmin
+    // Usamos supabaseAnon aqui para evitar depender da SERVICE_ROLE_KEY na VPS
+    const { data, error } = await supabaseAnon
       .from("app_settings")
       .select("*")
       .single();
+
 
     if (error) {
       console.error("Error fetching settings:", error);
