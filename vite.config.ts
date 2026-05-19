@@ -12,4 +12,12 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
+  vite: {
+    build: {
+      ssr: true,
+      rollupOptions: {
+        external: ['node:events', 'node:async_hooks', 'node:stream', 'node:buffer', 'node:util']
+      }
+    }
+  }
 });
