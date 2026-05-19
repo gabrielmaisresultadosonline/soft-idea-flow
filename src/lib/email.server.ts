@@ -17,6 +17,7 @@ interface SendEmailParams {
 }
 
 export async function sendEmail({ to, subject, html }: SendEmailParams) {
+  console.log(`[Email] Tentando enviar e-mail para: ${to} com assunto: ${subject}`);
   try {
     const info = await transporter.sendMail({
       from: '"UniDoc Telemedicina" <suporte@unidoctelemedicina.com.br>',
@@ -24,13 +25,19 @@ export async function sendEmail({ to, subject, html }: SendEmailParams) {
       subject,
       html,
     });
-    console.log("Message sent: %s", info.messageId);
+    console.log("[Email] Sucesso! ID da mensagem: %s", info.messageId);
     return { success: true, messageId: info.messageId };
-  } catch (error) {
-    console.error("Error sending email:", error);
+  } catch (error: any) {
+    console.error("[Email] ERRO ao enviar e-mail:", error);
+    // Log detalhado do erro de SMTP
+    if (error.code) console.error(`[Email] Código do erro: ${error.code}`);
+    if (error.command) console.error(`[Email] Comando que falhou: ${error.command}`);
+    if (error.response) console.error(`[Email] Resposta do servidor: ${error.response}`);
+    
     return { success: false, error };
   }
 }
+
 
 export const clientEmailTemplate = (name: string) => `
 <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
