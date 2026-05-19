@@ -19,8 +19,8 @@ function LoginPage() {
   const navigate = useNavigate();
   const runSetup = useServerFn(setupAdmin);
   
-  const [email, setEmail] = useState("ededwindacruz@gmail.com");
-  const [password, setPassword] = useState("maisresultadosonline");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
 
@@ -49,7 +49,8 @@ function LoginPage() {
       });
 
       if (error || !data.session) {
-        toast.error("Credenciais inválidas.");
+        console.error("Login error:", error);
+        toast.error(error?.message || "Credenciais inválidas.");
         setIsLoading(false);
         return;
       }
