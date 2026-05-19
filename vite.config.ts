@@ -8,8 +8,13 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   tanstackStart: {
-    // Forcing SPA mode to avoid SSR issues on VPS
-    ssr: false,
+    // Ensuring we are targeting a node environment if possible, 
+    // but the main issue is the lack of a simple entry point for VPS.
     server: { entry: "server" },
   },
+  vite: {
+    build: {
+      outDir: 'dist',
+    }
+  }
 });
