@@ -8,18 +8,13 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   tanstackStart: {
+    // Attempting to generate a client-only build that includes index.html
+    ssr: false,
     server: { entry: "server" },
   },
   vite: {
-    server: {
-      host: true,
-      port: 3000,
-      allowedHosts: true
-    },
-    preview: {
-      host: true,
-      port: 3000,
-      allowedHosts: true
+    build: {
+      outDir: 'dist',
     }
   }
 });
