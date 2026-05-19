@@ -2,24 +2,22 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { supabaseAnon } from "./supabase-anon.server";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 
 export const getAppSettings = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async () => {
-    // Usamos supabaseAnon aqui para evitar depender da SERVICE_ROLE_KEY na VPS
     const { data, error } = await supabaseAnon
       .from("app_settings")
       .select("*")
-      .single();
-
+      .limit(1)
+      .maybeSingle();
 
     if (error) {
-      console.error("Error fetching settings:", error);
+      console.error("[Settings] Error fetching:", error);
       throw new Error("Falha ao buscar configurações.");
     }
-    return data;
+    return data ?? { id: null, notification_email: "suporte@unidoctelemedicina.com.br", updated_at: null };
   });
 
 export const updateAppSettings = createServerFn({ method: "POST" })
@@ -29,15 +27,49 @@ export const updateAppSettings = createServerFn({ method: "POST" })
       notificationEmail: z.string().email(),
     }).parse(data)
   )
-  .handler(async ({ data }) => {
-    const { error } = await supabaseAdmin
-      .from("app_settings")
-      .update({ notification_email: data.notificationEmail })
-      .neq("id", "00000000-0000-0000-0000-000000000000"); // Update any existing row
+  .handler(async ({ data, context }) => {
+    // Usa o cliente autenticado (RLS: admin can manage) em vez do service role
+    // para não depender da SERVICE_ROLE_KEY na VPS.
+    const { supabase, userId } = context;
+    console.log(`[Settings] Update requested by user ${userId} -> ${data.notificationEmail}`);
 
-    if (error) {
-      console.error("Error updating settings:", error);
-      throw new Error("Falha ao atualizar configurações.");
+    // Busca a linha existente
+    const { data: existing, error: fetchErr } = await supabase
+      .from("app_settings")
+      .select("id")
+      .limit(1)
+      .maybeSingle();
+
+    if (fetchErr) {
+      console.error("[Settings] Fetch existing failed:", fetchErr);
+      throw new Error(`Falha ao localizar configurações: ${fetchErr.message}`);
     }
+
+    if (existing?.id) {
+      const { error, count } = await supabase
+        .from("app_settings")
+        .update({ notification_email: data.notificationEmail, updated_at: new Date().toISOString() }, { count: "exact" })
+        .eq("id", existing.id);
+
+      if (error) {
+        console.error("[Settings] Update failed:", error);
+        throw new Error(`Falha ao atualizar configurações: ${error.message}`);
+      }
+      console.log(`[Settings] Rows updated: ${count}`);
+      if (!count) {
+        throw new Error("Nenhuma linha atualizada. Verifique se você tem permissão de admin.");
+      }
+    } else {
+      const { error } = await supabase
+        .from("app_settings")
+        .insert({ notification_email: data.notificationEmail });
+
+      if (error) {
+        console.error("[Settings] Insert failed:", error);
+        throw new Error(`Falha ao criar configurações: ${error.message}`);
+      }
+      console.log("[Settings] Row inserted");
+    }
+
     return { success: true };
   });
