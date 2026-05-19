@@ -43,24 +43,27 @@ function LoginPage() {
     setIsLoading(true);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) {
+      if (error || !data.session) {
         toast.error("Credenciais inválidas.");
+        setIsLoading(false);
         return;
       }
 
       toast.success("Bem-vindo de volta!");
-      navigate({ to: "/admin" });
+      // Força um recarregamento completo para garantir que a sessão esteja ativa
+      // antes do beforeLoad do /admin verificar a autenticação
+      window.location.href = "/admin";
     } catch (error: any) {
       toast.error(error.message || "Erro ao fazer login.");
-    } finally {
       setIsLoading(false);
     }
   };
+
 
   if (isInitializing) {
     return (
