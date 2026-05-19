@@ -8,13 +8,12 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   tanstackStart: {
-    // Ensuring we are targeting a node environment if possible, 
-    // but the main issue is the lack of a simple entry point for VPS.
     server: { entry: "server" },
   },
   vite: {
-    build: {
-      outDir: 'dist',
+    server: {
+      host: true,
+      port: 3000
     }
   }
 });
