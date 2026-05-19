@@ -14,12 +14,12 @@ export default defineConfig({
     server: {
       host: true,
       port: 3000,
-      allowedHosts: ["unidoctelemedicina.com.br", "www.unidoctelemedicina.com.br", "2.24.107.250"]
+      allowedHosts: true
     },
     preview: {
       host: true,
       port: 3000,
-      allowedHosts: ["unidoctelemedicina.com.br", "www.unidoctelemedicina.com.br", "2.24.107.250"]
+      allowedHosts: true
     }
   }
 });
