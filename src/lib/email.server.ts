@@ -3,12 +3,17 @@ import nodemailer from 'nodemailer';
 const transporter = nodemailer.createTransport({
   host: "smtp.hostinger.com",
   port: 465,
-  secure: true, // true for 465, false for other ports
+  secure: true,
   auth: {
     user: "suporte@unidoctelemedicina.com.br",
     pass: "29041997Ga@@",
   },
+  // Adicionando timeout e debug
+  connectionTimeout: 10000,
+  debug: true,
+  logger: true
 });
+
 
 interface SendEmailParams {
   to: string;
