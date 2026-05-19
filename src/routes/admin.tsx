@@ -44,7 +44,7 @@ function AdminLayout() {
       <div className="lg:hidden flex items-center justify-between p-4 bg-card/50 backdrop-blur-xl border-b border-white/5 sticky top-0 z-50">
         <div className="flex items-center gap-2">
           <div className="bg-primary/5 p-1.5 rounded-xl border border-primary/10">
-            <img src={logo} alt="UniDoc" width={32} height={32} className="rounded-lg" />
+            <img src={logo} alt="UniDoc" className="w-8 h-8 rounded-lg object-contain" />
           </div>
           <span className="font-black text-xl tracking-tighter text-primary uppercase">UniDoc</span>
         </div>
@@ -66,7 +66,7 @@ function AdminLayout() {
       `}>
         <div className="hidden lg:flex items-center gap-3 px-2">
           <div className="bg-primary/5 p-2 rounded-2xl border border-primary/10">
-            <img src={logo} alt="UniDoc" width={42} height={42} className="rounded-xl" />
+            <img src={logo} alt="UniDoc" className="w-10 h-10 rounded-xl object-contain" />
           </div>
           <div className="flex flex-col">
             <span className="font-black text-2xl tracking-tighter text-primary uppercase">UniDoc</span>
