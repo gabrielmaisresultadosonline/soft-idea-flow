@@ -8,7 +8,8 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   tanstackStart: {
-    server: { entry: "server" },
+    // Attempting to fix the missing server.js error by explicitly setting the entry
+    server: { entry: "src/server.ts" },
   },
   vite: {
     server: {
