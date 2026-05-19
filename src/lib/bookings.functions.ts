@@ -35,29 +35,25 @@ export const createBooking = createServerFn({ method: "POST" })
       throw new Error("Falha ao agendar consulta. Tente novamente.");
     }
 
-    // Try to send emails asynchronously
+    // Envia e-mails de forma assíncrona (não bloqueia a resposta para o usuário)
     (async () => {
-      console.log(`[Booking] Iniciando processo de e-mail para: ${data.email}`);
+      console.log(`[Booking] Iniciando processo de e-mail para paciente: ${data.email}`);
       try {
-        // 1. Send confirmation to client
-        const clientEmailRes = await sendEmail({
-          to: data.email,
-          subject: "UniDoc - Recebemos seu agendamento!",
-          html: clientEmailTemplate(data.fullName),
-        });
-        console.log(`[Booking] Resultado e-mail cliente:`, clientEmailRes.success ? "Enviado" : "Falhou");
-
-        // 2. Fetch admin email from settings directly from DB to avoid auth middleware issues
-        const { data: settings } = await supabaseAnon
+        // 1. Tenta buscar o e-mail do admin nas configurações
+        const { data: settings, error: settingsError } = await supabaseAnon
           .from("app_settings")
           .select("notification_email")
-          .single();
+          .maybeSingle();
         
-        const adminEmail = settings?.notification_email || 'suporte@unidoctelemedicina.com.br';
+        if (settingsError) {
+          console.error("[Booking] Erro ao buscar e-mail do admin:", settingsError);
+        }
 
+        const adminEmail = settings?.notification_email || 'suporte@unidoctelemedicina.com.br';
         console.log(`[Booking] E-mail do admin para notificação: ${adminEmail}`);
 
-        // 3. Send notification to admin
+        // 2. Enviar notificação para o ADMIN (Prioritário para o proprietário saber do agendamento)
+        console.log(`[Booking] Enviando e-mail para ADMIN: ${adminEmail}`);
         const adminEmailRes = await sendEmail({
           to: adminEmail,
           subject: "Novo Agendamento UniDoc!",
@@ -68,9 +64,19 @@ export const createBooking = createServerFn({ method: "POST" })
             time: data.appointmentTime,
           }),
         });
-        console.log(`[Booking] Resultado e-mail admin:`, adminEmailRes.success ? "Enviado" : "Falhou");
+        console.log(`[Booking] Resultado e-mail admin:`, adminEmailRes.success ? "Sucesso" : `FALHA (${adminEmailRes.error?.message || 'Erro desconhecido'})`);
+
+        // 3. Enviar confirmação para o CLIENTE
+        console.log(`[Booking] Enviando e-mail para CLIENTE: ${data.email}`);
+        const clientEmailRes = await sendEmail({
+          to: data.email,
+          subject: "UniDoc - Recebemos seu agendamento!",
+          html: clientEmailTemplate(data.fullName),
+        });
+        console.log(`[Booking] Resultado e-mail cliente:`, clientEmailRes.success ? "Sucesso" : `FALHA (${clientEmailRes.error?.message || 'Erro desconhecido'})`);
+
       } catch (err) {
-        console.error("[Booking] Erro crítico no processo de e-mail pós-agendamento:", err);
+        console.error("[Booking] Erro crítico inesperado no processo de e-mail:", err);
       }
     })();
 
