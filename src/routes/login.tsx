@@ -86,19 +86,30 @@ function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6" autoComplete="off">
+            {/* Campos fantasmas para impedir o autofill do navegador */}
+            <input type="text" name="fakeusernameremembered" autoComplete="username" style={{ display: "none" }} tabIndex={-1} aria-hidden="true" />
+            <input type="password" name="fakepasswordremembered" autoComplete="new-password" style={{ display: "none" }} tabIndex={-1} aria-hidden="true" />
             <div className="space-y-2">
               <Label htmlFor="email">E-mail / Usuário</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-3 text-muted-foreground" size={18} />
                 <Input 
                   id="email" 
+                  name="login-email"
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="E-mail"
                   className="pl-10 bg-white/5 border-white/10"
                   required
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
+                  data-form-type="other"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
                 />
               </div>
             </div>
@@ -108,15 +119,24 @@ function LoginPage() {
                 <Lock className="absolute left-3 top-3 text-muted-foreground" size={18} />
                 <Input 
                   id="password" 
+                  name="login-password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   className="pl-10 bg-white/5 border-white/10"
                   required
+                  autoComplete="new-password"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
+                  data-form-type="other"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
                 />
               </div>
             </div>
+
             <Button 
               type="submit" 
               className="w-full bg-primary-gradient text-primary-foreground font-bold h-12 rounded-full"
