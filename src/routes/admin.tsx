@@ -91,10 +91,15 @@ function AdminLayout() {
             <Users size={20} className={location.pathname === '/admin/doctors' ? 'text-primary' : 'group-hover:text-primary transition-colors'} />
             <span className="font-semibold">Médicos</span>
           </Button>
-          <Button variant="ghost" className="w-full justify-start gap-4 h-12 rounded-xl text-muted-foreground hover:bg-white/5 transition-all group opacity-50" disabled>
-            <Settings size={20} />
+          <Button 
+            variant="ghost" 
+            className={`w-full justify-start gap-4 h-12 rounded-xl transition-all group ${location.pathname === '/admin/settings' ? 'bg-primary/10 text-primary font-bold border border-primary/10 shadow-[0_0_15px_-5px_oklch(var(--primary)/0.3)]' : 'text-muted-foreground hover:bg-white/5'}`}
+            onClick={() => navigate({ to: "/admin/settings" })}
+          >
+            <Settings size={20} className={location.pathname === '/admin/settings' ? 'text-primary' : 'group-hover:text-primary transition-colors'} />
             <span className="font-semibold">Configurações</span>
           </Button>
+
         </nav>
 
         <div className="pt-6 border-t border-white/5 mt-auto">
