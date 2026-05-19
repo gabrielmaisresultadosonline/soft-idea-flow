@@ -1,7 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { supabaseAnon } from "./supabase-anon.server";
+import { sendEmail, clientEmailTemplate, adminEmailTemplate } from "./email.server";
+import { getAppSettings } from "./settings.functions";
 
 /**
  * Creates a new booking in the database. Public.
@@ -34,7 +37,7 @@ export const createBooking = createServerFn({ method: "POST" })
       throw new Error("Falha ao agendar consulta. Tente novamente.");
     }
 
-    // Try to send emails asynchronously (don't block the response)
+    // Try to send emails asynchronously
     (async () => {
       try {
         // 1. Send confirmation to client
@@ -65,7 +68,6 @@ export const createBooking = createServerFn({ method: "POST" })
     })();
 
     return { success: true };
-
   });
 
 /**
