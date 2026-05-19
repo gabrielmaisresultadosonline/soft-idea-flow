@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { supabaseAnon } from "./supabase-anon.server";
 
 export const trackVisit = createServerFn({ method: "POST" })
   .inputValidator((data) =>
@@ -12,7 +12,7 @@ export const trackVisit = createServerFn({ method: "POST" })
     }).parse(data)
   )
   .handler(async ({ data }) => {
-    const { error } = await supabaseAdmin.from("site_visits").insert({
+    const { error } = await supabaseAnon.from("site_visits").insert({
       path: data.path,
       user_agent: data.userAgent,
       referrer: data.referrer,
@@ -31,7 +31,6 @@ export const getAnalytics = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
 
-    // Verify admin
     const { data: isAdmin } = await supabase.rpc("has_role", {
       _user_id: userId,
       _role: "admin",
@@ -41,7 +40,6 @@ export const getAnalytics = createServerFn({ method: "GET" })
       throw new Error("Acesso negado.");
     }
 
-    // Get visits from the last 24 hours
     const { data: visits, error } = await supabase
       .from("site_visits")
       .select("*")

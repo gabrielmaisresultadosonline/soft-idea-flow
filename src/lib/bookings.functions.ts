@@ -1,11 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { supabaseAnon } from "./supabase-anon.server";
 
 /**
- * Creates a new booking in the database.
- * This is a public function.
+ * Creates a new booking in the database. Public.
  */
 export const createBooking = createServerFn({ method: "POST" })
   .inputValidator((data) =>
@@ -16,12 +15,12 @@ export const createBooking = createServerFn({ method: "POST" })
         whatsapp: z.string().min(8),
         cpf: z.string().min(11),
         lgpdAccepted: z.boolean(),
-        appointmentTime: z.string(), // ISO string
+        appointmentTime: z.string(),
       })
       .parse(data)
   )
   .handler(async ({ data }) => {
-    const { error } = await supabaseAdmin.from("bookings").insert({
+    const { error } = await supabaseAnon.from("bookings").insert({
       full_name: data.fullName,
       email: data.email,
       whatsapp: data.whatsapp,
@@ -39,15 +38,13 @@ export const createBooking = createServerFn({ method: "POST" })
   });
 
 /**
- * Fetches all bookings.
- * Only for admins.
+ * Fetches all bookings. Admins only (enforced by RLS).
  */
 export const getBookings = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
 
-    // First, verify the user is actually an admin using the has_role function
     const { data: isAdmin, error: roleError } = await supabase.rpc("has_role", {
       _user_id: userId,
       _role: "admin",
@@ -70,10 +67,6 @@ export const getBookings = createServerFn({ method: "GET" })
     return data;
   });
 
-/**
- * Updates a booking status.
- * Only for admins.
- */
 export const updateBookingStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data) =>
@@ -117,10 +110,6 @@ export const updateBookingStatus = createServerFn({ method: "POST" })
     return { success: true };
   });
 
-/**
- * Deletes all bookings.
- * Only for admins.
- */
 export const clearBookings = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
@@ -135,7 +124,10 @@ export const clearBookings = createServerFn({ method: "POST" })
       throw new Error("Acesso negado.");
     }
 
-    const { error } = await supabaseAdmin.from("bookings").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+    const { error } = await supabase
+      .from("bookings")
+      .delete()
+      .neq("id", "00000000-0000-0000-0000-000000000000");
 
     if (error) {
       console.error("Error clearing bookings:", error);
@@ -146,47 +138,10 @@ export const clearBookings = createServerFn({ method: "POST" })
   });
 
 /**
- * Internal setup function to create the initial admin user.
- * This should only be called once or in development.
+ * Setup admin function — DEPRECATED. Required SUPABASE_SERVICE_ROLE_KEY.
+ * Now disabled. Create the initial admin manually via the database.
  */
 export const setupAdmin = createServerFn({ method: "POST" })
   .handler(async () => {
-    const email = "ededwindacruz@gmail.com";
-    const password = "maisresultadosonline";
-
-    // Check if user exists
-    const { data: users } = await supabaseAdmin.auth.admin.listUsers();
-    let user = users.users.find((u) => u.email === email);
-
-    if (!user) {
-      const { data: newUser, error: createError } =
-        await supabaseAdmin.auth.admin.createUser({
-          email,
-          password,
-          email_confirm: true,
-        });
-
-      if (createError) {
-        console.error("Error creating admin user:", createError);
-        return { error: createError.message };
-      }
-      user = newUser.user;
-    }
-
-    if (user) {
-      // Ensure the user has the admin role
-      const { error: roleError } = await supabaseAdmin
-        .from("user_roles")
-        .upsert({
-          user_id: user.id,
-          role: "admin",
-        }, { onConflict: "user_id,role" });
-
-      if (roleError) {
-        console.error("Error assigning admin role:", roleError);
-        return { error: roleError.message };
-      }
-    }
-
-    return { success: true, email };
+    return { error: "setupAdmin desativado. Crie o admin manualmente." };
   });
