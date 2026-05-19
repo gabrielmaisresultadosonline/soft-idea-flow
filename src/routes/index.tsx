@@ -136,7 +136,7 @@ function Index() {
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/40 border-b border-white/5">
         <nav className="mx-auto max-w-7xl px-5 lg:px-8 h-20 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 group">
-            <img src={logo} alt="UniDoc" width={80} height={80} className="rounded-xl lg:w-32 lg:h-32 transition-transform group-hover:scale-105" />
+            <img src={logo} alt="UniDoc" className="w-10 h-10 lg:w-14 lg:h-14 rounded-xl transition-transform group-hover:scale-105 object-contain" />
             <span className="sr-only">UniDoc</span>
           </Link>
           <ul className="hidden lg:flex items-center gap-9 text-sm font-medium text-muted-foreground">
@@ -391,7 +391,7 @@ function Index() {
       <footer className="py-12 border-t border-white/5">
         <div className="mx-auto max-w-7xl px-5 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <img src={logo} alt="UniDoc" width={32} height={32} className="rounded-lg" />
+            <img src={logo} alt="UniDoc" className="w-8 h-8 rounded-lg object-contain" />
             <span>© {new Date().getFullYear()} UniDoc. Todos os direitos reservados.</span>
           </div>
           <div className="flex items-center gap-6">
