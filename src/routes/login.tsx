@@ -1,42 +1,30 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import { useServerFn } from "@tanstack/react-start";
-import { setupAdmin } from "@/lib/bookings.functions";
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Lock, Mail, Loader2 } from "lucide-react";
+import { Lock, Mail } from "lucide-react";
 import logo from "@/assets/unidoc-official-logo.png";
 
 export const Route = createFileRoute("/login")({
+  validateSearch: (search) => ({
+    redirect: typeof search.redirect === "string" && search.redirect.startsWith("/admin")
+      ? search.redirect
+      : "/admin",
+  }),
   component: LoginPage,
 });
 
 function LoginPage() {
   const navigate = useNavigate();
-  const runSetup = useServerFn(setupAdmin);
+  const search = Route.useSearch();
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isInitializing, setIsInitializing] = useState(true);
-
-  useEffect(() => {
-    // Ensure admin user exists on first load
-    const init = async () => {
-      try {
-        await runSetup();
-      } catch (err) {
-        console.error("Setup failed", err);
-      } finally {
-        setIsInitializing(false);
-      }
-    };
-    init();
-  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,23 +44,13 @@ function LoginPage() {
       }
 
       toast.success("Bem-vindo de volta!");
-      // Força um recarregamento completo para garantir que a sessão esteja ativa
-      // antes do beforeLoad do /admin verificar a autenticação
-      window.location.href = "/admin";
+      await supabase.auth.getSession();
+      await navigate({ to: search.redirect as "/admin", replace: true });
     } catch (error: any) {
       toast.error(error.message || "Erro ao fazer login.");
       setIsLoading(false);
     }
   };
-
-
-  if (isInitializing) {
-    return (
-      <div className="bg-hero min-h-screen flex items-center justify-center p-6">
-        <Loader2 className="animate-spin text-primary" size={48} />
-      </div>
-    );
-  }
 
   return (
     <div className="bg-hero min-h-screen flex items-center justify-center p-6">
