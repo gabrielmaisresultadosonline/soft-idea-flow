@@ -39,20 +39,23 @@ export const createBooking = createServerFn({ method: "POST" })
 
     // Try to send emails asynchronously
     (async () => {
+      console.log(`[Booking] Iniciando processo de e-mail para: ${data.email}`);
       try {
         // 1. Send confirmation to client
-        await sendEmail({
+        const clientEmailRes = await sendEmail({
           to: data.email,
           subject: "UniDoc - Recebemos seu agendamento!",
           html: clientEmailTemplate(data.fullName),
         });
+        console.log(`[Booking] Resultado e-mail cliente:`, clientEmailRes.success ? "Enviado" : "Falhou");
 
         // 2. Fetch admin email from settings
         const settings = await getAppSettings();
         const adminEmail = settings?.notification_email || 'suporte@unidoctelemedicina.com.br';
+        console.log(`[Booking] E-mail do admin para notificação: ${adminEmail}`);
 
         // 3. Send notification to admin
-        await sendEmail({
+        const adminEmailRes = await sendEmail({
           to: adminEmail,
           subject: "Novo Agendamento UniDoc!",
           html: adminEmailTemplate({
@@ -62,10 +65,12 @@ export const createBooking = createServerFn({ method: "POST" })
             time: data.appointmentTime,
           }),
         });
+        console.log(`[Booking] Resultado e-mail admin:`, adminEmailRes.success ? "Enviado" : "Falhou");
       } catch (err) {
-        console.error("Error in post-booking email process:", err);
+        console.error("[Booking] Erro crítico no processo de e-mail pós-agendamento:", err);
       }
     })();
+
 
     return { success: true };
   });
