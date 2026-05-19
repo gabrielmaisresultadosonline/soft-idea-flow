@@ -8,12 +8,8 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   tanstackStart: {
+    // Forcing SPA mode to avoid SSR issues on VPS
+    ssr: false,
     server: { entry: "server" },
   },
-  vite: {
-    base: './',
-    build: {
-      outDir: 'dist',
-    }
-  }
 });
