@@ -28,9 +28,10 @@ export const trackMetaEvent = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }) => {
     if (!PIXEL_ID || !ACCESS_TOKEN) {
-      console.warn("Meta Pixel ID or Access Token not configured.");
+      // Silenciando o log repetitivo para focar no que importa
       return { success: false, error: "Missing configuration" };
     }
+
 
     const payload = {
       data: [
