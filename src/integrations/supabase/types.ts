@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_settings: {
+        Row: {
+          id: string
+          notification_email: string
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          notification_email?: string
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          notification_email?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       bookings: {
         Row: {
           appointment_time: string
