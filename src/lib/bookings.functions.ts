@@ -49,9 +49,14 @@ export const createBooking = createServerFn({ method: "POST" })
         });
         console.log(`[Booking] Resultado e-mail cliente:`, clientEmailRes.success ? "Enviado" : "Falhou");
 
-        // 2. Fetch admin email from settings
-        const settings = await getAppSettings();
+        // 2. Fetch admin email from settings directly from DB to avoid auth middleware issues
+        const { data: settings } = await supabaseAnon
+          .from("app_settings")
+          .select("notification_email")
+          .single();
+        
         const adminEmail = settings?.notification_email || 'suporte@unidoctelemedicina.com.br';
+
         console.log(`[Booking] E-mail do admin para notificação: ${adminEmail}`);
 
         // 3. Send notification to admin
