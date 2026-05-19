@@ -75,7 +75,7 @@ function LoginPage() {
       <Card className="max-w-md w-full glass border-white/10 shadow-glow">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <img src={logo} alt="UniDoc" width={64} height={64} className="rounded-2xl" />
+            <img src={logo} alt="UniDoc" className="w-16 h-16 rounded-2xl object-contain" />
           </div>
           <CardTitle className="text-2xl font-bold">Acesso Administrativo</CardTitle>
           <CardDescription>

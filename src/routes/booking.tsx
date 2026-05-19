@@ -221,7 +221,7 @@ function BookingPage() {
               <ArrowLeft size={20} />
             </Button>
             <div className="flex items-center gap-2">
-              <img src={logo} alt="UniDoc" width={32} height={32} className="rounded-lg" />
+              <img src={logo} alt="UniDoc" className="w-8 h-8 rounded-lg object-contain" />
               <h1 className="text-lg sm:text-xl font-bold tracking-tight">Agendamento</h1>
             </div>
           </div>
