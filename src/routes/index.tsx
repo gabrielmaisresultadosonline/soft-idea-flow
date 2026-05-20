@@ -216,9 +216,9 @@ function Index() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 bg-whatsapp text-whatsapp-foreground font-semibold px-7 py-4 rounded-full hover:scale-[1.03] transition-transform w-full sm:w-auto justify-center"
+              className="inline-flex items-center gap-3 bg-whatsapp text-black font-black px-10 py-5 rounded-full hover:scale-[1.05] transition-transform w-full sm:w-auto justify-center text-xl shadow-lg"
             >
-              <MessageCircle size={20} />
+              <MessageCircle size={28} strokeWidth={3} />
               Falar pelo WhatsApp
             </a>
           </div>
