@@ -116,6 +116,33 @@ function Index() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const trackEventFn = useServerFn(trackMetaEvent);
 
+  const handleWhatsAppClick = (location: string) => {
+    if (typeof window !== "undefined") {
+      // Browser tracking
+      if ((window as any).fbq) {
+        (window as any).fbq('track', 'Lead', {
+          content_name: 'WhatsApp Click',
+          content_category: location
+        });
+      }
+
+      // Server tracking
+      trackEventFn({
+        data: {
+          eventName: "Lead",
+          userData: {
+            clientUserAgent: window.navigator.userAgent,
+          },
+          customData: {
+            content_name: "WhatsApp Click",
+            location: location,
+          },
+          eventSourceUrl: window.location.href,
+        },
+      }).catch(err => console.error("Meta Tracking Error:", err));
+    }
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       trackEventFn({
@@ -216,6 +243,7 @@ function Index() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noreferrer"
+              onClick={() => handleWhatsAppClick('hero')}
               className="inline-flex items-center gap-3 bg-whatsapp text-black font-black px-10 py-5 rounded-full hover:scale-[1.05] transition-transform w-full sm:w-auto justify-center text-xl shadow-lg"
             >
               <MessageCircle size={28} strokeWidth={3} />
@@ -330,6 +358,7 @@ function Index() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => handleWhatsAppClick('cta')}
                 className="inline-flex items-center gap-2 bg-whatsapp text-whatsapp-foreground font-semibold px-7 py-4 rounded-full hover:scale-[1.03] transition-transform justify-center"
               >
                 <MessageCircle size={20} />
@@ -378,6 +407,7 @@ function Index() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noreferrer"
+              onClick={() => handleWhatsAppClick('faq')}
               className="inline-flex items-center gap-3 bg-whatsapp text-black font-black px-10 py-5 rounded-full hover:scale-[1.05] transition-transform text-xl shadow-lg"
             >
               <MessageCircle size={28} strokeWidth={3} />

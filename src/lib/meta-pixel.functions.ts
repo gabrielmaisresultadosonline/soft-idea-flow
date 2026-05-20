@@ -2,8 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import crypto from "crypto";
 
-const PIXEL_ID = process.env.META_PIXEL_ID;
-const ACCESS_TOKEN = process.env.META_ACCESS_TOKEN;
+const PIXEL_ID = process.env.META_PIXEL_ID || "1293284119061716";
+const ACCESS_TOKEN = process.env.META_ACCESS_TOKEN || "EAAV2KYXVHnEBRnZAwkzdwvVFN4K8oMsfur1uh7GDNt87Nbd7ZAvNFsqwd7T98PSN8n5bZBLOwbtakdSX6W6oalQF7XkOtFGaFcyDKIfCzZAVFdPhXu4l9bXSZBZCQ7hwZBiMw3j3pP2YQM4EN58QgPc81b804jarH4SZAEeyxhwKeVaZC4jpZBTeoT8IA9ZCkZCzXgZDZD";
 
 function hashData(data: string | undefined): string | null {
   if (!data) return null;
