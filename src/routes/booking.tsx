@@ -88,6 +88,16 @@ function BookingPage() {
     // Meta Pixel InitiateCheckout Event
     if (step === 2) {
       if (typeof window !== "undefined") {
+        // Browser tracking
+        if ((window as any).fbq) {
+          (window as any).fbq('track', 'InitiateCheckout', {
+            currency: "BRL",
+            value: "50.00",
+            content_name: "Consulta Online",
+          });
+        }
+
+        // Server tracking
         trackEventFn({
           data: {
             eventName: "InitiateCheckout",
@@ -141,6 +151,16 @@ function BookingPage() {
 
       // Meta Pixel Lead Event
       if (typeof window !== "undefined") {
+        // Browser tracking
+        if ((window as any).fbq) {
+          (window as any).fbq('track', 'Lead', {
+            currency: "BRL",
+            value: "50.00",
+            content_name: "Consulta Online",
+          });
+        }
+
+        // Server tracking
         trackEventFn({
           data: {
             eventName: "Lead",
