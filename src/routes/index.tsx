@@ -50,8 +50,8 @@ const steps = [
   {
     n: "02",
     icon: CreditCard,
-    title: "Pague",
-    desc: "Pague via Pix ou cartão na hora do agendamento. Rápido e sem burocracia.",
+    title: "Agende",
+    desc: "Escolha o horário que funciona pra você. Sem fila, sem espera.",
   },
   {
     n: "03",
@@ -69,7 +69,7 @@ const steps = [
 
 const benefits = [
   { icon: Clock, title: "Sem fila de espera", desc: "Agende e seja atendido no horário marcado. Respeito ao seu tempo." },
-  { icon: Wallet, title: "Valor acessível", desc: "Consulta com preço justo. Sem mensalidade, sem surpresas." },
+  { icon: Wallet, title: "Sem custos fixos", desc: "Sem mensalidade, sem taxas de adesão. Tudo de forma simples." },
   { icon: GraduationCap, title: "Feito para universitários", desc: "Horários flexíveis que encaixam na sua rotina de aulas e estágio." },
   { icon: Wifi, title: "100% online", desc: "Consulte de qualquer lugar: república, campus, transporte." },
   { icon: Stethoscope, title: "Médicos com CRM ativo", desc: "Profissionais verificados e habilitados para telemedicina." },
@@ -94,8 +94,8 @@ const faqs = [
     a: "Sim. Receitas, atestados e pedidos de exames são emitidos digitalmente com assinatura digital válida em todo o país.",
   },
   {
-    q: "Quais formas de pagamento são aceitas?",
-    a: "Aceitamos Pix, cartão de crédito e débito. O pagamento é feito na hora do agendamento de forma segura.",
+    q: "Como funciona o agendamento?",
+    a: "Você escolhe o melhor horário para você e realiza o agendamento de forma 100% online.",
   },
   {
     q: "Posso cancelar ou reagendar minha consulta?",
@@ -193,7 +193,7 @@ function Index() {
               <ShieldCheck size={16} /> Em conformidade com o CFM • Resolução 2.314/2022
             </span>
             <span className="text-primary font-bold tracking-[0.2em] uppercase text-xs sm:text-sm animate-pulse">
-              CONSULTA RÁPIDA E ACESSÍVEL • R$50
+              CONSULTA RÁPIDA E ACESSÍVEL
             </span>
           </div>
           <h1 className="mt-8 text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.05]">
@@ -202,7 +202,7 @@ function Index() {
             <br className="hidden sm:block" /> ficar <span className="text-gradient-primary">doente.</span>
           </h1>
           <p className="mt-7 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Consultas médicas online com <span className="text-primary font-semibold">valor acessível</span>. Sem fila, sem deslocamento, sem burocracia. Feito para a rotina universitária.
+            Consultas médicas online de forma simples. Sem fila, sem deslocamento, sem burocracia. Feito para a rotina universitária.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
