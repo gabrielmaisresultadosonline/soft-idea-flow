@@ -236,9 +236,9 @@ function Index() {
             <br className="hidden sm:block" /> quem não tem tempo de
             <br className="hidden sm:block" /> ficar <span className="text-gradient-primary">doente.</span>
           </h1>
-          <div className="mt-6 inline-flex items-center gap-3 bg-emerald-500/15 border border-emerald-400/30 text-emerald-400 px-6 py-3 rounded-full">
+          <div className="mt-6 inline-flex items-center gap-3 bg-whatsapp/15 border border-whatsapp/30 text-whatsapp px-6 py-3 rounded-full">
             <span className="text-2xl sm:text-3xl font-black">R$50</span>
-            <span className="text-sm sm:text-base font-medium text-emerald-300">consulta online</span>
+            <span className="text-sm sm:text-base font-medium text-whatsapp/80">consulta online</span>
           </div>
           <p className="mt-7 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Consultas médicas online de forma simples. Sem fila, sem deslocamento, sem burocracia. Feito para a rotina universitária.
