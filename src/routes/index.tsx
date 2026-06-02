@@ -28,6 +28,14 @@ import imgHealth from "@/assets/student-health.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "Médico online R$50 — Consulta online | UniDoc" },
+      { name: "description", content: "Consultas médicas online de forma simples. Sem fila, sem deslocamento, sem burocracia. Feito para a rotina universitária." },
+      { property: "og:title", content: "Médico online R$50 — Consulta online | UniDoc" },
+      { property: "og:description", content: "Consultas médicas online de forma simples. Sem fila, sem deslocamento, sem burocracia. Feito para a rotina universitária." },
+    ],
+  }),
 });
 
 const WHATSAPP_URL =

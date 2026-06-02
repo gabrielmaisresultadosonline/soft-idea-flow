@@ -91,9 +91,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "UniDoc — Médico online para universitários" },
-      { name: "description", content: "Your Caring Companion is an online medical platform for booking consultations and managing appointments." },
-      { property: "og:description", content: "Your Caring Companion is an online medical platform for booking consultations and managing appointments." },
-      { name: "twitter:description", content: "Your Caring Companion is an online medical platform for booking consultations and managing appointments." },
+      { name: "twitter:description", content: "Teleconsulta em minutos com médicos de CRM ativo. Agende, pague e consulte de qualquer lugar." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/30cc27f6-4e9e-4895-9c6e-143a984595e9/id-preview-467a406f--1fd9ddbb-d78a-4c1f-8897-0f15e3726ae8.lovable.app-1779128626429.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/30cc27f6-4e9e-4895-9c6e-143a984595e9/id-preview-467a406f--1fd9ddbb-d78a-4c1f-8897-0f15e3726ae8.lovable.app-1779128626429.png" },
     ],
@@ -133,6 +131,8 @@ function RootShell({ children }: { children: React.ReactNode }) {
             `,
           }}
         />
+      </head>
+      <body>
         <noscript>
           <img
             height="1"
@@ -141,8 +141,6 @@ function RootShell({ children }: { children: React.ReactNode }) {
             src="https://www.facebook.com/tr?id=1293284119061716&ev=PageView&noscript=1"
           />
         </noscript>
-      </head>
-      <body>
         {children}
         <Scripts />
       </body>
