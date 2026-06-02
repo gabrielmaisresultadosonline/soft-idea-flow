@@ -31,7 +31,7 @@ export const Route = createFileRoute("/")({
 });
 
 const WHATSAPP_URL =
-  "https://wa.me/556781226312?text=Sou%20Acad%C3%AAmico%20e%20gostaria%20de%20Agendar";
+  "https://wa.me/556781226312?text=Ol%C3%A1%20sou%20acad%C3%AAmico%20e%20gostaria%20de%20agendar%20uma%20consulta%20ou%20saber%20mais%20sobre%20a%20consulta%20online%3F";
 
 const navLinks = [
   { href: "#como-funciona", label: "Como Funciona" },
