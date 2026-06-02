@@ -131,6 +131,8 @@ function RootShell({ children }: { children: React.ReactNode }) {
             `,
           }}
         />
+      </head>
+      <body>
         <noscript>
           <img
             height="1"
@@ -139,8 +141,6 @@ function RootShell({ children }: { children: React.ReactNode }) {
             src="https://www.facebook.com/tr?id=1293284119061716&ev=PageView&noscript=1"
           />
         </noscript>
-      </head>
-      <body>
         {children}
         <Scripts />
       </body>
